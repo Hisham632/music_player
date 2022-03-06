@@ -34,7 +34,8 @@ dependencies:
   google_fonts: 2.2.0
   path_provider: ^2.0.9
   permission_handler: ^9.2.0
-
+  palette_generator: ^0.3.3
+  avatar_glow: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.

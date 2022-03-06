@@ -6,12 +6,16 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:avatar_glow/avatar_glow.dart';
+
 /*
 //Adjust the pic with padding
 //put text below of the name
 //add a slider
 //make the play and pause button animated
+
 
 previous and next button and fix play button
 make the background color the avg color of the pic
@@ -30,7 +34,7 @@ class AudioPlay extends StatefulWidget {
 
 
 
-class _AudioPlayState extends State<AudioPlay> {
+class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   late AudioPlayer audioPlayer;
   late AudioCache player=player = AudioCache();
@@ -40,6 +44,7 @@ class _AudioPlayState extends State<AudioPlay> {
   late List<FileSystemEntity> listOfAllFolderAndFiles;
   String songName='', lastSongPlayed='';
  // late PaletteColor BackColor;
+  late AnimationController animationController;
 
   void initPlayer() async {
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
@@ -49,6 +54,7 @@ class _AudioPlayState extends State<AudioPlay> {
 
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
+    animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
 
 
     //player.load('assets/misfit.mp3');
@@ -93,6 +99,18 @@ class _AudioPlayState extends State<AudioPlay> {
     super.initState();
     initPlayer();
   }
+/*  _updatePalette() async { Gets the avg color of img
+    bgColors = [];
+    for(String image in images) {
+      PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
+        AssetImage(image),
+        size: Size(200, 100),
+      );
+      palette.darkMutedColor != null ? bgColors.add(palette.darkMutedColor) : bgColors.add(PaletteColor(Colors.red,3));
+    }
+    setState(() {});
+  }*/
+
 
 
   play(songNum) async {
@@ -129,6 +147,8 @@ class _AudioPlayState extends State<AudioPlay> {
 previous(){
    // play(lastSongPlayed);
 }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,36 +189,92 @@ previous(){
           ),
 
 
-          Row(
+          Row(//buttons row
             children: [
-              Container(// use expanded
-                child: ElevatedButton(
+              Expanded(
+                flex: 2,
+                child: IconButton(
+                  iconSize: 50,
+                  icon: Icon(Icons.arrow_back_sharp),
+                  color: Colors.green,
 
-                    onPressed: () {
-                      audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
-                        print('Current player state: $s');
-                        if(s==PlayerState.PLAYING){
-                          isPlaying=true;
-                        }
-                        else {
-                          isPlaying=false;
-                        }
-                        print(isPlaying);
-                      });
+                  onPressed: ()
+                  {
 
-                      if(!isPlaying){
-                        play(2);
-                      }
-                      else if(isPlaying){
-                        pause();
-                      }
-                    },
-                    child: Text('Play')),
-                alignment: Alignment.center,
-                width: 411,
+                  },
+                ),
               ),
+              Expanded(
+                  child: AvatarGlow(
+                    glowColor: Colors.deepPurple,
+                      endRadius: 50.0,
+                      duration: Duration(milliseconds: 2000),
+                      repeat: true,
+                      showTwoGlows: true,
+                      repeatPauseDuration: Duration(milliseconds: 100),
 
+                      child: Material(     // Replace this child with your own
+                          elevation: 8.0,
+                          shape: CircleBorder(),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.blue,
 
+                            child: IconButton(
+                                iconSize: 150,
+                                icon: AnimatedIcon(
+                                  icon: AnimatedIcons.play_pause,
+                                  progress: animationController,
+                                  color: Colors.deepOrange,
+                                  size: 45,
+                                ),
+                                onPressed: ()
+                                {
+                                  audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
+                                    print('Current player state: $s');
+                                    if(s==PlayerState.PLAYING){
+                                      isPlaying=true;
+                                      animationController.forward();
+                                    }
+                                    else {
+                                      animationController.reverse();
+
+                                      isPlaying=false;
+                                    }
+                                    print(isPlaying);
+                                  });
+
+                                  if(!isPlaying)
+                                  {
+                                    play(2);
+                                  }
+                                  else if(isPlaying)
+                                  {
+                                    pause();
+                                  }
+
+                                },
+                              ),
+
+                            radius: 30.0,
+                          ),
+                      ),
+
+                  )
+                ),
+              Expanded(
+                flex: 2,
+
+                child: IconButton(
+                    iconSize: 50,
+                    icon: Icon(Icons.arrow_forward),
+                    color: Colors.green,
+
+                    onPressed: ()
+                    {
+
+                    },
+                ),
+              ),
             ],
           ),
 
