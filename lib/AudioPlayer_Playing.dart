@@ -42,16 +42,14 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   Duration position= Duration();
   bool isPlaying=false;
   late List<FileSystemEntity> listOfAllFolderAndFiles;
-  String songName='', lastSongPlayed='';
- // late PaletteColor BackColor;
+  String songName='', lastSongPlayed='';//not used
+
   late AnimationController animationController;
+  int songNumber=1;
 
   void initPlayer() async {
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
-
-
-
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
@@ -72,7 +70,6 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
           this.position=position;
     });
   });
-
 
     final status = await Permission.storage.status;
     const statusManageStorage = Permission.manageExternalStorage;
@@ -99,18 +96,6 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     super.initState();
     initPlayer();
   }
-/*  _updatePalette() async { Gets the avg color of img
-    bgColors = [];
-    for(String image in images) {
-      PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
-        AssetImage(image),
-        size: Size(200, 100),
-      );
-      palette.darkMutedColor != null ? bgColors.add(palette.darkMutedColor) : bgColors.add(PaletteColor(Colors.red,3));
-    }
-    setState(() {});
-  }*/
-
 
 
   play(songNum) async {
@@ -121,9 +106,9 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     //lastSongPlayed=songNum;//might need to do in a list since might go back multiple times
     audioPlayer.play(song, isLocal: true);
 
-    /*audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
+    audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
       next();
-    });*/
+    });
 
 
     }
@@ -141,11 +126,25 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   next(){
     //ig just +1 to songNum
+    songNumber+=1;
+    if(listOfAllFolderAndFiles.length<songNumber)
+      {
+        songNumber=1;
+      }
+    play(songNumber);
 
     //audioPlayer.onPlayerCompletion
   }
 previous(){
    // play(lastSongPlayed);
+  songNumber-=1;
+
+  if(songNumber<1)
+  {
+    songNumber=listOfAllFolderAndFiles.length;
+  }
+  play(songNumber);
+
 }
 
 
@@ -200,7 +199,7 @@ previous(){
 
                   onPressed: ()
                   {
-
+                    previous();
                   },
                 ),
               ),
@@ -245,7 +244,7 @@ previous(){
 
                                   if(!isPlaying)
                                   {
-                                    play(2);
+                                    play(songNumber);
                                   }
                                   else if(isPlaying)
                                   {
@@ -271,6 +270,7 @@ previous(){
 
                     onPressed: ()
                     {
+                      next();
 
                     },
                 ),
@@ -286,3 +286,34 @@ previous(){
 
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  _updatePalette() async { Gets the avg color of img
+    bgColors = [];
+    for(String image in images) {
+      PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
+        AssetImage(image),
+        size: Size(200, 100),
+      );
+      palette.darkMutedColor != null ? bgColors.add(palette.darkMutedColor) : bgColors.add(PaletteColor(Colors.red,3));
+    }
+    setState(() {});
+  }*/

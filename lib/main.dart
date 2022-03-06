@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
+import 'package:music_player/List.dart';
 
 void main() {
   runApp( MaterialApp(
-    initialRoute:'/' ,
+    initialRoute:'/listing' ,
     routes: {
       '/':(context)=> AudioPlay(),
+      '/listing':(context)=> Lists(),
+
     },
   ));
 }
