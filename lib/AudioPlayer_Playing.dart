@@ -26,7 +26,12 @@ create a list to store all the files
  */
 
 class AudioPlay extends StatefulWidget {
-  const AudioPlay({Key? key}) : super(key: key);
+  final int number;
+
+  const AudioPlay({Key? key,
+    required this.number,
+
+  }) : super(key: key);
 
   @override
   _AudioPlayState createState() => _AudioPlayState();
@@ -35,6 +40,8 @@ class AudioPlay extends StatefulWidget {
 
 
 class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
+
+
 
   late AudioPlayer audioPlayer;
   late AudioCache player=player = AudioCache();
@@ -88,7 +95,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
     print(listOfAllFolderAndFiles);//has all the files from the directory
-
+    print('Number is:'+widget.number.toString());
+    songNumber=widget.number;
   }
 
   void initState()

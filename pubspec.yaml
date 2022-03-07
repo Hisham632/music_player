@@ -36,6 +36,8 @@ dependencies:
   permission_handler: ^9.2.0
   palette_generator: ^0.3.3
   avatar_glow: ^2.0.2
+  just_audio: ^0.9.20
+  flutter_audio_query: ^0.3.5+6
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -4,9 +4,9 @@ import 'package:music_player/List.dart';
 
 void main() {
   runApp( MaterialApp(
-    initialRoute:'/listing' ,
+    initialRoute:'/test' ,
     routes: {
-      '/':(context)=> AudioPlay(),
+      '/':(context)=> AudioPlay(number: 2),
       '/listing':(context)=> Lists(),
 
     },

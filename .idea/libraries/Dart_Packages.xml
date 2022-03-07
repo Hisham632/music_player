@@ -9,6 +9,13 @@
             </list>
           </value>
         </entry>
+        <entry key="audio_session">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_session-0.1.6+1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="audioplayers">
           <value>
             <list>
@@ -107,10 +114,24 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_audio_query">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_audio_query-0.3.5+6/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_lints">
           <value>
             <list>
               <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_plugin_android_lifecycle">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/lib" />
             </list>
           </value>
         </entry>
@@ -153,6 +174,27 @@
           <value>
             <list>
               <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="just_audio">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio-0.9.20/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="just_audio_platform_interface">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_platform_interface-4.1.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="just_audio_web">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_web-0.4.4/lib" />
             </list>
           </value>
         </entry>
@@ -296,6 +338,13 @@
             </list>
           </value>
         </entry>
+        <entry key="rxdart">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.3/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="sky_engine">
           <value>
             <list>
@@ -384,6 +433,7 @@
     </properties>
     <CLASSES>
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_session-0.1.6+1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.20.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/auto_size_text-3.0.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/avatar_glow-2.0.2/lib" />
@@ -397,11 +447,16 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-1.1.2/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/file-6.1.2/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_audio_query-0.3.5+6/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.2.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio-0.9.20/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_platform_interface-4.1.0/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_web-0.4.4/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.11/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.7.0/lib" />
@@ -422,6 +477,7 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/platform-3.1.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.1.2/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.4/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.3/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0/lib" />
