@@ -14,7 +14,13 @@ import 'package:dart_tags/dart_tags.dart';
 import 'package:flutter_video_info/flutter_video_info.dart';
 
 class Lists extends StatefulWidget {
-  const Lists({Key? key}) : super(key: key);
+  final String folderName;
+
+  const Lists({Key? key,
+    required this.folderName,
+
+
+  }) : super(key: key);
 
   @override
   _ListsState createState() => _ListsState();
@@ -33,7 +39,9 @@ initState()
      int songNum=2;
 
     super.initState();
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    //Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory(widget.folderName.substring(13, widget.folderName.length - 1));// later make sure the folder is not empty
+
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
     print(listOfAllFolderAndFiles);//has all the files from the directory
     print(listOfAllFolderAndFiles.length);//has all the files from the directory

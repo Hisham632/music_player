@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:music_player/List.dart';
+import 'package:music_player/Grids.dart';
 
 void main() {
   runApp( MaterialApp(
-    initialRoute:'/listing' ,
+    initialRoute:'/Playlists' ,
     routes: {
       '/':(context)=> AudioPlay(number: 2),
-      '/listing':(context)=> Lists(),
+      '/listing':(context)=> Lists(folderName:'test'),
+      '/Playlists':(context)=> Playlists(),
 
     },
   ));
@@ -25,12 +27,13 @@ Music Player App:
 
 4.Playlist page where we can add songs from the list to a playlist
 
-What to do next:
-Leave the code for the metadata just return null for now
-add the list divider thing
-make it nice
-create the album/playlist page where each folder becomes a grid and when u click it opens a new page as a list
 
+What to do next:
+add the list divider thing
 do th avg background color where based on those 4 it switches
 add time stamps below slider
+also make it when u click from list it starts the song
+
+make it look nice
+add a like button
 */
