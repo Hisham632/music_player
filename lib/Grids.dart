@@ -37,11 +37,7 @@ class _PlaylistsState extends State<Playlists> {
           PlaylistsFolders.add(listOfAllFolderAndFiles[count]);
           print(PlaylistsFolders);
       }
-
     }
-
-
-
   }
 
 

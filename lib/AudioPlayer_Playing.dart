@@ -97,6 +97,11 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     print(listOfAllFolderAndFiles);//has all the files from the directory
     print('Number is:'+widget.number.toString());
     songNumber=widget.number;
+    if(songNumber!=-1)
+      {
+        play(songNumber);
+      }
+
   }
 
   void initState()
@@ -155,6 +160,27 @@ previous(){
 
 }
 
+timeStamp()
+{
+  if(position.inSeconds.remainder(60)>10)
+    {
+      return position.inSeconds.remainder(60);
+    }
+  else {
+    return "0"+position.inSeconds.remainder(60).toString();
+  }
+}
+fileTimeStamp()
+{
+    if(fileDuration.inSeconds.remainder(60)>10)
+    {
+      return fileDuration.inSeconds.remainder(60);
+    }
+    else {
+      return "0"+fileDuration.inSeconds.remainder(60).toString();
+    }
+}
+
 
 
   @override
@@ -179,21 +205,30 @@ previous(){
             minFontSize: 27,
             maxLines: 1,
           ),
-          SizedBox(
-            width: 380,
-            child: Slider(
-                min: 0,
-                max: fileDuration.inSeconds.toDouble(),
-                value: position.inSeconds.toDouble(),
-                activeColor: Colors.deepPurple,
-                inactiveColor: Colors.blueGrey,
-                onChanged: (double value){
-                  setState(() {
-                    audioPlayer.seek(new Duration(seconds: value.toInt()));
-                  });
-                }
-            ),
+          Row(
+            children: [
+
+              Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+              SizedBox(
+                width: 335,
+                child: Slider(
+                    min: 0,
+                    max: fileDuration.inSeconds.toDouble(),
+                    value: position.inSeconds.toDouble(),
+                    activeColor: Colors.deepPurple,
+                    inactiveColor: Colors.blueGrey,
+                    onChanged: (double value){
+                      setState(() {
+                        audioPlayer.seek(new Duration(seconds: value.toInt()));
+                      });
+                    }
+                ),
+              ),
+              Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+
+            ],
           ),
+
 
 
           Row(//buttons row
@@ -229,11 +264,12 @@ previous(){
                             child: IconButton(
                                 iconSize: 150,
                                 icon: AnimatedIcon(
-                                  icon: AnimatedIcons.play_pause,
+                                  icon: AnimatedIcons.pause_play,
                                   progress: animationController,
                                   color: Colors.deepOrange,
                                   size: 45,
                                 ),
+
                                 onPressed: ()
                                 {
                                   audioPlayer.onPlayerStateChanged.listen((PlayerState s) {

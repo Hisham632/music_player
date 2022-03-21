@@ -39,6 +39,7 @@ initState()
      int songNum=2;
 
     super.initState();
+    print(widget.folderName);
     //Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     Directory dir = Directory(widget.folderName.substring(13, widget.folderName.length - 1));// later make sure the folder is not empty
 
@@ -90,7 +91,13 @@ initState()
 
     return Scaffold(
       //appBar: AppBar(),
-      body: ListView.builder(//later add that divider
+      body: ListView.separated(//later add that divider
+          separatorBuilder: (context, index) => const Divider(
+            color: Colors.deepPurple,
+            height: 0,
+            thickness: 2,
+          ),
+
         itemCount: listOfAllFolderAndFiles.length,
           itemBuilder: (context,songNum){
             return Container(
@@ -118,31 +125,38 @@ initState()
 
      //print('EachTime '+ songNum.toString());
 
-    return ListTile(//use the special textFont ALSO later add that divider
-      leading: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Image.asset('Images/img.png'),
+    return Card(
+      color: Colors.deepPurple[200],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
       ),
-      title: Text(
-        listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5),
-        style: TextStyle(fontSize: 18,color: Colors.deepOrange,fontWeight: FontWeight.bold,fontFamily:'lato'),
+      elevation:5,
+        child: ListTile(//use the special textFont ALSO later add that divider
+        leading: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          child: Image.asset('Images/img.png'),
+        ),
+        title: Text(
+          listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5),
+          style: TextStyle(fontSize: 18,color: Colors.deepOrange,fontWeight: FontWeight.bold,fontFamily:'lato'),
+        ),
+
+        dense: true,
+        contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
+        selected: true,
+        subtitle: Text('Logic • 3:03  ',style: GoogleFonts.lato(),),
+        trailing: Icon(Icons.sort),
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AudioPlay(number:songNum+1),
+            ),
+          );
+          print('clicked '+listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5));
+        },
+
       ),
-
-      dense: true,
-      contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
-      selected: true,
-      subtitle: Text('Logic • 3:03  ',style: GoogleFonts.lato(),),
-      trailing: Icon(Icons.sort),
-      onTap: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AudioPlay(number:songNum),
-          ),
-        );
-        print('clicked '+listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5));
-      },
-
     );
   }
 

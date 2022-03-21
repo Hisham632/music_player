@@ -7,8 +7,8 @@ void main() {
   runApp( MaterialApp(
     initialRoute:'/Playlists' ,
     routes: {
-      '/':(context)=> AudioPlay(number: 2),
-      '/listing':(context)=> Lists(folderName:'test'),
+      '/':(context)=> AudioPlay(number: -1),
+      '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
       '/Playlists':(context)=> Playlists(),
 
     },
@@ -29,11 +29,10 @@ Music Player App:
 
 
 What to do next:
-add the list divider thing
-do th avg background color where based on those 4 it switches
-add time stamps below slider
-also make it when u click from list it starts the song
+Arrange Playlist page so that each title is its own box and arrange pic
 
+later make headbar to go from albums/playlists to all song page and another to donwload songs
+do th avg background color where based on those 4 it switches
 make it look nice
 add a like button
 */
