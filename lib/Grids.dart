@@ -44,49 +44,85 @@ class _PlaylistsState extends State<Playlists> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      //appBar: AppBar(),
-      backgroundColor: Colors.white10,
-      body: GridView.builder(
-        itemCount: PlaylistsFolders.length,
-        itemBuilder: (context,count)
-        {
-          return Scaffold(// maybe make it a card
-            body:GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Lists(folderName:PlaylistsFolders[count].toString()),// make list take a parameter for the folder
-                  ),
-                );
-                print("Clicked "+count.toString());
-              },
-
-                child:Column(
-                  children: [
-                    Expanded(child: Image.asset('Images/img.png'),),
-                    AutoSizeText(
-                      PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-5),
-                      style: GoogleFonts.lato(),
-                      minFontSize: 20,
-                      maxLines: 1,
-                    ),
-
-                  ],
-                ),
+    return MaterialApp(
+      home: DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            isScrollable: true,
+            indicatorColor: Colors.amberAccent,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorWeight: 5,
+            indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(50), // Creates border
+                color: Colors.blue // Can also add an image
             ),
+            tabs: [
+              Tab(text:"Playlists"),
+              Tab(text: "Songs",)
+            ],
+          ),
+          //title: Text('Choose'),
 
-          );
-        },
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 15.0,
+
+        ),
+        backgroundColor: Colors.white10,
+        body: GridView.builder(
+          itemCount: PlaylistsFolders.length,
+          itemBuilder: (context,count)
+          {
+            return Card(// maybe make it a card
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              elevation: 15,
+              color: Colors.red[700],
+              child:InkWell(
+                splashColor: Colors.red.withAlpha(30),
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Lists(folderName:PlaylistsFolders[count].toString()),// make list take a parameter for the folder
+                      ),
+                    );
+                    print("Clicked "+count.toString());
+                  },
+
+                    child:Column(
+                      mainAxisSize:MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+
+                      children: [
+                        Ink.image(
+                          height: 160,
+                          image: AssetImage('Images/img.png'),
+                          fit: BoxFit.fitWidth,
+                        ),
+                        Text(
+                            PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-5),
+                            style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'lato'),
+                            overflow: TextOverflow.ellipsis
+                        ),
+
+                      ],
+                    ),
+                ),
+
+
+            );
+          },
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 5.0,
+          ),
+
         ),
 
       ),
-
+    ),
     );
 
   }

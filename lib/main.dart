@@ -29,10 +29,12 @@ Music Player App:
 
 
 What to do next:
-Arrange Playlist page so that each title is its own box and arrange pic
+Tabs
 
 later make headbar to go from albums/playlists to all song page and another to donwload songs
 do th avg background color where based on those 4 it switches
 make it look nice
 add a like button
+
+backgroundPlaying
 */
