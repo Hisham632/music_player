@@ -5,9 +5,12 @@ import 'package:music_player/Grids.dart';
 
 void main() {
   runApp( MaterialApp(
+    theme: ThemeData(
+      brightness:  Brightness.dark
+    ),
     initialRoute:'/Playlists' ,
     routes: {
-      '/':(context)=> AudioPlay(number: -1),
+      //'/':(context)=> AudioPlay(number: -1),
       '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
       '/Playlists':(context)=> Playlists(),
 
@@ -29,12 +32,27 @@ Music Player App:
 
 
 What to do next:
-Tabs
+make a bottom bar to play and pause and that it saves which song we're on
 
-later make headbar to go from albums/playlists to all song page and another to donwload songs
+In the appBar add a leading thing
+Look at discord for model thing
+backgroundPlaying
 do th avg background color where based on those 4 it switches
 make it look nice
 add a like button
 
-backgroundPlaying
+Bugs:
+Fix the all songs list to skip album names in index
+
+
+
+
+
+miniplayer
+background (might have queue option)
+like button
+YoutubeDownloader
+Make UI perfect
+
+then add PlaylistOption and playNext and queue
 */

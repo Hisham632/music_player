@@ -97,6 +97,9 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     print(listOfAllFolderAndFiles);//has all the files from the directory
     print('Number is:'+widget.number.toString());
     songNumber=widget.number;
+    AudioPlayer.players.forEach((key, value) {
+      value.stop();
+    });
     if(songNumber!=-1)
       {
         play(songNumber);
