@@ -55,4 +55,28 @@ YoutubeDownloader
 Make UI perfect
 
 then add PlaylistOption and playNext and queue
+
+
+
+
+
+
+
+
+
+
+avg color
+ decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
+                stops: [0.0, 0.4],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                tileMode: TileMode.repeated)),
+
+
+
+
+
+
 */

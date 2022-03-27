@@ -5,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
+import 'package:miniplayer/miniplayer.dart';
 
 class Playlists extends StatefulWidget {
   const Playlists({Key? key}) : super(key: key);
@@ -62,28 +63,79 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
 miniPlayer()
 {
-  Size phoneSize= MediaQuery.of(context).size;
+  //Size phoneSize= MediaQuery.of(context).size;
   return AnimatedContainer(
-    duration: const Duration(microseconds: 500),
-      color: Colors.blue,
-    width: phoneSize.width,
-    height: 50,
-    child: Row(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.asset('Images/img.png'),
+    color: Colors.blueAccent,
+    duration: Duration(seconds: 1),
+    child: SizedBox(
+      height: 85,
+      child: Column(
+        children: [
+        SizedBox(
+        height: 1,
+        child: SliderTheme(
+          child: Slider(
+            value: 12,
+            max: 100,
+            onChanged: null,
+          ),
+          data: SliderTheme.of(context).copyWith(
+            activeTrackColor: Colors.orange,
+            inactiveTrackColor: Colors.red.withOpacity(0.3),
+            trackShape: SpotifyMiniPlayerTrackShape(),
+            trackHeight: 2,
+            thumbShape: RoundSliderThumbShape(
+              enabledThumbRadius: 0,
+            ),
+          ),
         ),
-        Text('SongName', style: TextStyle(fontSize: 18,color: Colors.blueAccent[400],fontWeight: FontWeight.bold,fontFamily:'lato'),),
-        IconButton(onPressed: (){}, icon: Icon(Icons.play_arrow,color: Colors.orange,))
-        
-      ],
+      ),
+      Row(
+      children: [
+      Flexible(
+      flex: 8,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AudioPlay(number: -1)));
+        },
+        child: Row(
+          children: [
+            Flexible(
+                child: Image.asset('Images/img.png')),
+            Flexible(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0),
+                child: Text('Song Name'),
+              ),
+            )
+          ],
+        ),
+      ),
     ),
-
+    Flexible(
+        flex: 2,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15.0),
+          child: SizedBox(
+            height: 60,
+            width: 60,
+            child: Icon(Icons.play_arrow),
+          ),
+        ))
+    ],
+  )
+  ],
+  ),
+  ),
   );
-
-
 }
+
+
 
 
   @override
@@ -154,29 +206,16 @@ miniPlayer()
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            miniPlayer(music),
-            BottomNavigationBar(
-              currentIndex: currentTabIndex,
-              onTap: (currentIndex) {
-                print("Current Index is $currentIndex");
-                currentTabIndex = currentIndex;
-                setState(() {}); // re-render
+            Miniplayer(
+              minHeight: 70,
+              maxHeight: 370,
+              builder: (height, percentage) {
+                return Center(
+                  child: Text('$height, $percentage'),
+                );
               },
-              selectedLabelStyle: TextStyle(color: Colors.white),
-              selectedItemColor: Colors.white,
-              backgroundColor: Colors.black45,
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.home, color: Colors.white), label: 'Home'),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search, color: Colors.white),
-                  label: 'Search',
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.library_books, color: Colors.white),
-                    label: 'Your Library')
-              ],
-            )
+            ),
+
           ],
         ),
 
@@ -324,6 +363,28 @@ miniPlayer()
 
 
 
+}
+
+
+
+
+
+
+class SpotifyMiniPlayerTrackShape extends RoundedRectSliderTrackShape {
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double? trackHeight = sliderTheme.trackHeight;
+    final double trackLeft = offset.dx;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  }
 }
 
 /*
