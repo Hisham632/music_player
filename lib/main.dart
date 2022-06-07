@@ -3,6 +3,8 @@ import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/Grids.dart';
 
+
+
 void main() {
   runApp(
       MaterialApp(
@@ -22,51 +24,71 @@ void main() {
 
 
 
-
 /*
 Music Player App:
-1. Draw UI template for main
-2. create player page (where we actually play the music)
-3. a page where we select the song played, list of songs displayed in a list
+Features:
+  miniplayer
+  background (might have queue option)
+  like button
+  YoutubeDownloader
+  Make UI perfect
 
-4.Playlist page where we can add songs from the list to a playlist
+  then add PlaylistOption and playNext and queue
+
 
 
 What to do next:
-make a bottom bar to play and pause and that it saves which song we're on
+  BackGround playing and Fix bug
+  Then Youtube downloading
 
-In the appBar add a leading thing
-Look at discord for model thing
-backgroundPlaying
-do th avg background color where based on those 4 it switches
-make it look nice
-add a like button
 
 Bugs:
 Fix the all songs list to skip album names in index
 
+Tasks:
+make a bottom bar to play and pause and that it saves which song we're on
+  In the appBar add a leading thing
+  Look at discord for model picture
 
-
-
-
-miniplayer
-background (might have queue option)
-like button
-YoutubeDownloader
-Make UI perfect
-
-then add PlaylistOption and playNext and queue
-
-
-
-
+  Main Playing Page:
+    do th avg background color where based on those 4 it switches
+    add a like button
+    previous and next button and fix play button
+    make the background color the avg color of the pic
 
 
 
 
 
 
-avg color
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+avg color Code
  decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
@@ -78,11 +100,11 @@ avg color
 
 
 
-For Miniplayer:
-Make the Stack with AudioPlayer()
-add the state and riverpod
-make it so when we drag the miniplayer above a certain height it goes to the AudioPlayer page
-The Miniplayer has the pause, next and previous buttons and the details of the song playing
+For Miniplayer implementation :
+  Make the Stack with AudioPlayer()
+  add the state and riverpod
+  make it so when we drag the miniplayer above a certain height it goes to the AudioPlayer page
+  The Miniplayer has the pause, next and previous buttons and the details of the song playing
 
 
 

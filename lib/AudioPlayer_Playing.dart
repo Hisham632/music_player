@@ -10,20 +10,6 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
-/*
-//Adjust the pic with padding
-//put text below of the name
-//add a slider
-//make the play and pause button animated
-
-
-previous and next button and fix play button
-make the background color the avg color of the pic
-
-
-create a list to store all the files
-
- */
 
 class AudioPlay extends StatefulWidget {
   final int number;
