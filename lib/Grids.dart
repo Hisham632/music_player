@@ -203,21 +203,7 @@ miniPlayer()
           ),
 
         ),
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Miniplayer(
-              minHeight: 70,
-              maxHeight: 370,
-              builder: (height, percentage) {
-                return Center(
-                  child: Text('$height, $percentage'),
-                );
-              },
-            ),
 
-          ],
-        ),
 
       ),
     ),

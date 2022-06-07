@@ -4,7 +4,8 @@ import 'package:music_player/List.dart';
 import 'package:music_player/Grids.dart';
 
 void main() {
-  runApp( MaterialApp(
+  runApp(
+      MaterialApp(
     theme: ThemeData(
       brightness:  Brightness.dark
     ),
@@ -24,9 +25,9 @@ void main() {
 
 /*
 Music Player App:
-1.Draw UI template for main
+1. Draw UI template for main
 2. create player page (where we actually play the music)
-3.a page where we select the song played, list of songs displayed in a list
+3. a page where we select the song played, list of songs displayed in a list
 
 4.Playlist page where we can add songs from the list to a playlist
 
@@ -76,6 +77,12 @@ avg color
 
 
 
+
+For Miniplayer:
+Make the Stack with AudioPlayer()
+add the state and riverpod
+make it so when we drag the miniplayer above a certain height it goes to the AudioPlayer page
+The Miniplayer has the pause, next and previous buttons and the details of the song playing
 
 
 
