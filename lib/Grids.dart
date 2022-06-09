@@ -6,7 +6,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:miniplayer/miniplayer.dart';
-
+import 'package:path/path.dart' as path;
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 class Playlists extends StatefulWidget {
   const Playlists({Key? key}) : super(key: key);
 
@@ -26,7 +27,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   void initState()
   {
     super.initState();
-    tabController=TabController(length: 2, vsync: this);
+    tabController=TabController(length: 3, vsync: this);
     getPlaylists();
     getAllSongsList();
   }
@@ -143,7 +144,7 @@ miniPlayer()
 
     return MaterialApp(
       home: DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
       /*  appBar: AppBar(
           bottom: TabBar(
@@ -186,7 +187,8 @@ miniPlayer()
                      ),
                      tabs: [
                        Tab(icon:Icon(Icons.api,color: Colors.deepPurple,),text:"Playlists"),
-                       Tab(icon:Icon(Icons.visibility_outlined,color: Colors.deepPurple,),text: "Songs",)
+                       Tab(icon:Icon(Icons.visibility_outlined,color: Colors.deepPurple,),text: "Songs",),
+                       Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
 
@@ -198,7 +200,7 @@ miniPlayer()
             children:[
               playlistGrid(),
               getAllSongs(),
-
+              downloader()
             ],
           ),
 
@@ -350,6 +352,86 @@ miniPlayer()
 
 
 }
+
+downloader(){
+  final textController = TextEditingController();
+
+    return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Insert the video id or url',
+            ),
+            TextField(controller: textController),
+            ElevatedButton(
+                child: const Text('Download'),
+                onPressed: () async {
+                  // Here you should validate the given input or else an error
+                  // will be thrown.
+                  var yt = YoutubeExplode();
+                  var id = VideoId("https://www.youtube.com/watch?v=2JpkMXinO1M&ab_channel=AnimelunaII");
+                  var video = await yt.videos.get(id);
+                  print(video.title);
+
+                  // Display info about this video.
+
+
+                  // Request permission to write in an external directory.
+                  // (In this case downloads)
+                  await Permission.storage.request();
+
+                  // Get the streams manifest and the audio track.
+                  var manifest = await yt.videos.streamsClient.getManifest(id);
+                  var audio = manifest.audioOnly.last;
+
+                  // Build the directory.
+                  Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+                  var filePath = path.join(dir.uri.toFilePath(),
+                      '${video.title}.${audio.container.name}');
+
+                  // Open the file to write.
+                  var file = File(filePath);
+                  var fileStream = file.openWrite();
+
+                  // Pipe all the content of the stream into our file.
+                 // var audioStream = await yt.videos.streamsClient.get(audio).pipe(fileStream);
+                   var audioStream = await yt.videos.streamsClient.get(audio);
+
+                  var len = audio.size.totalBytes;
+                  var count = 0;
+                  var progress;
+                  // Pipe all the content of the stream into our file.
+                  await for (final data in audioStream) {
+                  // Keep track of the current downloaded data.
+                  count += data.length;
+
+                  // Calculate the current progress.
+                  progress = ((count / len) * 100).ceil();
+
+                  print("Progress: $progress");
+
+
+                  fileStream.add(data);
+                  }
+
+                  if(progress==100)
+                    {
+                      print("Download Complete");
+                    }
+
+
+
+                  await fileStream.flush();
+                  await fileStream.close();
+
+
+                }),
+          ],
+        ),
+      );
+  }
+
 
 
 

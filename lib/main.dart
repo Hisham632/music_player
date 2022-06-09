@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/Grids.dart';
+import 'package:music_player/youtubeTest.dart';
 
 
 
@@ -16,6 +17,7 @@ void main() {
       //'/':(context)=> AudioPlay(number: -1),
       '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
       '/Playlists':(context)=> Playlists(),
+      '/youtube':(context)=>  MyHomePage(title: 'Flutter Demo Home Page'),
 
     },
   ));

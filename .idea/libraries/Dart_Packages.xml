@@ -86,6 +86,13 @@
             </list>
           </value>
         </entry>
+        <entry key="csslib">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/csslib-0.17.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="cupertino_icons">
           <value>
             <list>
@@ -177,10 +184,24 @@
             </list>
           </value>
         </entry>
+        <entry key="freezed_annotation">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/freezed_annotation-1.1.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="google_fonts">
           <value>
             <list>
               <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.2.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="html">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/html-0.15.0/lib" />
             </list>
           </value>
         </entry>
@@ -209,6 +230,13 @@
           <value>
             <list>
               <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="json_annotation">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.5.0/lib" />
             </list>
           </value>
         </entry>
@@ -359,6 +387,13 @@
             </list>
           </value>
         </entry>
+        <entry key="petitparser">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-4.4.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="platform">
           <value>
             <list>
@@ -478,6 +513,20 @@
             </list>
           </value>
         </entry>
+        <entry key="xml">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/xml-5.3.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="youtube_explode_dart">
+          <value>
+            <list>
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/youtube_explode_dart-1.11.0/lib" />
+            </list>
+          </value>
+        </entry>
       </option>
     </properties>
     <CLASSES>
@@ -493,6 +542,7 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/convert-3.0.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/csslib-0.17.2/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.4/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dart_tags-0.4.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
@@ -503,11 +553,14 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_media_metadata-1.0.0+1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_video_info-1.2.0/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/freezed_annotation-1.1.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.2.0/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/html-0.15.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/id3-1.0.2/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.5.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio-0.9.20/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_platform_interface-4.1.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_web-0.4.4/lib" />
@@ -529,6 +582,7 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_apple-9.0.2/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-3.7.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_windows-0.1.0/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-4.4.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/platform-3.1.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.1.2/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.4/lib" />
@@ -545,6 +599,8 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/win32-2.4.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.2.0+1/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/xml-5.3.1/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/youtube_explode_dart-1.11.0/lib" />
       <root url="file://C:/flutter/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://C:/flutter/flutter/packages/flutter/lib" />
       <root url="file://C:/flutter/flutter/packages/flutter_test/lib" />
