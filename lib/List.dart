@@ -60,17 +60,17 @@ initState()
 
 
 
-  Future songMetaData(songNum) async{
+  Future songMetaData() async{
     //we could a list
 
-    String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
-    print('line 71 '+song);
+    //String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
+    //print('line 71 '+song);
 
-    final metadata = await MetadataRetriever.fromFile(File('/storage/emulated/0/Download/Grand Escape (feat. Toko Miura).mp3'));
+    final metadata = await MetadataRetriever.fromFile(File('/storage/emulated/0/AudioFiles/Attack.webm'));
 
     List metaInfo=[metadata.trackName, metadata.trackDuration, metadata.albumName, metadata.albumArtistName, metadata.year, metadata.albumArt];
 
-   /* String? trackName = metadata.trackName;
+    String? trackName = metadata.trackName;
     String? albumName = metadata.albumName;
     String? albumArtistName = metadata.albumArtistName;
     int? year = metadata.year;
@@ -103,7 +103,7 @@ initState()
             return Container(
               color: Colors.black,
                   child: FutureBuilder(
-                    future: songMetaData(songNum),
+                    future: songMetaData(),
                     builder: (context, snapshot){
                       return songListView(context, songNum);
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:music_player/youtubeTest.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:music_player/List.dart';
@@ -27,7 +28,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   void initState()
   {
     super.initState();
-    tabController=TabController(length: 3, vsync: this);
+    tabController=TabController(length: 2, vsync: this);
     getPlaylists();
     getAllSongsList();
   }
@@ -144,8 +145,54 @@ miniPlayer()
 
     return MaterialApp(
       home: DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
+        drawer: Drawer(
+         // shape: ,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                ), child: null,
+              ),
+          ListTile(
+            leading: Icon(Icons.whatshot),
+            title: Text('Main'),
+            textColor: Colors.deepOrange,
+            iconColor: Colors.deepOrange,
+            hoverColor: Colors.deepPurple,
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Playlists(),
+                ),
+              );
+              //print('clicked '+listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5));
+
+            },
+          ),
+              ListTile(
+                leading: Icon(Icons.whatshot),
+                title: Text('Youtube Downloader'),
+                textColor: Colors.deepOrange,
+                iconColor: Colors.deepOrange,
+                hoverColor: Colors.deepPurple,
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyHomePage(title: ''),
+                    ),
+                  );
+                },
+              ),
+              ,
+            ],
+          ),
+        ),
       /*  appBar: AppBar(
           bottom: TabBar(
             isScrollable: true,
@@ -188,11 +235,12 @@ miniPlayer()
                      tabs: [
                        Tab(icon:Icon(Icons.api,color: Colors.deepPurple,),text:"Playlists"),
                        Tab(icon:Icon(Icons.visibility_outlined,color: Colors.deepPurple,),text: "Songs",),
-                       Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
+                       //Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
 
                  ),
+
               ];
           },
           body: TabBarView(
@@ -200,7 +248,6 @@ miniPlayer()
             children:[
               playlistGrid(),
               getAllSongs(),
-              downloader()
             ],
           ),
 
