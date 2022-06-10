@@ -5,12 +5,10 @@ import 'package:music_player/Grids.dart';
 import 'package:music_player/youtubeTest.dart';
 
 /*
-change to drawer just for downloader
-then design tab for youtubeDowloader with the selection of 1 vid or playlist
+MetaData
 
-Top left: Choose:    Radio buttons for playlist or vid
-bit below center we ask
-then progress bar and says when complete
+way to save which song is playing
+
  */
 
 void main() {

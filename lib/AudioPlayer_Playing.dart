@@ -13,9 +13,10 @@ import 'package:avatar_glow/avatar_glow.dart';
 
 class AudioPlay extends StatefulWidget {
   final int number;
+  final String path;
 
   const AudioPlay({Key? key,
-    required this.number,
+    required this.number,required this.path
 
   }) : super(key: key);
 
@@ -26,6 +27,8 @@ class AudioPlay extends StatefulWidget {
 
 
 class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
+
+  int countTimes=0;
 
 
 
@@ -77,8 +80,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       ].request();
     }
 
-
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory(widget.path);
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
     print(listOfAllFolderAndFiles);//has all the files from the directory
     print('Number is:'+widget.number.toString());
@@ -259,16 +261,32 @@ fileTimeStamp()
                                   size: 45,
                                 ),
 
-                                onPressed: ()
+                                onPressed: () async
                                 {
                                   audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
-                                    print('Current player state: $s');
+
+                                    print(' player state: $s');
                                     if(s==PlayerState.PLAYING){
-                                      isPlaying=true;
-                                      animationController.forward();
+                                      if(countTimes==0)
+                                      {
+                                        countTimes++;
+                                        isPlaying=true;
+                                        animationController.reverse();
+                                        pause();
+                                      }
+                                      else
+                                        {
+                                          isPlaying=true;
+                                          animationController.reverse();
+                                        }
+
+
+
+
+                                      print("PAUSING EMER");
                                     }
                                     else {
-                                      animationController.reverse();
+                                      animationController.forward();
 
                                       isPlaying=false;
                                     }
@@ -281,6 +299,7 @@ fileTimeStamp()
                                   }
                                   else if(isPlaying)
                                   {
+                                    print("PAUSING EMER2");
                                     pause();
                                   }
 

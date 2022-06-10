@@ -101,7 +101,7 @@ miniPlayer()
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const AudioPlay(number: -1)));
+                  builder: (context) => const AudioPlay(number: -1, path:'/storage/emulated/0/AudioFiles/' ,)));
         },
         child: Row(
           children: [
@@ -189,7 +189,7 @@ miniPlayer()
                   );
                 },
               ),
-              ,
+
             ],
           ),
         ),
@@ -335,7 +335,36 @@ miniPlayer()
               child: FutureBuilder(
                   future: songMetaData(songNum),
                   builder: (context, snapshot){
-                    return songListView(context, songNum);
+                    if((listAllSongs[songNum].toString().substring(listAllSongs[songNum].toString().length-9,listAllSongs[songNum].toString().length)).contains(".")){
+                      return songListView(context, songNum);
+                     }
+                     else{
+                       return Card(
+                         color: Colors.indigo[800],
+                         shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10.0),
+                         ),
+                         elevation:5,
+                         child: ListTile(//use the special textFont ALSO later add that divider
+                           leading: ClipRRect(
+                             borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                             child: Image.asset('Images/img.png'),
+                           ),
+                           title: Text(
+                             listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
+                             style: TextStyle(fontSize: 18,color: Colors.deepOrange,fontWeight: FontWeight.bold,fontFamily:'lato'),
+                           ),
+
+                           dense: true,
+                           contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
+                           selected: true,
+
+
+
+                         ),
+                       );;
+                     }
+
 
                   }
 
@@ -356,7 +385,7 @@ miniPlayer()
     //print('EachTime '+ songNum.toString());
 
     return Card(
-      color: Colors.deepPurple[200],
+      color: Colors.purple[900],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -380,10 +409,11 @@ miniPlayer()
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum+1),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
             ),
           );
-          print('clicked '+listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5));
+          print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());
+          print((listAllSongs[songNum].toString().substring(listAllSongs[songNum].toString().length-9,listAllSongs[songNum].toString().length)).contains("."));
         },
 
       ),

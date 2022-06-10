@@ -126,7 +126,7 @@ initState()
      //print('EachTime '+ songNum.toString());
 
     return Card(
-      color: Colors.deepPurple[200],
+      color: Colors.purple[900],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -150,7 +150,7 @@ initState()
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum+1),
+              builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1),),
             ),
           );
           print('clicked '+listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5));
