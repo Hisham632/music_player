@@ -9,6 +9,7 @@ import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:path/path.dart' as path;
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
 class Playlists extends StatefulWidget {
   const Playlists({Key? key}) : super(key: key);
 
@@ -28,44 +29,53 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   void initState() {
     super.initState();
 
-    initPlayerPermi();
+    initPlayerPermission();
     tabController=TabController(length: 2, vsync: this);
-    getPlaylists();
-    getAllSongsList();
+    try{
+      getPlaylists();
+      getAllSongsList();
+    }catch(e)
+    {
+      runApp(MaterialApp(
+        home: Center(
+          child: Text(e.toString()),
+        ),
+      ));
+    }
+
   }
   void dispose() {
     tabController.dispose();
     super.dispose();
   }
 
-  void initPlayerPermi()
-  async {
-  final status = await Permission.storage.status;
-  const statusManageStorage = Permission.manageExternalStorage;
-  if (status.isDenied ||
-  !status.isGranted ||
-  !await statusManageStorage.isGranted) {
-  await [
-  Permission.storage,
-  Permission.mediaLibrary,
-  Permission.requestInstallPackages,
-  Permission.manageExternalStorage,
-  ].request();
-  }
+  void initPlayerPermission() async {
+      final status = await Permission.storage.status;
+      const statusManageStorage = Permission.manageExternalStorage;
+      if (status.isDenied ||
+      !status.isGranted ||
+      !await statusManageStorage.isGranted) {
+          await [
+          Permission.storage,
+          Permission.mediaLibrary,
+          Permission.requestInstallPackages,
+          Permission.manageExternalStorage,
+          ].request();
+      }
   }
 
   void getPlaylists()
   {
     Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
-    print(listOfAllFolderAndFiles[0]);//has all the files from the directory
-    print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
+   // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
+   // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
 
     for(int count=0;count<listOfAllFolderAndFiles.length;count++)
     {
       if(listOfAllFolderAndFiles[count].toString().substring(0,9)=='Directory'){
           PlaylistsFolders.add(listOfAllFolderAndFiles[count]);
-          print(PlaylistsFolders);
+          //print(PlaylistsFolders);
       }
     }
   }
@@ -75,8 +85,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
-    print('line58');
-    print(listAllSongs.length);
+   // print('line58');
+    //print(listAllSongs.length);
 
   }
 /*
@@ -298,7 +308,7 @@ miniPlayer()
                   builder: (context) => Lists(folderName:PlaylistsFolders[count].toString()),// make list take a parameter for the folder
                 ),
               );
-              print("Clicked "+count.toString());
+             // print("Clicked "+count.toString());
             },
 
             child:Column(
@@ -429,8 +439,8 @@ miniPlayer()
               builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
             ),
           );
-          print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());
-          print((listAllSongs[songNum].toString().substring(listAllSongs[songNum].toString().length-9,listAllSongs[songNum].toString().length)).contains("."));
+        //  print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());
+        //  print((listAllSongs[songNum].toString().substring(listAllSongs[songNum].toString().length-9,listAllSongs[songNum].toString().length)).contains("."));
         },
 
       ),
@@ -446,7 +456,7 @@ miniPlayer()
 
 
 }
-
+/*
 downloader(){
   final textController = TextEditingController();
 
@@ -528,7 +538,7 @@ downloader(){
 
 
 
-
+*/
 
 
 /*

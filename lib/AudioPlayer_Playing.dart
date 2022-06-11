@@ -53,7 +53,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
     //player.load('assets/misfit.mp3');
     audioPlayer.onDurationChanged.listen((Duration duration) {
-      print('duration $duration');
+     // print('duration $duration');
       setState(() {
         fileDuration=duration;
       });
@@ -61,7 +61,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
     audioPlayer.onAudioPositionChanged.listen((Duration position) {
 
-        print('Current position: $position');
+        //print('Current position: $position');
         setState(() {
           this.position=position;
     });
@@ -82,8 +82,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
     Directory dir = Directory(widget.path);
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
-    print(listOfAllFolderAndFiles);//has all the files from the directory
-    print('Number is:'+widget.number.toString());
+    //print(listOfAllFolderAndFiles);//has all the files from the directory
+   // print('Number is:'+widget.number.toString());
     songNumber=widget.number;
     AudioPlayer.players.forEach((key, value) {
       value.stop();
@@ -177,7 +177,7 @@ fileTimeStamp()
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.indigo[600],
       appBar: AppBar(
           title: Text('Lets GO')),
       body: Column(
@@ -265,7 +265,7 @@ fileTimeStamp()
                                 {
                                   audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
 
-                                    print(' player state: $s');
+                                   // print(' player state: $s');
                                     if(s==PlayerState.PLAYING){
                                       if(countTimes==0)
                                       {
@@ -283,14 +283,14 @@ fileTimeStamp()
 
 
 
-                                      print("PAUSING EMER");
+                                     // print("PAUSING EMER");
                                     }
                                     else {
                                       animationController.forward();
 
                                       isPlaying=false;
                                     }
-                                    print(isPlaying);
+                                   // print(isPlaying);
                                   });
 
                                   if(!isPlaying)
@@ -299,7 +299,7 @@ fileTimeStamp()
                                   }
                                   else if(isPlaying)
                                   {
-                                    print("PAUSING EMER2");
+                                   // print("PAUSING EMER2");
                                     pause();
                                   }
 

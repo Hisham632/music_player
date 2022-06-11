@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 {
                   var id = VideoId(textController.text);
                   var video = await youtubeDownload.videos.get(id);
-                  print("HERE "+video.thumbnails.highResUrl);
+                  //print("HERE "+video.thumbnails.highResUrl);
 
                   setState(() {
                     vidTitle=video.title;
@@ -171,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     progress = ((count / len) * 100).ceil();
 
-                    print("Progress: $progress");
+                   // print("Progress: $progress");
                     setState(() {
                       downloadProgress=progress;
                     });
@@ -190,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   var playlist = await youtubeDownload.playlists.get(textController.text);
 
                   var title = playlist.title;
-                  print(title);
+                  //print(title);
                   await Permission.storage.request();
                   Directory dir = Directory('/storage/emulated/0/AudioFiles/$title/');
 
@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   await for (var video in youtubeDownload.playlists.getVideos(playlist.id)) {
 
-                    print("HERE "+video.title);
+                   // print("HERE "+video.title);
                     var manifest = await youtubeDownload.videos.streamsClient.getManifest(video.id);
                     var audio = manifest.audioOnly.withHighestBitrate();
 
@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       progress = ((count / len) * 100).ceil();
 
-                      print("Progress: $progress");
+                     // print("Progress: $progress");
                       setState(() {
                         downloadProgress=progress;
                       });
@@ -253,10 +253,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
       Row(
         children: [
-          Expanded(
-              flex: 1,
-              child:  Image.network(vidImage.toString(),width: 200,height: 200,),
-          ),
+          // Expanded(
+          //     flex: 1,
+          //     child:  Image.network(vidImage.toString(),width: 200,height: 200,),
+          // ),
           Expanded(flex:1,
               child: Text(vidTitle+" Lenght: "+vidLenght.toString()+" "+author+"   "+downloadProgress.toString()+"%")
           ),
