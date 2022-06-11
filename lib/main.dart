@@ -12,20 +12,30 @@ way to save which song is playing
  */
 
 void main() {
-  runApp(
-      MaterialApp(
-    theme: ThemeData(
-      brightness:  Brightness.dark
-    ),
-    initialRoute:'/Playlists' ,
-    routes: {
-      //'/':(context)=> AudioPlay(number: -1),
-      '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
-      '/Playlists':(context)=> Playlists(),
-      '/youtube':(context)=>  MyHomePage(title: 'Flutter Demo Home Page'),
+  try{
 
-    },
-  ));
+    runApp(
+        MaterialApp(
+          theme: ThemeData(
+              brightness:  Brightness.dark
+          ),
+          initialRoute:'/Playlists' ,
+          routes: {
+            //'/':(context)=> AudioPlay(number: -1),
+             '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
+            '/Playlists':(context)=> Playlists(),
+            // '/youtube':(context)=>  MyHomePage(title: 'Flutter Demo Home Page'),
+
+          },
+        ));
+  } catch(e){
+    runApp(MaterialApp(
+      home: Center(
+        child: Text(e.toString()),
+      ),
+    ));
+
+  }
 }
 
 

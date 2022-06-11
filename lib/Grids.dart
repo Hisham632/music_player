@@ -79,7 +79,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
     print(listAllSongs.length);
 
   }
-
+/*
 miniPlayer()
 {
   //Size phoneSize= MediaQuery.of(context).size;
@@ -118,7 +118,7 @@ miniPlayer()
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const AudioPlay(number: -1, path:'/storage/emulated/0/AudioFiles/' ,)));
+                  builder: (context) => const AudioPlay(number: -1, path:'/storage/emulated/0/Download/' ,)));
         },
         child: Row(
           children: [
@@ -156,7 +156,7 @@ miniPlayer()
 
 
 
-
+*/
   @override
   Widget build(BuildContext context) {
 
@@ -480,7 +480,7 @@ downloader(){
                   var audio = manifest.audioOnly.last;
 
                   // Build the directory.
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+                  Directory dir = Directory('/storage/emulated/0/Download/');
                   var filePath = path.join(dir.uri.toFilePath(),
                       '${video.title}.${audio.container.name}');
 
@@ -531,7 +531,7 @@ downloader(){
 
 
 
-
+/*
 class SpotifyMiniPlayerTrackShape extends RoundedRectSliderTrackShape {
   Rect getPreferredRect({
     required RenderBox parentBox,
@@ -547,7 +547,7 @@ class SpotifyMiniPlayerTrackShape extends RoundedRectSliderTrackShape {
     final double trackWidth = parentBox.size.width;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
-}
+}*/
 
 /*
 GridView.builder(
