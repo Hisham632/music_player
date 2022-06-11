@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 if(vidDownloadChoice==Choice.Video)
                 {
-                  var id = VideoId("https://www.youtube.com/watch?v=2JpkMXinO1M&ab_channel=AnimelunaII");
+                  var id = VideoId(textController.text);
                   var video = await youtubeDownload.videos.get(id);
                   print("HERE "+video.thumbnails.highResUrl);
 
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 {
 
                   // Get playlist metadata.
-                  var playlist = await youtubeDownload.playlists.get('https://www.youtube.com/playlist?list=PLuvVjLDbzSdFKzS_SxKKB75qdqErTnMBC');
+                  var playlist = await youtubeDownload.playlists.get(textController.text);
 
                   var title = playlist.title;
                   print(title);

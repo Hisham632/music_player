@@ -5,13 +5,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:on_audio_edit/on_audio_edit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:id3/id3.dart';
 import 'package:dart_tags/dart_tags.dart';
-import 'package:flutter_video_info/flutter_video_info.dart';
+import 'package:on_audio_edit/on_audio_edit.dart';
 
 class Lists extends StatefulWidget {
   final String folderName;
@@ -55,7 +56,7 @@ initState()
    // print(songName);
    // var duration =  player.setFilePath(listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1));
     //print(duration);
-
+     //songMetaData();
    }
 
 
@@ -66,9 +67,13 @@ initState()
     //String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
     //print('line 71 '+song);
 
-    final metadata = await MetadataRetriever.fromFile(File('/storage/emulated/0/AudioFiles/Attack.webm'));
+    final metadata = await MetadataRetriever.fromFile(File('/storage/emulated/0/AudioFiles/Attack.webm'),).then(
+          (metadata) {
+        print(metadata.trackName);
+      },
+    );
 
-    List metaInfo=[metadata.trackName, metadata.trackDuration, metadata.albumName, metadata.albumArtistName, metadata.year, metadata.albumArt];
+   // List metaInfo=[metadata.trackName, metadata.trackDuration, metadata.albumName, metadata.albumArtistName, metadata.year, metadata.albumArt];
 
     String? trackName = metadata.trackName;
     String? albumName = metadata.albumName;
@@ -77,9 +82,23 @@ initState()
     Uint8List? albumArt = metadata.albumArt;
     int? trackDuration = metadata.trackDuration;
 
-    //List<musicFileInfo> fileMeta=[];*/
+    //List<musicFileInfo> fileMeta=[];
     print('Line84');
-    print(metadata.trackName);
+    print(trackName);
+
+    // final OnAudioEdit _audioEdit = OnAudioEdit();
+    // AudioModel song = await _audioEdit.readAudio('/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)/Autumn festival.mp4');
+    // print('Line888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888');
+    //
+    // print("Line 88 SONG NAME METADATA: "+ song.title);
+
+    // final file = File('/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)/Autumn festival.mp4');
+    // TagProcessor().getTagsFromByteArray(file.readAsBytes()).then((l) {
+    //   print('FILE: LINE93');
+    //   l.forEach(print);
+    //   print('\n');
+    // });
+
 
     return null;
 
@@ -122,8 +141,6 @@ initState()
 
   songListView(context,songNum)
    {
-
-     //print('EachTime '+ songNum.toString());
 
     return Card(
       color: Colors.purple[900],
