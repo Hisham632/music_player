@@ -25,9 +25,10 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   late List<FileSystemEntity> listAllSongs;
 
 
-  void initState()
-  {
+  void initState() {
     super.initState();
+
+    initPlayerPermi();
     tabController=TabController(length: 2, vsync: this);
     getPlaylists();
     getAllSongsList();
@@ -35,6 +36,22 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   void dispose() {
     tabController.dispose();
     super.dispose();
+  }
+
+  void initPlayerPermi()
+  async {
+  final status = await Permission.storage.status;
+  const statusManageStorage = Permission.manageExternalStorage;
+  if (status.isDenied ||
+  !status.isGranted ||
+  !await statusManageStorage.isGranted) {
+  await [
+  Permission.storage,
+  Permission.mediaLibrary,
+  Permission.requestInstallPackages,
+  Permission.manageExternalStorage,
+  ].request();
+  }
   }
 
   void getPlaylists()
@@ -106,7 +123,7 @@ miniPlayer()
         child: Row(
           children: [
             Flexible(
-                child: Image.asset('Images/img.png')),
+                child: Image.asset('Images/gatePic.jpg')),
             Flexible(
               flex: 3,
               child: Padding(
@@ -291,7 +308,7 @@ miniPlayer()
               children: [
                 Ink.image(
                   height: 160,
-                  image: AssetImage('Images/img.png'),
+                  image: AssetImage('Images/gatePic.jpg'),
                   fit: BoxFit.fitWidth,
                 ),
                 Text(
@@ -348,7 +365,7 @@ miniPlayer()
                          child: ListTile(//use the special textFont ALSO later add that divider
                            leading: ClipRRect(
                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                             child: Image.asset('Images/img.png'),
+                             child: Image.asset('Images/gatePic.jpg'),
                            ),
                            title: Text(
                              listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
@@ -393,7 +410,7 @@ miniPlayer()
       child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.asset('Images/img.png'),
+          child: Image.asset('Images/gatePic.jpg'),
         ),
         title: Text(
           listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),

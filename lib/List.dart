@@ -67,24 +67,24 @@ initState()
     //String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
     //print('line 71 '+song);
 
-    final metadata = await MetadataRetriever.fromFile(File('/storage/emulated/0/AudioFiles/Attack.webm'),).then(
-          (metadata) {
-        print(metadata.trackName);
-      },
-    );
+    // final metadata = await MetadataRetriever.fromFile(File('/storage/emulated/0/AudioFiles/Attack.webm'),).then(
+    //       (metadata) {
+    //     print(metadata.trackName);
+    //   },
+    // );
 
-   // List metaInfo=[metadata.trackName, metadata.trackDuration, metadata.albumName, metadata.albumArtistName, metadata.year, metadata.albumArt];
-
-    String? trackName = metadata.trackName;
-    String? albumName = metadata.albumName;
-    String? albumArtistName = metadata.albumArtistName;
-    int? year = metadata.year;
-    Uint8List? albumArt = metadata.albumArt;
-    int? trackDuration = metadata.trackDuration;
-
-    //List<musicFileInfo> fileMeta=[];
-    print('Line84');
-    print(trackName);
+   // // List metaInfo=[metadata.trackName, metadata.trackDuration, metadata.albumName, metadata.albumArtistName, metadata.year, metadata.albumArt];
+   //
+   //  String? trackName = metadata.trackName;
+   //  String? albumName = metadata.albumName;
+   //  String? albumArtistName = metadata.albumArtistName;
+   //  int? year = metadata.year;
+   //  Uint8List? albumArt = metadata.albumArt;
+   //  int? trackDuration = metadata.trackDuration;
+   //
+   //  //List<musicFileInfo> fileMeta=[];
+   //  print('Line84');
+   //  print(trackName);
 
     // final OnAudioEdit _audioEdit = OnAudioEdit();
     // AudioModel song = await _audioEdit.readAudio('/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)/Autumn festival.mp4');
@@ -151,7 +151,7 @@ initState()
         child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.asset('Images/img.png'),
+          child: Image.asset('Images/gatePic.jpg'),
         ),
         title: Text(
           listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5),
@@ -161,7 +161,7 @@ initState()
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
-        subtitle: Text('Logic • 3:03  ',style: GoogleFonts.lato(),),
+        subtitle: Text('YourGate • 5:47  ',style: GoogleFonts.lato(),),
         trailing: Icon(Icons.sort),
         onTap: (){
           Navigator.push(
