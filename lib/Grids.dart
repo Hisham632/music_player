@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/youtubeTest.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:music_player/List.dart';
@@ -31,17 +32,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
     initPlayerPermission();
     tabController=TabController(length: 2, vsync: this);
-    try{
-      getPlaylists();
-      getAllSongsList();
-    }catch(e)
-    {
-      runApp(MaterialApp(
-        home: Center(
-          child: Text(e.toString()),
-        ),
-      ));
-    }
+    getPlaylists();
+    getAllSongsList();
 
   }
   void dispose() {
@@ -66,7 +58,9 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getPlaylists()
   {
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    //getExternalStorageDirectory() ;
+
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -83,10 +77,10 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList()
   {
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
     listAllSongs = dir.listSync(recursive: true);
-   // print('line58');
-    //print(listAllSongs.length);
+    print('line58');
+    print(listAllSongs.length);
 
   }
 /*
@@ -244,7 +238,7 @@ miniPlayer()
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
                  SliverAppBar(
-                   title: Center(child:Text('Well Well If It Isnt Us',style: TextStyle(fontSize: 18,color: Colors.blueAccent[400],fontWeight: FontWeight.bold,fontFamily:'lato'),)),
+                   title: Center(child:Text('Beyond The Sea',textAlign: TextAlign.center,style: TextStyle(fontSize: 24,color: Colors.lightBlue[600],fontWeight: FontWeight.bold,fontFamily:'lato'),)),
                    backgroundColor: Colors.green,
                    pinned: true,
                    floating: true,
@@ -430,13 +424,13 @@ miniPlayer()
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
-        subtitle: Text('Logic • 3:03  ',style: GoogleFonts.lato(),),
+        subtitle: Text('YourGate • 5:47  ',style: GoogleFonts.lato(),),
         trailing: Icon(Icons.sort),
         onTap: (){
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/',),
             ),
           );
         //  print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());

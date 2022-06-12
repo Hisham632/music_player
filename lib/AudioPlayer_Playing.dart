@@ -179,12 +179,12 @@ fileTimeStamp()
     return Scaffold(
         backgroundColor: Colors.indigo[600],
       appBar: AppBar(
-          title: Text('Lets GO')),
+          title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
       body: Column(
         children: [
         Center(
           child: Container(
-            child: Image.asset('Images/img.png'),
+            child: Image.asset('Images/Soundtrack_album_cover.jpg'),
             alignment: Alignment.center,
             width: 350,
             height: 380,
@@ -368,4 +368,18 @@ fileTimeStamp()
       palette.darkMutedColor != null ? bgColors.add(palette.darkMutedColor) : bgColors.add(PaletteColor(Colors.red,3));
     }
     setState(() {});
-  }*/
+  }
+
+
+
+
+  avg color Code
+ decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
+                stops: [0.0, 0.4],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                tileMode: TileMode.repeated)),
+
+  */

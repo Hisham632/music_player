@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -30,8 +31,24 @@ class _MyHomePageState extends State<MyHomePage> {
    int vidLenght=0;
    int downloadProgress=0;
    int vidNum=0;
+  String playlistTitle="";
 
+  void initPlayerPermission() async {
+    final status = await Permission.storage.status;
+    const statusManageStorage = Permission.manageExternalStorage;
+    if (status.isDenied ||
+        !status.isGranted ||
+        !await statusManageStorage.isGranted) {
+      await [
+        Permission.storage,
+        Permission.mediaLibrary,
+        Permission.requestInstallPackages,
+        Permission.manageExternalStorage,
+        Permission.accessMediaLocation,
 
+      ].request();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 if(vidDownloadChoice==Choice.Video)
                 {
-                  var id = VideoId(textController.text);
+                  var id = VideoId(textController.text.toString());
                   var video = await youtubeDownload.videos.get(id);
                   //print("HERE "+video.thumbnails.highResUrl);
 
@@ -156,9 +173,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   var manifest = await youtubeDownload.videos.streamsClient.getManifest(id);
                   var audio = manifest.audioOnly.withHighestBitrate();
 
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+                  initPlayerPermission();
+
+                 // Directory directory2 = await getExternalStorageDirectory() as Directory;
+                  //print("TEEMP");
+                 // print(directory2);
+
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
                   var filePath = path.join(dir.uri.toFilePath(),'${video.title}.${audio.container.name}');
-                  var file = File(filePath);
+
+                  print(filePath);
+
+                  if(Directory(filePath).existsSync()){
+                    print("EXists");
+
+                  }
+                  else
+                    {
+                      print("NOT exist");
+
+                      try{
+                        File(filePath).createSync(recursive: true);
+                      }catch(e){
+                        print("Error: "+e.toString());
+                      }
+                    }
+
+
+
+                  var file=File(filePath);
                   var fileStream = file.openWrite();
                   var audioStream = await youtubeDownload.videos.streamsClient.get(audio);
 
@@ -187,15 +230,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 {
 
                   // Get playlist metadata.
-                  var playlist = await youtubeDownload.playlists.get(textController.text);
+                  var playlist = await youtubeDownload.playlists.get(textController.text.toString());
 
                   var title = playlist.title;
                   //print(title);
                   await Permission.storage.request();
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/$title/');
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/$title/');
+                 // Directory directory2 = await getExternalStorageDirectory() as Directory;
+
 
                   setState(() {
-                    vidTitle=title;
+                    playlistTitle=title;
                     author=playlist.author;
                     vidImage=playlist.thumbnails.highResUrl;
                     vidNum=playlist.videoCount!;
@@ -204,19 +249,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   await for (var video in youtubeDownload.playlists.getVideos(playlist.id)) {
 
+                    setState(() {
+                      vidTitle=video.title;
+                    });
+
                    // print("HERE "+video.title);
                     var manifest = await youtubeDownload.videos.streamsClient.getManifest(video.id);
                     var audio = manifest.audioOnly.withHighestBitrate();
+                    var filePath = path.join(dir.uri.toFilePath(),'${video.title}.${audio.container.name}');
 
-                    var filePath;
-                    if ((await dir.exists())){
-                      filePath = path.join(dir.uri.toFilePath(),'${video.title}.${audio.container.name}');
-
-                    }else{
-                      dir.create();
-                      filePath = path.join(dir.uri.toFilePath(),'${video.title}.${audio.container.name}');
+                    //var filePath;
+                    if(Directory(filePath).existsSync()){
+                      print("EXists");
 
                     }
+                    else
+                    {
+                      print("NOT exist");
+
+                      try{
+                        File(filePath).createSync(recursive: true);
+                      }catch(e){
+                        print("Error: "+e.toString());
+                      }
+                    }
+
+                   // if ((await directory2.exists())){
+
+                    // }else{
+                    //   directory2.create();
+                    //   filePath = path.join(directory2.uri.toFilePath(),'/$title/${video.title}.${audio.container.name}');
+                    //
+                    // }
+                   // print("GOING IN");
 
                     var file = File(filePath);
                     var fileStream = file.openWrite();
@@ -253,12 +318,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
       Row(
         children: [
-          // Expanded(
-          //     flex: 1,
-          //     child:  Image.network(vidImage.toString(),width: 200,height: 200,),
-          // ),
+          Expanded(
+              flex: 1,
+              child:  Image.network(vidImage.toString(),width: 200,height: 200,),
+          ),
           Expanded(flex:1,
-              child: Text(vidTitle+" Lenght: "+vidLenght.toString()+" "+author+"   "+downloadProgress.toString()+"%")
+              child: Column(
+                children: [
+                  Text(vidTitle, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                  Text("Duration: "+(vidLenght/60).toString()+":"+(vidLenght%60).toString(), style: TextStyle(color: Colors.red[900],fontSize: 14,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                  Text("Author: "+author, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
+                  Text(downloadProgress.toString()+"%", style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
+                  Text("Number of videos in"+playlistTitle+" is "+vidNum.toString(), style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
+
+                ],
+              )
           ),
 
         ],
