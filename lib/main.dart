@@ -8,7 +8,7 @@ import 'package:music_player/youtubeTest.dart';
 MetaData
 
 way to save which song is playing
-
+to create Like lists we can copy the song we want to that folder
  */
 
 void main() {

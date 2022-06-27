@@ -317,7 +317,7 @@ fileTimeStamp()
 
                 child: IconButton(
                     iconSize: 50,
-                    icon: Icon(Icons.arrow_forward),
+                    icon: Icon(Icons.skip_next_rounded),
                     color: Colors.green,
 
                     onPressed: ()
