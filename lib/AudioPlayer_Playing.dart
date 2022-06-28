@@ -3,12 +3,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:music_player/TextScroll.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:music_player/like_button_icons.dart';
+import 'package:music_player/my_icons_icons.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class AudioPlay extends StatefulWidget {
@@ -171,6 +177,17 @@ fileTimeStamp()
       return "0"+fileDuration.inSeconds.remainder(60).toString();
     }
 }
+  // _updatePalette() async {
+  // var bgColors = [];
+  // for(String image in images) {
+  //   PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
+  //     AssetImage(image),
+  //     size: Size(200, 100),
+  //   );
+  //   palette.darkMutedColor != null ? bgColors.add(palette.darkMutedColor) : bgColors.add(PaletteColor(Colors.red,3));
+  // }
+  // setState(() {});
+  // }
 
 
 
@@ -178,159 +195,211 @@ fileTimeStamp()
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.indigo[600],
-      appBar: AppBar(
-          title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
-      body: Column(
-        children: [
-        Center(
-          child: Container(
-            child: Image.asset('Images/Soundtrack_album_cover.jpg'),
-            alignment: Alignment.center,
-            width: 350,
-            height: 380,
-          ),
-        ),
-          AutoSizeText(
-            songName,
-            style: GoogleFonts.lato(),
-            minFontSize: 27,
-            maxLines: 1,
-          ),
-          Row(
-            children: [
 
-              Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
-              SizedBox(
-                width: 335,
-                child: Slider(
-                    min: 0,
-                    max: fileDuration.inSeconds.toDouble(),
-                    value: position.inSeconds.toDouble(),
-                    activeColor: Colors.deepPurple,
-                    inactiveColor: Colors.blueGrey,
-                    onChanged: (double value){
-                      setState(() {
-                        audioPlayer.seek(new Duration(seconds: value.toInt()));
-                      });
-                    }
-                ),
-              ),
-              Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+      // appBar: AppBar(
+      //     title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
+       body: Container(
+        decoration: BoxDecoration(//HERE IS backgroundColor
+            gradient: LinearGradient(
+                colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
+                stops: [0.0, 0.7],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                tileMode: TileMode.repeated)),
 
-            ],
-          ),
+        child: Column(
+          children: [
+            SizedBox(height: 40,),
 
+            Row(
+              children: [
+                SizedBox(width: 10,),
+                IconButton(
+                  iconSize: 32,
+                  icon: Icon(MyIcons.chevron_down_1),
+                  color: Colors.lightGreen[400],
 
-
-          Row(//buttons row
-            children: [
-              Expanded(
-                flex: 2,
-                child: IconButton(
-                  iconSize: 50,
-                  icon: Icon(Icons.arrow_back_sharp),
-                  color: Colors.green,
+                  alignment: Alignment.topLeft,
 
                   onPressed: ()
                   {
-                    previous();
+                    //previous();
                   },
                 ),
-              ),
-              Expanded(
-                  child: AvatarGlow(
-                    glowColor: Colors.deepPurple,
-                      endRadius: 50.0,
-                      duration: Duration(milliseconds: 2000),
-                      repeat: true,
-                      showTwoGlows: true,
-                      repeatPauseDuration: Duration(milliseconds: 100),
-
-                      child: Material(     // Replace this child with your own
-                          elevation: 8.0,
-                          shape: CircleBorder(),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.blue,
-
-                            child: IconButton(
-                                iconSize: 150,
-                                icon: AnimatedIcon(
-                                  icon: AnimatedIcons.pause_play,
-                                  progress: animationController,
-                                  color: Colors.deepOrange,
-                                  size: 45,
-                                ),
-
-                                onPressed: () async
-                                {
-                                  audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
-
-                                   // print(' player state: $s');
-                                    if(s==PlayerState.PLAYING){
-                                      if(countTimes==0)
-                                      {
-                                        countTimes++;
-                                        isPlaying=true;
-                                        animationController.reverse();
-                                        pause();
-                                      }
-                                      else
-                                        {
-                                          isPlaying=true;
-                                          animationController.reverse();
-                                        }
-
-
-
-
-                                     // print("PAUSING EMER");
-                                    }
-                                    else {
-                                      animationController.forward();
-
-                                      isPlaying=false;
-                                    }
-                                   // print(isPlaying);
-                                  });
-
-                                  if(!isPlaying)
-                                  {
-                                    play(songNumber);
-                                  }
-                                  else if(isPlaying)
-                                  {
-                                   // print("PAUSING EMER2");
-                                    pause();
-                                  }
-
-                                },
-                              ),
-
-                            radius: 30.0,
-                          ),
-                      ),
-
-                  )
+              ],
+            ),
+            SizedBox(height: 10,),
+          Center(
+            child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('Images/Soundtrack_album_cover.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius:  BorderRadius.all(Radius.circular(15.0)),
                 ),
-              Expanded(
-                flex: 2,
+              alignment: Alignment.center,
+              width: 350,
+              height: 380,
+            ),
+          ),SizedBox(height: 20,),
 
-                child: IconButton(
+            Container(
+              child: ScrollingText(
+                text: songName,
+                textStyle: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),
+              ),
+              height: 60,
+              width: 380,
+            )
+         ,SizedBox(height: 20,),
+            Row(
+              children: [
+
+                Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                SizedBox(
+                  width: 335,
+                  child: Slider(
+                      min: 0,
+                      max: fileDuration.inSeconds.toDouble(),
+                      value: position.inSeconds.toDouble(),
+                      activeColor: Colors.deepPurple,
+                      inactiveColor: Colors.blueGrey,
+                      onChanged: (double value){
+                        setState(() {
+                          audioPlayer.seek(new Duration(seconds: value.toInt()));
+                        });
+                      }
+                  ),
+                ),
+                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+
+              ],
+            ),
+
+
+         SizedBox(height: 30,),
+
+            Row(//buttons row
+              children: [
+                SizedBox(width: 15,),
+
+                IconButton(
+                    iconSize: 30,
+                    icon: Icon(LikeButton.heart),
+                    color: Colors.deepPurple[900],
+
+                    onPressed: ()
+                    {
+
+
+                    },
+                  ),
+                SizedBox(width: 15,),
+                IconButton(
                     iconSize: 50,
-                    icon: Icon(Icons.skip_next_rounded),
+                    icon: Icon(Icons.skip_previous_rounded),
                     color: Colors.green,
 
                     onPressed: ()
                     {
-                      next();
-
+                      previous();
                     },
-                ),
-              ),
-            ],
-          ),
+                  ),
+                SizedBox(width: 20),
 
-      ],
+                 AvatarGlow(
+                      glowColor: Colors.deepPurple,
+                        endRadius: 50.0,
+                        duration: Duration(milliseconds: 2000),
+                        repeat: true,
+                        showTwoGlows: true,
+                        repeatPauseDuration: Duration(milliseconds: 100),
+
+                        child: Material(     // Replace this child with your own
+                            elevation: 8.0,
+                            shape: CircleBorder(),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.indigo[400],
+
+                              child: IconButton(
+                                  iconSize: 200,
+                                  icon: AnimatedIcon(
+                                    icon: AnimatedIcons.pause_play,
+                                    progress: animationController,
+                                    color: Colors.deepOrange,
+                                    size: 55,
+                                  ),
+
+                                  onPressed: () async
+                                  {
+                                    audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
+
+                                     // print(' player state: $s');
+                                      if(s==PlayerState.PLAYING){
+                                        if(countTimes==0)
+                                        {
+                                          countTimes++;
+                                          isPlaying=true;
+                                          animationController.reverse();
+                                          pause();
+                                        }
+                                        else
+                                          {
+                                            isPlaying=true;
+                                            animationController.reverse();
+                                          }
+
+
+
+
+                                       // print("PAUSING EMER");
+                                      }
+                                      else {
+                                        animationController.forward();
+
+                                        isPlaying=false;
+                                      }
+                                     // print(isPlaying);
+                                    });
+
+                                    if(!isPlaying)
+                                    {
+                                      play(songNumber);
+                                    }
+                                    else if(isPlaying)
+                                    {
+                                     // print("PAUSING EMER2");
+                                      pause();
+                                    }
+
+                                  },
+                                ),
+
+                              radius: 35.0,
+                            ),
+                        ),
+
+                    ),
+                SizedBox(width: 38,),
+
+           IconButton(
+                      iconSize: 50,
+                      icon: Icon(Icons.skip_next_rounded),
+                      color: Colors.green,
+
+                      onPressed: ()
+                      {
+                        next();
+
+                      },
+                  ),
+
+              ],
+            ),
+
+        ],
+        ),
       )
 
       );
