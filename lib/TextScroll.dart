@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class ScrollingText extends StatefulWidget {
   final String text;
@@ -42,6 +43,8 @@ class ScrollingTextState extends State<ScrollingText>
   }
 
   void startTimer() {
+    print("SONG_NAMeInSliding");
+    print(widget.text);
     if (_key.currentContext != null) {
       double? widgetWidth =
           _key.currentContext?.findRenderObject()?.paintBounds.size.width;
@@ -121,16 +124,21 @@ class ScrollingTextState extends State<ScrollingText>
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      key: _key,
-      scrollDirection: widget.scrollAxis,
-      controller: scrollController,
-      physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        getBothEndsChild(),
-        getCenterChild(),
-        getBothEndsChild(),
-      ],
-    );
+
+
+
+
+        return ListView(
+          key: _key,
+          scrollDirection: widget.scrollAxis,
+          controller: scrollController,
+          physics: NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            getBothEndsChild(),
+            getCenterChild(),
+            getBothEndsChild(),
+          ],
+        );
+   
   }
 }

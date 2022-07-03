@@ -245,10 +245,7 @@ fileTimeStamp()
           ),SizedBox(height: 20,),
 
             Container(
-              child: ScrollingText(
-                text: songName,
-                textStyle: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),
-              ),
+              child: songNameLenght(),
               height: 60,
               width: 380,
             )
@@ -405,6 +402,20 @@ fileTimeStamp()
       );
 
 
+  }
+
+  songNameLenght()
+  {
+    if(songName.length>20)
+    {
+      return ScrollingText(
+        text: songName,
+        textStyle: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),
+      );
+    }
+    else {
+      return Text(songName, style: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),textAlign:  TextAlign.center,);
+    }
   }
 }
 
