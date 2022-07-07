@@ -12,10 +12,14 @@ to create Like lists we can copy the song we want to that folder
  */
 
 void main() {
+
   try{
 
     runApp(
+
         MaterialApp(
+          debugShowCheckedModeBanner: false,
+
           theme: ThemeData(
               brightness:  Brightness.dark
           ),

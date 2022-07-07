@@ -79,8 +79,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
     listAllSongs = dir.listSync(recursive: true);
-    print('line58');
-    print(listAllSongs.length);
+    //print('line58');
+  //  print(listAllSongs.length);
 
   }
 /*
@@ -165,6 +165,8 @@ miniPlayer()
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
       home: DefaultTabController(
       length: 2,
       child: Scaffold(

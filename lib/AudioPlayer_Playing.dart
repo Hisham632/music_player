@@ -15,6 +15,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:path/path.dart' as path2;
 
 
 class AudioPlay extends StatefulWidget {
@@ -45,6 +46,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   bool isPlaying=false;
   late List<FileSystemEntity> listOfAllFolderAndFiles;
   String songName='', lastSongPlayed='';//not used
+  bool liked = false;
 
   late AnimationController animationController;
   int songNumber=1;
@@ -111,7 +113,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   play(songNum) async {
     //player.play(song);
     String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
-    songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5);
+    songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
     //lastSongPlayed=song;
     //lastSongPlayed=songNum;//might need to do in a list since might go back multiple times
     audioPlayer.play(song, isLocal: true);
@@ -284,10 +286,28 @@ fileTimeStamp()
                 IconButton(
                     iconSize: 30,
                     icon: Icon(LikeButton.heart),
-                    color: Colors.deepPurple[900],
+                    color: liked
+                        ? Colors.red[800]
+                        : Colors.deepPurple[900] ,
+
 
                     onPressed: ()
                     {
+                      print("{RESSSED");
+                      String song = listOfAllFolderAndFiles[songNumber].toString().substring(7, listOfAllFolderAndFiles[songNumber].toString().length - 1);
+
+                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/Liked/"+songName+".webm").existsSync()) {
+
+                    }
+                    else
+                      {
+                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/Liked/"+songName+".webm");
+
+                      }
+
+                      setState(() {
+                        liked = !liked;
+                      });
 
 
                     },
@@ -303,7 +323,7 @@ fileTimeStamp()
                       previous();
                     },
                   ),
-                SizedBox(width: 20),
+                SizedBox(width: 27),
 
                  AvatarGlow(
                       glowColor: Colors.deepPurple,
@@ -417,6 +437,8 @@ fileTimeStamp()
       return Text(songName, style: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),textAlign:  TextAlign.center,);
     }
   }
+
+
 }
 
 
