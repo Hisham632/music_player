@@ -195,13 +195,19 @@ fileTimeStamp()
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
     return Scaffold(
         backgroundColor: Colors.indigo[600],
 
       // appBar: AppBar(
       //     title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
        body: Container(
-        decoration: BoxDecoration(//HERE IS backgroundColor
+         height: mediaQueryData.size.height,
+         width: mediaQueryData.size.width,
+        decoration: BoxDecoration(
+
+            image: DecorationImage(image: AssetImage('Images/Soundtrack_album_cover.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
             gradient: LinearGradient(
                 colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
                 stops: [0.0, 0.7],
@@ -437,6 +443,8 @@ fileTimeStamp()
       return Text(songName, style: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),textAlign:  TextAlign.center,);
     }
   }
+
+
 
 
 }
