@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:multi_split_view/multi_split_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:id3/id3.dart';
 import 'package:dart_tags/dart_tags.dart';
 import 'package:on_audio_edit/on_audio_edit.dart';
+enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class Lists extends StatefulWidget {
   final String folderName;
@@ -108,34 +110,90 @@ initState()
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      //appBar: AppBar(),
-      body: ListView.separated(//later add that divider
+
+    var name=widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1);
+    var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.center,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 22,color: Colors.lightBlue[600],fontWeight: FontWeight.bold,fontFamily:'sans-serif'));
+    var num=0.0;
+
+    if(name.length>30){
+        num=0.0;
+    }
+    else{
+      num=100.0;
+    }
+
+    print(name+" "+(name.toString().length).toString());
+
+    MultiSplitView multiSplitView = MultiSplitView(axis: Axis.vertical, children: [
+
+      Container(
+        color: const Color(0xFF161617),
+        child: Row(
+
+
+            children: [SizedBox(width: 1),
+        Container(
+              padding: EdgeInsets.all(50),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('Images/gatePic.jpg'),
+                  fit: BoxFit.fill,
+                ),
+                borderRadius:  BorderRadius.all(Radius.circular(10.0)),
+
+              ),
+              alignment: Alignment.centerRight,
+              width: 120,
+              height: 120,
+
+            ),
+
+              SizedBox(width: num),
+
+              Flexible(
+
+
+                  child: playlistName,)
+
+
+
+
+
+
+
+
+            ]
+        ),
+      ), ListView.separated(//later add that divider
           separatorBuilder: (context, index) => const Divider(
-            color: Colors.deepPurple,
+            color: Color(0xFF1b0b36),
             height: 0,
             thickness: 2,
           ),
 
-        itemCount: listOfAllFolderAndFiles.length,
+          itemCount: listOfAllFolderAndFiles.length,
           itemBuilder: (context,songNum){
             return Container(
-              color: Colors.black,
-                  child: FutureBuilder(
+                color: Colors.black,
+                child: FutureBuilder(
                     future: songMetaData(),
                     builder: (context, snapshot){
                       return songListView(context, songNum);
 
                     }
-                  )
+                )
 
             );
 
-              //ElevatedButton(onPressed: (){}, child: Text(listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5)));
+            //ElevatedButton(onPressed: (){}, child: Text(listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5)));
 
           }
-      ),
-    );
+      )]             , controller: MultiSplitViewController(weights: [0.22]));
+    return MultiSplitViewTheme(
+        child: multiSplitView,
+        data: MultiSplitViewThemeData(
+            dividerThickness: 0.001,
+            dividerPainter: DividerPainters.background(color: Color(0xFF0f2357))));
 
   }
 
@@ -143,7 +201,7 @@ initState()
    {
 
     return Card(
-      color: Colors.purple[900],
+      color: Color(0xFF0f2357),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -155,14 +213,30 @@ initState()
         ),
         title: Text(
           listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5),
-          style: TextStyle(fontSize: 18,color: Colors.deepOrange,fontWeight: FontWeight.bold,fontFamily:'lato'),
+          style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'sans-serif'),
         ),
 
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
         subtitle: Text('YourGate • 5:47  ',style: GoogleFonts.lato(),),
-        trailing: Icon(Icons.sort),
+        trailing: PopupMenuButton<Menu>(
+          // Callback that sets the selected popup menu item.
+            onSelected: (Menu item) {
+              setState(() {
+              });
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+              const PopupMenuItem<Menu>(
+                value: Menu.itemOne,
+                child: Text('Item 1'),
+              ),
+              const PopupMenuItem<Menu>(
+                value: Menu.itemTwo,
+                child: Text('Item 2'),
+              ),
+
+            ]),
         onTap: (){
           Navigator.push(
             context,

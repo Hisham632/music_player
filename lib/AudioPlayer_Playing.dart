@@ -16,6 +16,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path/path.dart' as path2;
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:music_player/notification.dart';
 
 
 class AudioPlay extends StatefulWidget {
@@ -54,6 +56,17 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   void initPlayer() async {
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
+    // AwesomeNotifications().requestPermissionToSendNotifications();
+    // AwesomeNotifications().actionStream.listen((isPlaying) {
+    // //   if(isPlaying){
+    // //
+    //   }
+    //
+    //   notificationDetail.updateNotificationMediaPlayer(100, isPlaying, songName);
+    //
+    //
+    // });
+
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
@@ -217,7 +230,7 @@ fileTimeStamp()
 
         child: Column(
           children: [
-            SizedBox(height: 40,),
+            //SizedBox(height: 40,),
 
             Row(
               children: [
@@ -236,7 +249,7 @@ fileTimeStamp()
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            //SizedBox(height: 10,),
           Center(
             child: Container(
                 decoration: BoxDecoration(
@@ -257,7 +270,7 @@ fileTimeStamp()
               height: 60,
               width: 380,
             )
-         ,SizedBox(height: 20,),
+         ,//SizedBox(height: 20,),
             Row(
               children: [
 
@@ -283,7 +296,7 @@ fileTimeStamp()
             ),
 
 
-         SizedBox(height: 30,),
+         //SizedBox(height: 30,),
 
             Row(//buttons row
               children: [

@@ -10,6 +10,9 @@ import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:path/path.dart' as path;
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:awesome_notifications/android_foreground_service.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class Playlists extends StatefulWidget {
   const Playlists({Key? key}) : super(key: key);
@@ -42,7 +45,9 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   }
 
   void initPlayerPermission() async {
-      final status = await Permission.storage.status;
+    // AwesomeNotifications().requestPermissionToSendNotifications();
+
+    final status = await Permission.storage.status;
       const statusManageStorage = Permission.manageExternalStorage;
       if (status.isDenied ||
       !status.isGranted ||
@@ -60,7 +65,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -77,7 +82,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList()
   {
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles');
     listAllSongs = dir.listSync(recursive: true);
     //print('line58');
   //  print(listAllSongs.length);
@@ -171,21 +176,19 @@ miniPlayer()
       length: 2,
       child: Scaffold(
         drawer: Drawer(
+          backgroundColor: Color(0xFF242526),
          // shape: ,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ), child: null,
-              ),
+            SizedBox(height: 30,)
+            ,
           ListTile(
-            leading: Icon(Icons.whatshot),
-            title: Text('Main'),
-            textColor: Colors.deepOrange,
-            iconColor: Colors.deepOrange,
-            hoverColor: Colors.deepPurple,
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            textColor: Color(0xFF4c7dad),
+            iconColor: Color(0xFF4c7dad),
+            hoverColor: Color(0xFF4c7dad),
             onTap: (){
               Navigator.push(
                 context,
@@ -198,11 +201,11 @@ miniPlayer()
             },
           ),
               ListTile(
-                leading: Icon(Icons.whatshot),
+                leading: Icon(Icons.download),
                 title: Text('Youtube Downloader'),
-                textColor: Colors.deepOrange,
-                iconColor: Colors.deepOrange,
-                hoverColor: Colors.deepPurple,
+                textColor: Color(0xFF4c7dad),
+                iconColor: Color(0xFF4c7dad),
+                hoverColor: Color(0xFF4c7dad),
                 onTap: (){
                   Navigator.push(
                     context,
@@ -235,29 +238,29 @@ miniPlayer()
 
 
         ),*/
-        backgroundColor: Colors.white10,
+        backgroundColor: const Color(0xFF06152e),
         body:NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
                  SliverAppBar(
-                   title: Center(child:Text('Beyond The Sea',textAlign: TextAlign.center,style: TextStyle(fontSize: 24,color: Colors.lightBlue[600],fontWeight: FontWeight.bold,fontFamily:'lato'),)),
-                   backgroundColor: Colors.green,
+                   title: Center(child:Text('PlayLists        ',  textAlign: TextAlign.justify,style: TextStyle(fontSize: 28,color: Colors.lightBlue[600],fontWeight: FontWeight.bold,fontFamily:'sans-serif'),)),
+                   backgroundColor: Color(0xFF171616),
                    pinned: true,
                    floating: true,
                    bottom: TabBar(
-                     labelColor: Colors.brown,
+                     labelColor: const Color(0xFFFFFFFF),
                      controller: tabController,
                      isScrollable: true,
-                     indicatorColor: Colors.amberAccent,
-                     indicatorSize: TabBarIndicatorSize.label,
-                     indicatorWeight: 5,
-                     indicator: BoxDecoration(
-                         borderRadius: BorderRadius.circular(100), // Creates border
-                         color: Colors.teal // Can also add an image
-                     ),
+                     // indicatorColor: const Color(0xFF242222),
+                     // indicatorSize: TabBarIndicatorSize.label,
+                     // indicatorWeight: 5,
+                     // indicator: BoxDecoration(
+                     //     borderRadius: BorderRadius.circular(100), // Creates border
+                     //     color: const Color(0xFF242222) // Can also add an image
+                     // ),
                      tabs: [
-                       Tab(icon:Icon(Icons.api,color: Colors.deepPurple,),text:"Playlists"),
-                       Tab(icon:Icon(Icons.visibility_outlined,color: Colors.deepPurple,),text: "Songs",),
+                       Tab(icon:Icon(Icons.whatshot_outlined,color: Colors.red,),text:"Playlists"),
+                       Tab(icon:Icon(Icons.view_list,color: Colors.red,),text: "Songs",),
                        //Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
@@ -267,8 +270,10 @@ miniPlayer()
               ];
           },
           body: TabBarView(
+
             controller: tabController,
             children:[
+
               playlistGrid(),
               getAllSongs(),
             ],
@@ -286,15 +291,18 @@ miniPlayer()
   playlistGrid()
   {
     return GridView.builder(
+
       itemCount: PlaylistsFolders.length,
       itemBuilder: (context,count)
       {
+        print(                    PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),);
+
         return Card(// maybe make it a card
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           elevation: 15,
-          color: Colors.red[700],
+          color: Color(0xFF781212),
           child:InkWell(
             splashColor: Colors.red.withAlpha(30),
             onTap: (){
@@ -318,9 +326,11 @@ miniPlayer()
                   fit: BoxFit.fitWidth,
                 ),
                 Text(
-                    PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-5),
-                    style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'lato'),
-                    overflow: TextOverflow.ellipsis
+
+                    PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),
+                    style: TextStyle(fontSize: 22,color: Color(0xFF131652),fontWeight: FontWeight.bold,fontFamily:' sans-serif'),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start
                 ),
 
               ],
@@ -346,7 +356,7 @@ miniPlayer()
   {
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
-          color: Colors.deepPurple,
+          color: Color(0xFF1b0b36),
           height: 0,
           thickness: 2,
         ),
@@ -363,7 +373,7 @@ miniPlayer()
                      }
                      else{
                        return Card(
-                         color: Colors.indigo[800],
+                         color: Color(0xFF1e1d1f),
                          shape: RoundedRectangleBorder(
                            borderRadius: BorderRadius.circular(10.0),
                          ),
@@ -375,7 +385,7 @@ miniPlayer()
                            ),
                            title: Text(
                              listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
-                             style: TextStyle(fontSize: 18,color: Colors.deepOrange,fontWeight: FontWeight.bold,fontFamily:'lato'),
+                             style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'sans-serif'),
                            ),
 
                            dense: true,
@@ -404,11 +414,10 @@ miniPlayer()
 
   songListView(context,songNum)
   {
-
     //print('EachTime '+ songNum.toString());
 
     return Card(
-      color: Colors.purple[900],
+      color: Color(0xFF0f2357),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -420,19 +429,35 @@ miniPlayer()
         ),
         title: Text(
           listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
-          style: TextStyle(fontSize: 18,color: Colors.deepOrange,fontWeight: FontWeight.bold,fontFamily:'lato'),
+          style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'lato'),
         ),
 
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
         subtitle: Text('YourGate • 5:47  ',style: GoogleFonts.lato(),),
-        trailing: Icon(Icons.sort),
+        trailing: PopupMenuButton<Menu>(
+          // Callback that sets the selected popup menu item.
+            onSelected: (Menu item) {
+              setState(() {
+              });
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+              const PopupMenuItem<Menu>(
+                value: Menu.itemOne,
+                child: Text('Item 1'),
+              ),
+              const PopupMenuItem<Menu>(
+                value: Menu.itemTwo,
+                child: Text('Item 2'),
+              ),
+
+            ]),
         onTap: (){
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/',),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
             ),
           );
         //  print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());
