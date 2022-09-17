@@ -112,14 +112,14 @@ initState()
 
 
     var name=widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1);
-    var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.center,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 22,color: Colors.lightBlue[600],fontWeight: FontWeight.bold,fontFamily:'sans-serif'));
+    var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.center,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 26,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'));
     var num=0.0;
 
-    if(name.length>30){
+    if(name.length>20){
         num=0.0;
     }
     else{
-      num=100.0;
+      num=30.0*(name.length/10);
     }
 
     print(name+" "+(name.toString().length).toString());
@@ -166,7 +166,7 @@ initState()
         ),
       ), ListView.separated(//later add that divider
           separatorBuilder: (context, index) => const Divider(
-            color: Color(0xFF1b0b36),
+            color: Color(0xFF000000),
             height: 0,
             thickness: 2,
           ),
@@ -193,7 +193,7 @@ initState()
         child: multiSplitView,
         data: MultiSplitViewThemeData(
             dividerThickness: 0.001,
-            dividerPainter: DividerPainters.background(color: Color(0xFF0f2357))));
+            dividerPainter: DividerPainters.background(color: Color(0xFF000000))));
 
   }
 
@@ -201,7 +201,7 @@ initState()
    {
 
     return Card(
-      color: Color(0xFF0f2357),
+      color: Colors.grey[600]?.withOpacity(0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -213,14 +213,15 @@ initState()
         ),
         title: Text(
           listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5),
-          style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'sans-serif'),
+          style: TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
         ),
 
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
-        subtitle: Text('YourGate • 5:47  ',style: GoogleFonts.lato(),),
+        subtitle: Text('YourGate • 5:47  ',style: TextStyle(color: Colors.grey[400]),),
         trailing: PopupMenuButton<Menu>(
+          color:  Colors.white,//transition to transparent to grey
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
               setState(() {

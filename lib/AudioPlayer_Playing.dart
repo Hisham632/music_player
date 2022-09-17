@@ -211,7 +211,6 @@ fileTimeStamp()
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
     return Scaffold(
-        backgroundColor: Colors.indigo[600],
 
       // appBar: AppBar(
       //     title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
@@ -222,15 +221,15 @@ fileTimeStamp()
 
             image: DecorationImage(image: AssetImage('Images/Soundtrack_album_cover.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
             gradient: LinearGradient(
-                colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
-                stops: [0.0, 0.7],
+                colors: [Colors.transparent, Color(0xFF212121)],
+                stops: [0.0, 0.5],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 tileMode: TileMode.repeated)),
 
         child: Column(
           children: [
-            //SizedBox(height: 40,),
+            SizedBox(height: 40,),
 
             Row(
               children: [
@@ -238,7 +237,7 @@ fileTimeStamp()
                 IconButton(
                   iconSize: 32,
                   icon: Icon(MyIcons.chevron_down_1),
-                  color: Colors.lightGreen[400],
+                  color: Color(0xFF80171e),
 
                   alignment: Alignment.topLeft,
 
@@ -249,7 +248,7 @@ fileTimeStamp()
                 ),
               ],
             ),
-            //SizedBox(height: 10,),
+          //  SizedBox(height: 10,),
           Center(
             child: Container(
                 decoration: BoxDecoration(
@@ -263,7 +262,7 @@ fileTimeStamp()
               width: 350,
               height: 380,
             ),
-          ),SizedBox(height: 20,),
+          ),//SizedBox(height: 20,),
 
             Container(
               child: songNameLenght(),
@@ -274,15 +273,15 @@ fileTimeStamp()
             Row(
               children: [
 
-                Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Color(0xFF80171e),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
                 SizedBox(
                   width: 335,
                   child: Slider(
                       min: 0,
                       max: fileDuration.inSeconds.toDouble(),
                       value: position.inSeconds.toDouble(),
-                      activeColor: Colors.deepPurple,
-                      inactiveColor: Colors.blueGrey,
+                      activeColor: Color(0xFF3a59c9),
+                      inactiveColor: Color(0xFF37383b),
                       onChanged: (double value){
                         setState(() {
                           audioPlayer.seek(new Duration(seconds: value.toInt()));
@@ -290,13 +289,13 @@ fileTimeStamp()
                       }
                   ),
                 ),
-                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Colors.deepPurple,fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Color(0xFF80171e),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
 
               ],
             ),
 
 
-         //SizedBox(height: 30,),
+       // SizedBox(height: 30,),
 
             Row(//buttons row
               children: [
@@ -307,7 +306,7 @@ fileTimeStamp()
                     icon: Icon(LikeButton.heart),
                     color: liked
                         ? Colors.red[800]
-                        : Colors.deepPurple[900] ,
+                        : Color(0xFF755357) ,
 
 
                     onPressed: ()
@@ -335,7 +334,7 @@ fileTimeStamp()
                 IconButton(
                     iconSize: 50,
                     icon: Icon(Icons.skip_previous_rounded),
-                    color: Colors.green,
+                    color: Color(0xFF1d93cf),
 
                     onPressed: ()
                     {
@@ -356,14 +355,14 @@ fileTimeStamp()
                             elevation: 8.0,
                             shape: CircleBorder(),
                             child: CircleAvatar(
-                              backgroundColor: Colors.indigo[400],
+                              backgroundColor: Color(0xFF3a59c9),
 
                               child: IconButton(
                                   iconSize: 200,
                                   icon: AnimatedIcon(
                                     icon: AnimatedIcons.pause_play,
                                     progress: animationController,
-                                    color: Colors.deepOrange,
+                                    color: Color(0xFF000000),
                                     size: 55,
                                   ),
 
@@ -422,7 +421,7 @@ fileTimeStamp()
            IconButton(
                       iconSize: 50,
                       icon: Icon(Icons.skip_next_rounded),
-                      color: Colors.green,
+                      color: Color(0xFF1d93cf),
 
                       onPressed: ()
                       {
@@ -449,11 +448,11 @@ fileTimeStamp()
     {
       return ScrollingText(
         text: songName,
-        textStyle: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),
+        textStyle: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
       );
     }
     else {
-      return Text(songName, style: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'lato'),textAlign:  TextAlign.center,);
+      return Text(songName, style: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
     }
   }
 

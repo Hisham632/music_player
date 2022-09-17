@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Youtube Downloader"),
       ),
-        backgroundColor: Colors.indigo[800],
+        backgroundColor: Color(0xFF06152e),
         drawer: Drawer(
           // shape: ,
           child: ListView(
@@ -150,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ElevatedButton(
 
-              child: const Text('Download', style: TextStyle(fontSize: 18, color: Colors.purple),),
+              child: const Text('Download', style: TextStyle(fontSize: 18, color: Color(0xFF3a1566)),),
               onPressed: () async {
 
                 var youtubeDownload = YoutubeExplode();
@@ -179,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   //print("TEEMP");
                  // print(directory2);
 
-                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/');
+                  Directory dir = Directory('/storage/emulated/0/AudioFiles/');
                   var filePath = path.join(dir.uri.toFilePath(),'${video.title}.${audio.container.name}');
 
                   print(filePath);
@@ -235,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   var title = playlist.title;
                   //print(title);
                   await Permission.storage.request();
-                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/$title/');
+                  Directory dir = Directory('/storage/emulated/0/AudioFiles/$title/');
                  // Directory directory2 = await getExternalStorageDirectory() as Directory;
 
 
@@ -316,27 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           const SizedBox(height: 15),
 
-      Row(
-        children: [
-          Expanded(
-              flex: 1,
-              child:  Image.network(vidImage.toString(),width: 200,height: 200,),
-          ),
-          Expanded(flex:1,
-              child: Column(
-                children: [
-                  Text(vidTitle, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
-                  Text("Duration: "+(vidLenght/60).toString()+":"+(vidLenght%60).toString(), style: TextStyle(color: Colors.red[900],fontSize: 14,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
-                  Text("Author: "+author, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
-                  Text(downloadProgress.toString()+"%", style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
-                  Text("Number of videos in"+playlistTitle+" is "+vidNum.toString(), style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
 
-                ],
-              )
-          ),
-
-        ],
-      ),
 
 
 

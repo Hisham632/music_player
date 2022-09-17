@@ -92,6 +92,9 @@ flutter:
     - family: LikeButton
       fonts:
           - asset: "assets/LikeButton.ttf"
+    - family: Proxima Nova
+      fonts:
+        - asset: "assets/FontsFree-Net-proxima_nova_reg-webfont.ttf"
 
   # To add assets to your application, add an assets section, like this:
   assets:

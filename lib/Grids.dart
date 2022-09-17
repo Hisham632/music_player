@@ -176,7 +176,7 @@ miniPlayer()
       length: 2,
       child: Scaffold(
         drawer: Drawer(
-          backgroundColor: Color(0xFF242526),
+          backgroundColor: Color(0xFF111213),
          // shape: ,
           child: ListView(
             padding: EdgeInsets.zero,
@@ -238,13 +238,13 @@ miniPlayer()
 
 
         ),*/
-        backgroundColor: const Color(0xFF06152e),
+        backgroundColor: const Color(0xFF212224),
         body:NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
                  SliverAppBar(
-                   title: Center(child:Text('PlayLists        ',  textAlign: TextAlign.justify,style: TextStyle(fontSize: 28,color: Colors.lightBlue[600],fontWeight: FontWeight.bold,fontFamily:'sans-serif'),)),
-                   backgroundColor: Color(0xFF171616),
+                   title: Center(child:Text('Playlists        ',  textAlign: TextAlign.justify,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),)),
+                   backgroundColor: Color(0xFF111213),
                    pinned: true,
                    floating: true,
                    bottom: TabBar(
@@ -260,7 +260,7 @@ miniPlayer()
                      // ),
                      tabs: [
                        Tab(icon:Icon(Icons.whatshot_outlined,color: Colors.red,),text:"Playlists"),
-                       Tab(icon:Icon(Icons.view_list,color: Colors.red,),text: "Songs",),
+                       Tab(icon:Icon(Icons.view_list,color: Colors.red),text: "Songs",),
                        //Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
@@ -290,6 +290,8 @@ miniPlayer()
 
   playlistGrid()
   {
+    var images=['Images/Logic_No_Pressure_album_cover.jpeg','Images/donda.jpeg','Images/gatePic.jpg','Images/arcaneSound.jpg','Images/attackOnTitanAlbum.jpg','Images/noPressuere.jpg',];
+
     return GridView.builder(
 
       itemCount: PlaylistsFolders.length,
@@ -302,7 +304,7 @@ miniPlayer()
             borderRadius: BorderRadius.circular(12.0),
           ),
           elevation: 15,
-          color: Color(0xFF781212),
+          color: Colors.grey[850]?.withOpacity(0.5),
           child:InkWell(
             splashColor: Colors.red.withAlpha(30),
             onTap: (){
@@ -322,13 +324,14 @@ miniPlayer()
               children: [
                 Ink.image(
                   height: 160,
-                  image: AssetImage('Images/gatePic.jpg'),
+                  image: AssetImage(images[count]),
                   fit: BoxFit.fitWidth,
                 ),
+                SizedBox(height: 5,),
                 Text(
 
                     PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),
-                    style: TextStyle(fontSize: 22,color: Color(0xFF131652),fontWeight: FontWeight.bold,fontFamily:' sans-serif'),
+                    style: TextStyle(fontSize: 22,color: Color(0xFFfffcfc),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start
                 ),
@@ -384,8 +387,8 @@ miniPlayer()
                              child: Image.asset('Images/gatePic.jpg'),
                            ),
                            title: Text(
-                             listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
-                             style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'sans-serif'),
+                             listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-1),
+                             style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
                            ),
 
                            dense: true,
@@ -417,7 +420,7 @@ miniPlayer()
     //print('EachTime '+ songNum.toString());
 
     return Card(
-      color: Color(0xFF0f2357),
+      color: Color(0xFFFFFFFF),//Here632
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -429,27 +432,30 @@ miniPlayer()
         ),
         title: Text(
           listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
-          style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'lato'),
+          style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
         ),
 
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
-        subtitle: Text('YourGate • 5:47  ',style: GoogleFonts.lato(),),
+        subtitle: Text('YourGate • 5:47  ',style: TextStyle(fontFamily:'Proxima Nova'),),
+
         trailing: PopupMenuButton<Menu>(
+          color: Colors.white,
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
               setState(() {
               });
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+
               const PopupMenuItem<Menu>(
                 value: Menu.itemOne,
                 child: Text('Item 1'),
               ),
               const PopupMenuItem<Menu>(
                 value: Menu.itemTwo,
-                child: Text('Item 2'),
+                child: Text('Item 3'),
               ),
 
             ]),
