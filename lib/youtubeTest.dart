@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Youtube Downloader"),
+        title: Text("Youtube Downloader",style: TextStyle(fontFamily:"Proxima Nova")),
       ),
         backgroundColor: Color(0xFF06152e),
         drawer: Drawer(
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ListTile(
                 leading: Icon(Icons.whatshot),
-                title: Text('Youtube Downloader'),
+                title: Text('Youtube Downloader', style: TextStyle(fontFamily:"Proxima Nova"),),
                 textColor: Colors.deepOrange,
                 iconColor: Colors.deepOrange,
                 hoverColor: Colors.deepPurple,
@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(height: 10),
 
           RadioListTile<Choice>(
-                title: Text('Video'),
+                title: Text('Video',style: TextStyle(fontFamily:"Proxima Nova")),
                 value: Choice.Video,
             groupValue: vidDownloadChoice,
 
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
               ),
           RadioListTile<Choice>(
-            title: Text('Playlist'),
+            title: Text('Playlist',style: TextStyle(fontFamily:"Proxima Nova")),
             value: Choice.Playlist,
             groupValue: vidDownloadChoice,
 
@@ -316,7 +316,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
           const SizedBox(height: 15),
 
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child:  Image.network(vidImage.toString(),width: 200,height: 200,),
+              ),
+              Expanded(flex:1,
+                  child: Column(
+                    children: [
+                      Text(vidTitle, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                      Text("Duration: "+(vidLenght/60).toString()+":"+(vidLenght%60).toString(), style: TextStyle(color: Colors.red[900],fontSize: 14,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                      Text("Author: "+author, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' )),
+                      Text(downloadProgress.toString()+"%", style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' )),
+                      Text("Number of videos in"+playlistTitle+" is "+vidNum.toString(), style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' )),
 
+                    ],
+                  )
+              ),
+
+            ],
+          ),
 
 
 
@@ -328,3 +348,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 }
+/*
+  Row(
+        children: [
+          Expanded(
+              flex: 1,
+              child:  Image.network(vidImage.toString(),width: 200,height: 200,),
+          ),
+          Expanded(flex:1,
+              child: Column(
+                children: [
+                  Text(vidTitle, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                  Text("Duration: "+(vidLenght/60).toString()+":"+(vidLenght%60).toString(), style: TextStyle(color: Colors.red[900],fontSize: 14,fontWeight: FontWeight.bold,fontFamily:'lato' ),),
+                  Text("Author: "+author, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
+                  Text(downloadProgress.toString()+"%", style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
+                  Text("Number of videos in"+playlistTitle+" is "+vidNum.toString(), style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'lato' )),
+
+                ],
+              )
+          ),
+
+        ],
+      ),
+
+ */

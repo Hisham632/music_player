@@ -221,7 +221,7 @@ fileTimeStamp()
 
             image: DecorationImage(image: AssetImage('Images/Soundtrack_album_cover.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
             gradient: LinearGradient(
-                colors: [Colors.transparent, Color(0xFF212121)],
+                colors: [Colors.transparent, Color(0xFF1d083b)],
                 stops: [0.0, 0.5],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -237,7 +237,7 @@ fileTimeStamp()
                 IconButton(
                   iconSize: 32,
                   icon: Icon(MyIcons.chevron_down_1),
-                  color: Color(0xFF80171e),
+                  color: Color(0xFF80171e),//632
 
                   alignment: Alignment.topLeft,
 
@@ -273,7 +273,7 @@ fileTimeStamp()
             Row(
               children: [
 
-                Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Color(0xFF80171e),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
                 SizedBox(
                   width: 335,
                   child: Slider(
@@ -289,7 +289,7 @@ fileTimeStamp()
                       }
                   ),
                 ),
-                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Color(0xFF80171e),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
 
               ],
             ),
@@ -299,14 +299,14 @@ fileTimeStamp()
 
             Row(//buttons row
               children: [
-                SizedBox(width: 15,),
+                SizedBox(width: 13,),
 
                 IconButton(
                     iconSize: 30,
                     icon: Icon(LikeButton.heart),
                     color: liked
                         ? Colors.red[800]
-                        : Color(0xFF755357) ,
+                        : Colors.grey[400] ,
 
 
                     onPressed: ()
@@ -330,18 +330,18 @@ fileTimeStamp()
 
                     },
                   ),
-                SizedBox(width: 15,),
+                SizedBox(width: 13,),
                 IconButton(
                     iconSize: 50,
                     icon: Icon(Icons.skip_previous_rounded),
-                    color: Color(0xFF1d93cf),
+                    color: Colors.grey[800],
 
                     onPressed: ()
                     {
                       previous();
                     },
                   ),
-                SizedBox(width: 27),
+                SizedBox(width: 13),
 
                  AvatarGlow(
                       glowColor: Colors.deepPurple,
@@ -416,7 +416,7 @@ fileTimeStamp()
                         ),
 
                     ),
-                SizedBox(width: 38,),
+                SizedBox(width: 13,),
 
            IconButton(
                       iconSize: 50,
@@ -429,6 +429,19 @@ fileTimeStamp()
 
                       },
                   ),
+                SizedBox(width: 13,),
+
+                IconButton(
+                  iconSize: 35,
+                  icon: Icon(Icons.playlist_add),
+                  color: Color(0xFF1d93cf),
+
+                  onPressed: ()
+                  {
+                    next();
+
+                  },
+                ),
 
               ],
             ),
@@ -448,11 +461,11 @@ fileTimeStamp()
     {
       return ScrollingText(
         text: songName,
-        textStyle: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+        textStyle: TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
       );
     }
     else {
-      return Text(songName, style: TextStyle(fontSize: 32,color: Colors.red[900],fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
+      return Text(songName, style: TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
     }
   }
 

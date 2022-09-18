@@ -112,7 +112,7 @@ initState()
 
 
     var name=widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1);
-    var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.center,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 26,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'));
+    var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.left,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'));
     var num=0.0;
 
     if(name.length>20){
@@ -136,7 +136,7 @@ initState()
               padding: EdgeInsets.all(50),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('Images/gatePic.jpg'),
+                  image: AssetImage('Images/testPic2.jpg'),
                   fit: BoxFit.fill,
                 ),
                 borderRadius:  BorderRadius.all(Radius.circular(10.0)),
@@ -209,11 +209,13 @@ initState()
         child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.asset('Images/gatePic.jpg'),
+          child: Image.asset('Images/testPic2.jpg'),
         ),
         title: Text(
-          listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5),
+          listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6),
           style: TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+          overflow: TextOverflow.ellipsis,
+
         ),
 
         dense: true,
@@ -221,7 +223,6 @@ initState()
         selected: true,
         subtitle: Text('YourGate • 5:47  ',style: TextStyle(color: Colors.grey[400]),),
         trailing: PopupMenuButton<Menu>(
-          color:  Colors.white,//transition to transparent to grey
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
               setState(() {
@@ -237,8 +238,12 @@ initState()
                 child: Text('Item 2'),
               ),
 
-            ]),
-        onTap: (){
+            ]
+        ,color: Colors.grey,
+          icon: Icon(Icons.more_vert,color: Colors.grey[400],),
+        ),
+
+          onTap: (){
           Navigator.push(
             context,
             MaterialPageRoute(

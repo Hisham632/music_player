@@ -290,7 +290,7 @@ miniPlayer()
 
   playlistGrid()
   {
-    var images=['Images/Logic_No_Pressure_album_cover.jpeg','Images/donda.jpeg','Images/gatePic.jpg','Images/arcaneSound.jpg','Images/attackOnTitanAlbum.jpg','Images/noPressuere.jpg',];
+    var images=['Images/testPic.jpg','Images/donda.jpeg','Images/testPic2.jpg','Images/testPic4.jpg','Images/testPic5.jpg','Images/donda.jpg',];
 
     return GridView.builder(
 
@@ -327,11 +327,11 @@ miniPlayer()
                   image: AssetImage(images[count]),
                   fit: BoxFit.fitWidth,
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: 2,),
                 Text(
 
                     PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),
-                    style: TextStyle(fontSize: 22,color: Color(0xFFfffcfc),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+                    style: TextStyle(fontSize: 21,color: Color(0xFFfffcfc),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start
                 ),
@@ -420,7 +420,7 @@ miniPlayer()
     //print('EachTime '+ songNum.toString());
 
     return Card(
-      color: Color(0xFFFFFFFF),//Here632
+      color: Color(0xFF0f2357),//Here632
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
