@@ -219,10 +219,10 @@ fileTimeStamp()
          width: mediaQueryData.size.width,
         decoration: const BoxDecoration(
 
-            image: DecorationImage(image: AssetImage('Images/testPic2.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
+            //image: DecorationImage(image: AssetImage('Images/testPic2.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
             gradient: LinearGradient(
-                colors: [Colors.grey, Color(0xFF212121)],
-                stops: [0.0, 0.5],
+                colors: [Color(0xFF757575), Color(0xFF212121)],
+                stops: [0.05, 0.62],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 tileMode: TileMode.repeated)),
@@ -280,8 +280,8 @@ fileTimeStamp()
                       min: 0,
                       max: fileDuration.inSeconds.toDouble(),
                       value: position.inSeconds.toDouble(),
-                      activeColor: Color(0xFF3b3859),//0xFF35325e
-                      inactiveColor: Color(0xFFFFFFFF),
+                      activeColor: Color(0xFFFFFFFF),//0xFF35325e
+                      inactiveColor: Colors.grey[800],
                       onChanged: (double value){
                         setState(() {
                           audioPlayer.seek(new Duration(seconds: value.toInt()));

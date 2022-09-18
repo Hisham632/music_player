@@ -259,8 +259,8 @@ miniPlayer()
                      //     color: const Color(0xFF242222) // Can also add an image
                      // ),
                      tabs: [
-                       Tab(icon:Icon(Icons.whatshot_outlined,color: Colors.redAccent[400],),text:"Playlists"),
-                       Tab(icon:Icon(Icons.view_list,color: Colors.redAccent[400]),text: "Songs",),
+                       Tab(icon:Icon(Icons.whatshot_outlined,color: Color(0xFFfc0811),),text:"Playlists"),
+                       Tab(icon:Icon(Icons.view_list,color: Color(0xFFfc0811)),text: "Songs",),
                        //Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
