@@ -217,11 +217,11 @@ fileTimeStamp()
        body: Container(
          height: mediaQueryData.size.height,
          width: mediaQueryData.size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
 
-            image: DecorationImage(image: AssetImage('Images/Soundtrack_album_cover.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
+            image: DecorationImage(image: AssetImage('Images/testPic2.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
             gradient: LinearGradient(
-                colors: [Colors.transparent, Color(0xFF1d083b)],
+                colors: [Colors.grey, Color(0xFF212121)],
                 stops: [0.0, 0.5],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -237,7 +237,7 @@ fileTimeStamp()
                 IconButton(
                   iconSize: 32,
                   icon: Icon(MyIcons.chevron_down_1),
-                  color: Color(0xFF80171e),//632
+                  color: Color(0xFF212121),//632
 
                   alignment: Alignment.topLeft,
 
@@ -253,7 +253,7 @@ fileTimeStamp()
             child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('Images/Soundtrack_album_cover.jpg'),
+                    image: AssetImage('Images/testPic2.jpg'),
                     fit: BoxFit.fill,
                   ),
                   borderRadius:  BorderRadius.all(Radius.circular(15.0)),
@@ -262,11 +262,11 @@ fileTimeStamp()
               width: 350,
               height: 380,
             ),
-          ),//SizedBox(height: 20,),
+          ),SizedBox(height: 20,),
 
             Container(
               child: songNameLenght(),
-              height: 60,
+              height: 45,
               width: 380,
             )
          ,//SizedBox(height: 20,),
@@ -280,8 +280,8 @@ fileTimeStamp()
                       min: 0,
                       max: fileDuration.inSeconds.toDouble(),
                       value: position.inSeconds.toDouble(),
-                      activeColor: Color(0xFF3a59c9),
-                      inactiveColor: Color(0xFF37383b),
+                      activeColor: Color(0xFF3b3859),//0xFF35325e
+                      inactiveColor: Color(0xFFFFFFFF),
                       onChanged: (double value){
                         setState(() {
                           audioPlayer.seek(new Duration(seconds: value.toInt()));
@@ -306,7 +306,7 @@ fileTimeStamp()
                     icon: Icon(LikeButton.heart),
                     color: liked
                         ? Colors.red[800]
-                        : Colors.grey[400] ,
+                        : Colors.white70 ,
 
 
                     onPressed: ()
@@ -334,7 +334,7 @@ fileTimeStamp()
                 IconButton(
                     iconSize: 50,
                     icon: Icon(Icons.skip_previous_rounded),
-                    color: Colors.grey[800],
+                    color: Colors.white,
 
                     onPressed: ()
                     {
@@ -355,7 +355,7 @@ fileTimeStamp()
                             elevation: 8.0,
                             shape: CircleBorder(),
                             child: CircleAvatar(
-                              backgroundColor: Color(0xFF3a59c9),
+                              backgroundColor: Color(0xFFFFFFFF),
 
                               child: IconButton(
                                   iconSize: 200,
@@ -421,7 +421,7 @@ fileTimeStamp()
            IconButton(
                       iconSize: 50,
                       icon: Icon(Icons.skip_next_rounded),
-                      color: Color(0xFF1d93cf),
+                      color: Color(0xFFFFFFFF),
 
                       onPressed: ()
                       {
@@ -433,8 +433,8 @@ fileTimeStamp()
 
                 IconButton(
                   iconSize: 35,
-                  icon: Icon(Icons.playlist_add),
-                  color: Color(0xFF1d93cf),
+                  icon: Icon(Icons.loop),
+                  color: Color(0xFFFFFFFF),
 
                   onPressed: ()
                   {

@@ -259,8 +259,8 @@ miniPlayer()
                      //     color: const Color(0xFF242222) // Can also add an image
                      // ),
                      tabs: [
-                       Tab(icon:Icon(Icons.whatshot_outlined,color: Colors.red,),text:"Playlists"),
-                       Tab(icon:Icon(Icons.view_list,color: Colors.red),text: "Songs",),
+                       Tab(icon:Icon(Icons.whatshot_outlined,color: Colors.redAccent[400],),text:"Playlists"),
+                       Tab(icon:Icon(Icons.view_list,color: Colors.redAccent[400]),text: "Songs",),
                        //Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
@@ -327,7 +327,7 @@ miniPlayer()
                   image: AssetImage(images[count]),
                   fit: BoxFit.fitWidth,
                 ),
-                SizedBox(height: 2,),
+                SizedBox(height: 3,),
                 Text(
 
                     PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),
