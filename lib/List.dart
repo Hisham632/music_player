@@ -114,6 +114,7 @@ initState()
     var name=widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1);
     var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.left,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'));
     var num=0.0;
+    var imageSaveName=name.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     if(name.length>20){
         num=0.0;
@@ -134,10 +135,10 @@ initState()
             children: [SizedBox(width: 1),
         Container(
               padding: EdgeInsets.all(50),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('Images/testPic2.jpg'),
-                  fit: BoxFit.fill,
+                  image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
+                  fit: BoxFit.cover,
                 ),
                 borderRadius:  BorderRadius.all(Radius.circular(10.0)),
 
@@ -199,6 +200,8 @@ initState()
 
   songListView(context,songNum)
    {
+     var sName= listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
+     var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     return Card(
       color: Colors.grey[600]?.withOpacity(0.3),
@@ -209,7 +212,7 @@ initState()
         child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.asset('Images/testPic2.jpg'),
+          child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
         ),
         title: Text(
           listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6),

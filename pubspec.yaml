@@ -52,6 +52,10 @@ dependencies:
   community_material_icon: ^5.9.55
   awesome_notifications: ^0.6.21
   multi_split_view: ^1.6.0
+  image_downloader: ^0.31.0
+
+
+
 flutter_icons:
   android: true
   image_path: "assets/icon.jpg"

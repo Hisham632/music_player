@@ -65,7 +65,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -82,7 +82,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList()
   {
-    Directory dir = Directory('/storage/emulated/0/AudioFiles');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
     //print('line58');
   //  print(listAllSongs.length);
@@ -290,14 +290,16 @@ miniPlayer()
 
   playlistGrid()
   {
-    var images=['Images/testPic.jpg','Images/donda.jpeg','Images/testPic2.jpg','Images/testPic4.jpg','Images/testPic5.jpg','Images/donda.jpg',];
+    var images=['Images/testPic.jpg','Images/donda.jpeg','Images/testPic2.jpg','Images/testPic4.jpg','Images/testPic5.jpg','Images/testPic5.jpg','Images/testPic5.jpg','Images/testPic5.jpg','Images/testPic5.jpg'];
 
     return GridView.builder(
 
       itemCount: PlaylistsFolders.length,
       itemBuilder: (context,count)
       {
-        print(                    PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),);
+
+        var sName= PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1);
+        var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
         return Card(// maybe make it a card
           shape: RoundedRectangleBorder(
@@ -322,18 +324,29 @@ miniPlayer()
               crossAxisAlignment: CrossAxisAlignment.center,
 
               children: [
-                Ink.image(
-                  height: 160,
-                  image: AssetImage(images[count]),
-                  fit: BoxFit.fitWidth,
+                Container(decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
+                    fit: BoxFit.fitWidth,
+
+                  ),
+                  borderRadius:  BorderRadius.all(Radius.circular(15.0)),
                 ),
-                SizedBox(height: 3,),
+                  alignment: Alignment.center,
+                  height: 150,
+                ),
+                // Image(
+                //   height: 160,
+                //   image: AssetImage(images[count]),
+                //   fit: BoxFit.fitWidth,
+                // ),
+                SizedBox(height: 0,),
                 Text(
 
                     PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1),
                     style: TextStyle(fontSize: 21,color: Color(0xFFfffcfc),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
                     overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start
+                    textAlign: TextAlign.center
                 ),
 
               ],
@@ -359,13 +372,17 @@ miniPlayer()
   {
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
-          color: Color(0xFF1b0b36),
+          color: Color(0xFF000000),
           height: 0,
           thickness: 2,
         ),
 
         itemCount: listAllSongs.length,
         itemBuilder: (context,songNum){
+
+          var sName=listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-1);
+          var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+
           return Container(
               color: Colors.black,
               child: FutureBuilder(
@@ -376,7 +393,7 @@ miniPlayer()
                      }
                      else{
                        return Card(
-                         color: Color(0xFF1e1d1f),
+                         color: Colors.grey[900]?.withOpacity(0.35),
                          shape: RoundedRectangleBorder(
                            borderRadius: BorderRadius.circular(10.0),
                          ),
@@ -384,11 +401,13 @@ miniPlayer()
                          child: ListTile(//use the special textFont ALSO later add that divider
                            leading: ClipRRect(
                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                             child: Image.asset('Images/gatePic.jpg'),
+                             child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
                            ),
                            title: Text(
                              listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-1),
-                             style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+                             style: TextStyle(fontSize: 20,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+                             overflow: TextOverflow.ellipsis,
+
                            ),
 
                            dense: true,
@@ -418,9 +437,11 @@ miniPlayer()
   songListView(context,songNum)
   {
     //print('EachTime '+ songNum.toString());
+    var sName=listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-6);
+    var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     return Card(
-      color: Color(0xFF0f2357),//Here632
+      color: Colors.grey[600]?.withOpacity(0.3),//Here632
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -428,20 +449,21 @@ miniPlayer()
       child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.asset('Images/gatePic.jpg'),
+          child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
         ),
         title: Text(
-          listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-5),
-          style: TextStyle(fontSize: 18,color: Color(0xFFa6050f),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+          listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-6),
+          style: TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+          overflow: TextOverflow.ellipsis,
+
         ),
 
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
         selected: true,
-        subtitle: Text('YourGate • 5:47  ',style: TextStyle(fontFamily:'Proxima Nova'),),
+        subtitle: Text('YourGate • 5:47  ',style: TextStyle(fontFamily:'Proxima Nova',color:  Colors.grey[400]),),
 
         trailing: PopupMenuButton<Menu>(
-          color: Colors.white,
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
               setState(() {
@@ -458,12 +480,15 @@ miniPlayer()
                 child: Text('Item 3'),
               ),
 
-            ]),
+            ]
+          ,color: Colors.grey,
+          icon: Icon(Icons.more_vert,color: Colors.grey[400],),
+        ),
         onTap: (){
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/',),
             ),
           );
         //  print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());

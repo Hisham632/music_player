@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
@@ -7,6 +8,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:image_downloader/image_downloader.dart';
 
 import 'Grids.dart';
 
@@ -26,7 +28,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Choice? vidDownloadChoice = Choice.Video;
 
   String vidImage="";
-   String vidTitle="";
+  String playListImage="";
+
+  String vidTitle="";
   String author="";
    int vidLenght=0;
    int downloadProgress=0;
@@ -55,23 +59,21 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Youtube Downloader",style: TextStyle(fontFamily:"Proxima Nova")),
       ),
-        backgroundColor: Color(0xFF06152e),
+        backgroundColor: Color(0xFF111213),
         drawer: Drawer(
+          backgroundColor:  Color(0xFF111213),
           // shape: ,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ), child: null,
-              ),
+              SizedBox(height: 30,)
+              ,
               ListTile(
-                leading: Icon(Icons.whatshot),
-                title: Text('Main'),
-                textColor: Colors.deepOrange,
-                iconColor: Colors.deepOrange,
-                hoverColor: Colors.deepPurple,
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+                textColor: Color(0xFF4c7dad),
+                iconColor: Color(0xFF4c7dad),
+                hoverColor: Color(0xFF4c7dad),
                 onTap: (){
                   Navigator.push(
                     context,
@@ -84,11 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.whatshot),
-                title: Text('Youtube Downloader', style: TextStyle(fontFamily:"Proxima Nova"),),
-                textColor: Colors.deepOrange,
-                iconColor: Colors.deepOrange,
-                hoverColor: Colors.deepPurple,
+                leading: Icon(Icons.download),
+                title: Text('Youtube Downloader'),
+                textColor: Color(0xFF4c7dad),
+                iconColor: Color(0xFF4c7dad),
+                hoverColor: Color(0xFF4c7dad),
                 onTap: (){
                   Navigator.push(
                     context,
@@ -150,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ElevatedButton(
 
-              child: const Text('Download', style: TextStyle(fontSize: 18, color: Color(0xFF3a1566)),),
+              child: const Text('Download', style: TextStyle(fontSize: 18, color: Color(0xFF212121)),),
               onPressed: () async {
 
                 var youtubeDownload = YoutubeExplode();
@@ -159,12 +161,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 {
                   var id = VideoId(textController.text.toString());
                   var video = await youtubeDownload.videos.get(id);
-                  //print("HERE "+video.thumbnails.highResUrl);
 
                   setState(() {
-                    vidTitle=video.title;
+                    vidTitle=video.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')');
                     author=video.author;
-                    vidImage=video.thumbnails.highResUrl;
+                    vidImage=video.thumbnails.maxResUrl;
                     vidLenght=video.duration!.inSeconds;
 
                   });
@@ -175,12 +176,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   initPlayerPermission();
 
-                 // Directory directory2 = await getExternalStorageDirectory() as Directory;
+                  Directory directory2 = await getExternalStorageDirectory() as Directory;
                   //print("TEEMP");
                  // print(directory2);
-
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/');
-                  var filePath = path.join(dir.uri.toFilePath(),'${video.title}.${audio.container.name}');
+                  print("LINE182");
+                  print(vidTitle);
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+                  var filePath = path.join(dir.uri.toFilePath(),'$vidTitle.${audio.container.name}');
 
                   print(filePath);
 
@@ -219,38 +221,89 @@ class _MyHomePageState extends State<MyHomePage> {
                       downloadProgress=progress;
                     });
 
+
                     fileStream.add(data);
                   }
                   await fileStream.flush();
                   await fileStream.close();
+                  var imageSaveName=vidTitle.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
+                  try{
+                    print(imageSaveName);
+
+
+                    await ImageDownloader.downloadImage(vidImage.toString(),
+                      destination: AndroidDestinationType.custom(directory: '')
+                        ..inExternalFilesDir()
+                        ..subDirectory("pictures/$imageSaveName.jpg"),
+                    ).timeout(const Duration(seconds: 15),onTimeout: () => throw TimeoutException('Cant connect in 15 seconds.'));
+                  }
+                  catch(e){
+                    var nameFix="itachi";
+
+                    File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix.jpg');
+                    imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
+                  }
 
                 }
                 else if(vidDownloadChoice==Choice.Playlist)
                 {
 
-                  // Get playlist metadata.
+                  // Get playlist metadata.( r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]+-()', unicode: true)
                   var playlist = await youtubeDownload.playlists.get(textController.text.toString());
 
-                  var title = playlist.title;
+                  var title = playlist.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')');
                   //print(title);
                   await Permission.storage.request();
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/$title/');
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/$title/');
                  // Directory directory2 = await getExternalStorageDirectory() as Directory;
 
 
                   setState(() {
                     playlistTitle=title;
                     author=playlist.author;
-                    vidImage=playlist.thumbnails.highResUrl;
+
+                    playListImage=playlist.thumbnails.maxResUrl;
                     vidNum=playlist.videoCount!;
                   });
 
+                  var imageSaveName=playlistTitle.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+
+
+                  var somePlaylistVideos = await youtubeDownload.playlists.getVideos(playlist.id).take(1).toList();
+                  print(somePlaylistVideos[0].title);
+
+
+                  try{
+
+
+                    await ImageDownloader.downloadImage(somePlaylistVideos[0].thumbnails.maxResUrl,
+                        destination: AndroidDestinationType.custom(directory: '')
+                          ..inExternalFilesDir()
+                          ..subDirectory("pictures/$imageSaveName.jpg")
+
+
+                    ).timeout(const Duration(seconds: 10),onTimeout: () => throw TimeoutException('Can\'t connect in 10 seconds.'));
+
+                  }
+                  catch(e){
+
+                    var nameFix="itachi.jpg";
+
+                    File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix');
+                    imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
+                  }
 
                   await for (var video in youtubeDownload.playlists.getVideos(playlist.id)) {
 
                     setState(() {
-                      vidTitle=video.title;
+
+
+                      vidTitle=video.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')');
+                      vidImage=video.thumbnails.maxResUrl;
+
                     });
 
                    // print("HERE "+video.title);
@@ -260,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     //var filePath;
                     if(Directory(filePath).existsSync()){
-                      print("EXists");
+                      print("Exists");
 
                     }
                     else
@@ -282,6 +335,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     //
                     // }
                    // print("GOING IN");
+
 
                     var file = File(filePath);
                     var fileStream = file.openWrite();
@@ -305,6 +359,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     }
                     await fileStream.flush();
                     await fileStream.close();
+
+                    var imageSaveName2=vidTitle.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+
+
+                    try{
+
+
+                      File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+                      imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName2.jpg');
+
+                    }
+                    catch(e){
+
+                      var nameFix="itachi.jpg";
+
+                      File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix');
+                      imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName2.jpg');
+
+                    }
 
                   }
 

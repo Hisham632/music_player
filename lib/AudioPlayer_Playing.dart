@@ -210,6 +210,8 @@ fileTimeStamp()
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
+    var imageSaveName=songName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+
     return Scaffold(
 
       // appBar: AppBar(
@@ -217,11 +219,12 @@ fileTimeStamp()
        body: Container(
          height: mediaQueryData.size.height,
          width: mediaQueryData.size.width,
-        decoration: const BoxDecoration(
+        decoration:  BoxDecoration(
 
-            //image: DecorationImage(image: AssetImage('Images/testPic2.jpg'), fit: BoxFit.cover, opacity: 0.12),//HERE IS backgroundColor
+            image: DecorationImage(image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')), fit: BoxFit.cover, opacity: 0.1),//HERE IS backgroundColor
+
             gradient: LinearGradient(
-                colors: [Color(0xFF757575), Color(0xFF212121)],
+                colors: [Color(0xFF616161), Color(0xFF212121)],
                 stops: [0.05, 0.62],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -248,13 +251,14 @@ fileTimeStamp()
                 ),
               ],
             ),
-          //  SizedBox(height: 10,),
+            SizedBox(height: 20,),
           Center(
             child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('Images/testPic2.jpg'),
-                    fit: BoxFit.fill,
+                    image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
+                    fit: BoxFit.cover,
+
                   ),
                   borderRadius:  BorderRadius.all(Radius.circular(15.0)),
                 ),
@@ -262,20 +266,20 @@ fileTimeStamp()
               width: 350,
               height: 380,
             ),
-          ),SizedBox(height: 20,),
+          ),SizedBox(height: 23,),
 
             Container(
               child: songNameLenght(),
               height: 45,
               width: 380,
             )
-         ,//SizedBox(height: 20,),
+         ,SizedBox(height: 30,),
             Row(
               children: [
 
                 Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
                 SizedBox(
-                  width: 335,
+                  width: 305,
                   child: Slider(
                       min: 0,
                       max: fileDuration.inSeconds.toDouble(),
@@ -295,11 +299,11 @@ fileTimeStamp()
             ),
 
 
-       // SizedBox(height: 30,),
+        SizedBox(height: 15,),
 
             Row(//buttons row
               children: [
-                SizedBox(width: 13,),
+                SizedBox(width: 10,),
 
                 IconButton(
                     iconSize: 30,
@@ -314,12 +318,12 @@ fileTimeStamp()
                       print("{RESSSED");
                       String song = listOfAllFolderAndFiles[songNumber].toString().substring(7, listOfAllFolderAndFiles[songNumber].toString().length - 1);
 
-                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/Liked/"+songName+".webm").existsSync()) {
+                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm").existsSync()) {
 
                     }
                     else
                       {
-                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/Liked/"+songName+".webm");
+                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm");
 
                       }
 
@@ -330,7 +334,7 @@ fileTimeStamp()
 
                     },
                   ),
-                SizedBox(width: 13,),
+                SizedBox(width: 10,),
                 IconButton(
                     iconSize: 50,
                     icon: Icon(Icons.skip_previous_rounded),
@@ -341,7 +345,7 @@ fileTimeStamp()
                       previous();
                     },
                   ),
-                SizedBox(width: 13),
+                SizedBox(width: 10),
 
                  AvatarGlow(
                       glowColor: Colors.deepPurple,
@@ -416,7 +420,7 @@ fileTimeStamp()
                         ),
 
                     ),
-                SizedBox(width: 13,),
+                SizedBox(width: 10,),
 
            IconButton(
                       iconSize: 50,
@@ -429,7 +433,7 @@ fileTimeStamp()
 
                       },
                   ),
-                SizedBox(width: 13,),
+                SizedBox(width: 10,),
 
                 IconButton(
                   iconSize: 35,

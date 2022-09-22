@@ -3,6 +3,22 @@ import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/Grids.dart';
 import 'package:music_player/youtubeTest.dart';
+
+/*
+Downloading issues:
+Playlist covers dont seem to want to download,
+
+Some pics have a 404 error
+need to remove all symbols from file names or may cause errors
+
+Sometimes for playlist downloads images infitely, A resource failed to call close.
+W/SQLiteConnectionPool( 5494): A SQLiteConnection object for database '/data/user/0/com.example.music_player/databases/image_downloader_temporary' was leaked!  Please fix your application to end transactions in progress properly and to close the database when it is no longer needed.
+
+some files are mp4
+add try catch to download playlist
+ */
+
+
 // import 'package:awesome_notifications/awesome_notifications.dart';
 /*
 Colors:
@@ -59,7 +75,7 @@ void main() {
             //'/':(context)=> AudioPlay(number: -1),
           //   '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
             '/Playlists':(context)=> Playlists(),
-            // '/youtube':(context)=>  MyHomePage(title: 'Flutter Demo Home Page'),
+            //'/youtube':(context)=>  MyHomePage(title: 'Flutter Demo Home Page'),
 
           },
         ));
