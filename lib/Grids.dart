@@ -333,7 +333,7 @@ miniPlayer()
                   borderRadius:  BorderRadius.all(Radius.circular(15.0)),
                 ),
                   alignment: Alignment.center,
-                  height: 150,
+                  height: 148,
                 ),
                 // Image(
                 //   height: 160,

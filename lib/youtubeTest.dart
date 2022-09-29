@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   var video = await youtubeDownload.videos.get(id);
 
                   setState(() {
-                    vidTitle=video.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')');
+                    vidTitle=video.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')').replaceAll("\"",'').replaceAll('*','').replaceAll('"','').replaceAll('<','').replaceAll('>','').replaceAll('|','');
                     author=video.author;
                     vidImage=video.thumbnails.maxResUrl;
                     vidLenght=video.duration!.inSeconds;
@@ -181,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                  // print(directory2);
                   print("LINE182");
                   print(vidTitle);
-                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Songs/');
                   var filePath = path.join(dir.uri.toFilePath(),'$vidTitle.${audio.container.name}');
 
                   print(filePath);
@@ -253,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // Get playlist metadata.( r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]+-()', unicode: true)
                   var playlist = await youtubeDownload.playlists.get(textController.text.toString());
 
-                  var title = playlist.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')');
+                  var title = playlist.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')').replaceAll("\"",'').replaceAll('*','').replaceAll('"','').replaceAll('<','').replaceAll('>','').replaceAll('|','');
                   //print(title);
                   await Permission.storage.request();
                   Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/$title/');
@@ -301,7 +301,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     setState(() {
 
 
-                      vidTitle=video.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')');
+                      vidTitle=video.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')').replaceAll("\"",'').replaceAll('*','').replaceAll('"','').replaceAll('<','').replaceAll('>','').replaceAll('|','');
                       vidImage=video.thumbnails.maxResUrl;
 
                     });
