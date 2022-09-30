@@ -1,3 +1,3 @@
-# music_player
+# Audio Player App
 Audio Player App
 
