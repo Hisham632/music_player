@@ -3,6 +3,7 @@ import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/Grids.dart';
 import 'package:music_player/youtubeTest.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 /*
 Downloading issues:
@@ -32,34 +33,40 @@ way to save which song is playing
 to create Like lists we can copy the song we want to that folder
  */
 
-void main() {
-  // AwesomeNotifications().requestPermissionToSendNotifications();
+void main() async {
+  AwesomeNotifications().requestPermissionToSendNotifications();
 
   try{
 
-    // AwesomeNotifications().initialize(
-    //     'resource://drawable/img',
-    //     [
-    //
-    //       NotificationChannel(
-    //           channelGroupKey: 'media_player_tests',
-    //           icon: 'resource://drawable/img',
-    //           channelKey: 'media_player',
-    //           channelName: 'Media player controller',
-    //           channelDescription: 'Media player controller',
-    //           defaultPrivacy: NotificationPrivacy.Public,
-    //           enableVibration: true,
-    //           enableLights: true,
-    //           playSound: false,
-    //           locked: true),
-    //
-    //     ],
-    //     channelGroups: [
-    //
-    //       NotificationChannelGroup(channelGroupkey: 'media_player_tests', channelGroupName: 'Media Player tests')
-    //     ],
-    //     debug: true
-    // );
+    AwesomeNotifications().initialize(
+        'resource://drawable/res_ic_prev',
+        [
+
+          NotificationChannel(
+              channelGroupKey: 'media_player_tests',
+              icon: 'resource://drawable/res_ic_prev',
+              channelKey: 'media_player',
+              channelName: 'Media player controller',
+              channelDescription: 'Media player controller',
+              defaultPrivacy: NotificationPrivacy.Public,
+              enableVibration: true,
+              enableLights: true,
+              playSound: false,
+              locked: true,
+              defaultColor: Color(0xFF9D50DD),
+              ledColor: Colors.white,
+              importance: NotificationImportance.High,
+              channelShowBadge: true,  ),
+
+
+
+        ],
+        channelGroups: [
+
+          NotificationChannelGroup(channelGroupkey: 'media_player_tests', channelGroupName: 'Media Player tests')
+        ],
+        debug: true
+    );
 
 
     runApp(

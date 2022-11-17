@@ -18,11 +18,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path/path.dart' as path2;
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:music_player/notification.dart';
+import 'package:music_player/List.dart';
 
 
 class AudioPlay extends StatefulWidget {
   final int number;
   final String path;
+
+
 
   const AudioPlay({Key? key,
     required this.number,required this.path
@@ -49,6 +52,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   late List<FileSystemEntity> listOfAllFolderAndFiles;
   String songName='', lastSongPlayed='';//not used
   bool liked = false;
+  late List<FileSystemEntity> tempPathOld;
 
   late AnimationController animationController;
   int songNumber=1;
@@ -56,16 +60,15 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   void initPlayer() async {
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
-    // AwesomeNotifications().requestPermissionToSendNotifications();
+    AwesomeNotifications().requestPermissionToSendNotifications();
     // AwesomeNotifications().actionStream.listen((isPlaying) {
-    // //   if(isPlaying){
-    // //
-    //   }
     //
-    //   notificationDetail.updateNotificationMediaPlayer(100, isPlaying, songName);
+    //
+    //   notificationDetail.updateNotificationMediaPlayer(100,true, songName);
     //
     //
     // });
+    notificationDetail.updateNotificationMediaPlayer(10,true, songName);
 
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
@@ -129,6 +132,10 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
     //lastSongPlayed=song;
     //lastSongPlayed=songNum;//might need to do in a list since might go back multiple times
+    // if(Lists.playNextNum!=-1) {
+    //   listOfAllFolderAndFiles = tempPathOld; //Putting back to og Path
+    //   Lists.playNextNum==-1;
+    // }
     audioPlayer.play(song, isLocal: true);
 
     audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
@@ -150,15 +157,28 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   }
 
   next(){
-    //ig just +1 to songNum
-    songNumber+=1;
-    if(listOfAllFolderAndFiles.length<songNumber)
+
+    //if(Lists.playNextNum==-1){
+      //ig just +1 to songNum
+      songNumber+=1;
+      if(listOfAllFolderAndFiles.length<songNumber)
       {
         songNumber=1;
       }
-    play(songNumber);
+      play(songNumber);
 
-    //audioPlayer.onPlayerCompletion
+      //audioPlayer.onPlayerCompletion
+    // }
+    // else{
+    //   Directory dir = Directory(Lists.playNextPath);
+    //   tempPathOld=listOfAllFolderAndFiles;
+    //   listOfAllFolderAndFiles = dir.listSync(recursive: true);
+    //   play(Lists.playNextNum);
+    //
+    // }
+
+
+
   }
 previous(){
    // play(lastSongPlayed);
@@ -232,7 +252,7 @@ fileTimeStamp()
 
         child: Column(
           children: [
-            SizedBox(height: 40,),
+           // SizedBox(height: 40,),
 
             Row(
               children: [
@@ -251,7 +271,7 @@ fileTimeStamp()
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+           // SizedBox(height: 20,),
           Center(
             child: Container(
                 decoration: BoxDecoration(
@@ -266,14 +286,14 @@ fileTimeStamp()
               width: 350,
               height: 380,
             ),
-          ),SizedBox(height: 23,),
+          ),//SizedBox(height: 23,),
 
             Container(
               child: songNameLenght(),
               height: 45,
               width: 380,
             )
-         ,SizedBox(height: 30,),
+         ,//SizedBox(height: 30,),
             Row(
               children: [
 
@@ -299,7 +319,7 @@ fileTimeStamp()
             ),
 
 
-        SizedBox(height: 15,),
+       // SizedBox(height: 15,),
 
             Row(//buttons row
               children: [
@@ -318,12 +338,12 @@ fileTimeStamp()
                       print("{RESSSED");
                       String song = listOfAllFolderAndFiles[songNumber].toString().substring(7, listOfAllFolderAndFiles[songNumber].toString().length - 1);
 
-                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm").existsSync()) {
+                    if(Directory("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm").existsSync()) {
 
                     }
                     else
                       {
-                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm");
+                        File(song).copySync("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm");
 
                       }
 
@@ -378,6 +398,8 @@ fileTimeStamp()
                                       if(s==PlayerState.PLAYING){
                                         if(countTimes==0)
                                         {
+                                          notificationDetail.updateNotificationMediaPlayer(10,true, songName);
+
                                           countTimes++;
                                           isPlaying=true;
                                           animationController.reverse();
@@ -385,6 +407,8 @@ fileTimeStamp()
                                         }
                                         else
                                           {
+                                            notificationDetail.updateNotificationMediaPlayer(10,true, songName);
+
                                             isPlaying=true;
                                             animationController.reverse();
                                           }

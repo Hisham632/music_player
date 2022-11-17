@@ -19,6 +19,10 @@ enum Menu { itemOne, itemTwo, itemThree, itemFour }
 class Lists extends StatefulWidget {
   final String folderName;
 
+
+  static int playNextNum=-1;
+  static String playNextPath="";
+
   const Lists({Key? key,
     required this.folderName,
 
@@ -228,17 +232,26 @@ initState()
         trailing: PopupMenuButton<Menu>(
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
+              print("selected"+item.index.toString());
+
+
               setState(() {
+                // if(item.index==0){
+                //   Lists.playNextNum=songNum;
+                //   Lists.playNextPath=widget.folderName.substring(13, widget.folderName.length - 1);
+                //
+                // }
               });
+              ;
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
               const PopupMenuItem<Menu>(
                 value: Menu.itemOne,
-                child: Text('Item 1'),
+                child: Text('Play Next'),
               ),
               const PopupMenuItem<Menu>(
                 value: Menu.itemTwo,
-                child: Text('Item 2'),
+                child: Text('Add to Queue'),
               ),
 
             ]

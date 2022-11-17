@@ -45,7 +45,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   }
 
   void initPlayerPermission() async {
-    // AwesomeNotifications().requestPermissionToSendNotifications();
+     AwesomeNotifications().requestPermissionToSendNotifications();
 
     final status = await Permission.storage.status;
       const statusManageStorage = Permission.manageExternalStorage;
@@ -65,7 +65,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -82,7 +82,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList()
   {
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
     //print('line58');
   //  print(listAllSongs.length);
@@ -328,7 +328,7 @@ miniPlayer()
                   image: DecorationImage(
                     image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
                     fit: BoxFit.fitWidth,
-
+// Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
                   ),
                   borderRadius:  BorderRadius.all(Radius.circular(15.0)),
                 ),
@@ -488,7 +488,7 @@ miniPlayer()
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/',),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
             ),
           );
         //  print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());

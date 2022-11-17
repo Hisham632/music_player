@@ -36,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
    int downloadProgress=0;
    int vidNum=0;
   String playlistTitle="";
+  bool show=false;
 
   void initPlayerPermission() async {
     final status = await Permission.storage.status;
@@ -56,6 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
+
       appBar: AppBar(
         title: Text("Youtube Downloader",style: TextStyle(fontFamily:"Proxima Nova")),
       ),
@@ -132,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             },
           ),
-          SizedBox(height: 50),
+          SizedBox(height: 45),
 
 
           Padding(
@@ -154,6 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
               child: const Text('Download', style: TextStyle(fontSize: 18, color: Color(0xFF212121)),),
               onPressed: () async {
+
+                show=true;
 
                 var youtubeDownload = YoutubeExplode();
 
@@ -181,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
                  // print(directory2);
                   print("LINE182");
                   print(vidTitle);
-                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Songs/');
+                  Directory dir = Directory('/storage/emulated/0/AudioFiles/Songs/');
                   var filePath = path.join(dir.uri.toFilePath(),'$vidTitle.${audio.container.name}');
 
                   print(filePath);
@@ -241,8 +246,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   catch(e){
                     var nameFix="itachi";
 
-                    File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix.jpg');
-                    imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+                    File imageFile= File('/storage/emulated/files/pictures/$nameFix.jpg');
+                    imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
 
                   }
 
@@ -256,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   var title = playlist.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')').replaceAll("\"",'').replaceAll('*','').replaceAll('"','').replaceAll('<','').replaceAll('>','').replaceAll('|','');
                   //print(title);
                   await Permission.storage.request();
-                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/$title/');
+                  Directory dir = Directory('/storage/emulated/0/AudioFiles/$title/');
                  // Directory directory2 = await getExternalStorageDirectory() as Directory;
 
 
@@ -291,8 +296,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     var nameFix="itachi.jpg";
 
-                    File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix');
-                    imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+                    File imageFile= File('/storage/emulated/0files/pictures/$nameFix');
+                    imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
 
                   }
 
@@ -366,7 +371,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     try{
 
 
-                      File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+                      File imageFile= File('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
                       imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName2.jpg');
 
                     }
@@ -374,8 +379,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       var nameFix="itachi.jpg";
 
-                      File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix');
-                      imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName2.jpg');
+                      File imageFile= File('/storage/emulated/0/files/pictures/$nameFix');
+                      imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName2.jpg');
 
                     }
 
@@ -387,29 +392,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
               }),
 
-          const SizedBox(height: 15),
+          const SizedBox(height: 1),
 
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child:  Image.network(vidImage.toString(),width: 200,height: 200,),
-              ),
-              Expanded(flex:1,
-                  child: Column(
-                    children: [
-                      Text(vidTitle, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
-                      Text("Duration: "+(vidLenght/60).toString()+":"+(vidLenght%60).toString(), style: TextStyle(color: Colors.red[900],fontSize: 14,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
-                      Text("Author: "+author, style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' )),
-                      Text(downloadProgress.toString()+"%", style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' )),
-                      Text("Number of videos in"+playlistTitle+" is "+vidNum.toString(), style: TextStyle(color: Colors.red[900],fontSize: 18,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' )),
-
-                    ],
-                  )
-              ),
-
-            ],
-          ),
+          downloadedDetails()
 
 
 
@@ -420,6 +405,73 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   }
+
+  downloadedDetails(){
+
+    if(show)
+      {
+        return Column(
+
+
+
+          children: [
+             Image.network(vidImage.toString(),width: 380,height: 185,
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace)
+                  {
+                      return Image(
+                        image: FileImage(File('/storage/emulated/0files/pictures/itachi.jpg')),
+                      );
+                      },
+
+              ),
+           Column(
+                  children: [
+                    //if its a playlist should include its name
+//TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+                    Text(vidTitle, overflow: TextOverflow.ellipsis,style:TextStyle(fontSize: 18,color: const Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),),
+                    SizedBox(height: 1,),
+
+                    Text(""+author, overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),),
+SizedBox(height: 2.5,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment:MainAxisAlignment.center,
+
+                      children: [
+                        SizedBox(width: 5,),
+
+                        Text("Duration: "+((vidLenght/60).floor()).toString()+"min "+(vidLenght%60).toString()+"sec",textDirection: TextDirection.ltr,textAlign: TextAlign.left, style: TextStyle(fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),),
+                        SizedBox(width: 20,),
+
+                        Text("Download Progress: "+downloadProgress.toString()+"%", style: TextStyle(fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),),
+
+                      ],
+
+    ),
+
+                    SizedBox(height: 4,),
+
+
+                    //only include this if its a playlist
+                    
+                    (vidNum!=0)?Text("Playlist length: "+vidNum.toString(), style: TextStyle(fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),):Text(""),
+
+                  ],
+                )
+
+
+          ],
+        );
+      }
+    else
+      {
+        return Row();
+      }
+
+
+  }
+
+
 }
 /*
   Row(
