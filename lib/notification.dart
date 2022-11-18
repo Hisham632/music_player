@@ -15,13 +15,13 @@ class notificationDetail{
     await AwesomeNotifications().cancel(id);
   }
 
-  static void updateNotificationMediaPlayer(int id, bool playing, String songNmae) {
+  static void updateNotificationMediaPlayer(int id, bool isPlaying, String songNmae) {
     var imageSaveName=songNmae.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     //FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg'))
+  print("IN NOTIFICATION "+isPlaying.toString());
 
-
-    if (playing == null) {
+    if (isPlaying == null) {
       cancelNotification(id);
       return;
     }
@@ -50,18 +50,17 @@ class notificationDetail{
               icon: 'resource://drawable/res_ic_prev',
               label: 'Previous',
               autoDismissible: false,
-              showInCompactView: false,
+              showInCompactView: true,
               buttonType: ActionButtonType.KeepOnTop),
 
-          // MediaPlayerCentral.isPlaying
-          //     ? NotificationActionButton(
-          //     key: 'MEDIA_PAUSE',
-          //     icon: 'resource://drawable/res_ic_pause',
-          //     label: 'Pause',
-          //     autoDismissible: false,
-          //     showInCompactView: true,
-          //     buttonType: ActionButtonType.KeepOnTop)
-          //     :
+              // NotificationActionButton(
+              // key: 'MEDIA_PAUSE',
+              // icon: 'resource://drawable/res_ic_pause',
+              // label: 'Pause',
+              // autoDismissible: false,
+              // showInCompactView: true,
+              // buttonType: ActionButtonType.KeepOnTop)
+              // :
               NotificationActionButton(
               key: 'MEDIA_PLAY',
               icon: 'resource://drawable/res_ic_play',
@@ -85,8 +84,12 @@ class notificationDetail{
               icon: 'resource://drawable/res_ic_close',
               label: 'Close',
               autoDismissible: true,
-              showInCompactView: true,
+              showInCompactView: false,
               buttonType: ActionButtonType.KeepOnTop)
         ]);
   }
 }
+
+/*
+Dismiss noti
+ */

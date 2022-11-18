@@ -56,11 +56,19 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   late AnimationController animationController;
   int songNumber=1;
-
   void initPlayer() async {
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
     AwesomeNotifications().requestPermissionToSendNotifications();
+
+
+
+    AwesomeNotifications().actionStream.listen((receivedAction) {
+print("ACTION STREAM");
+        processMediaControls(receivedAction);
+
+    });
+
     // AwesomeNotifications().actionStream.listen((isPlaying) {
     //
     //
@@ -68,11 +76,11 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     //
     //
     // });
-    notificationDetail.updateNotificationMediaPlayer(10,true, songName);
 
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
+    // notificationDetail.updateNotificationMediaPlayer(10,true, songName);
 
 
     //player.load('assets/misfit.mp3');
@@ -116,8 +124,11 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       {
         play(songNumber);
       }
+    notificationDetail.updateNotificationMediaPlayer(songNumber,isPlaying, songName);
 
   }
+
+
 
   void initState()
   {
@@ -125,6 +136,45 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     initPlayer();
   }
 
+
+  void processMediaControls(actionReceived) {
+    switch (actionReceived.buttonKeyPressed) {
+
+      case 'MEDIA_CLOSE':
+        stop();
+        break;
+
+      case 'MEDIA_PLAY':
+        if(isPlaying){
+          pause();
+        }
+        else
+        {
+          play(songNumber);
+        }
+
+
+        break;
+
+    // case 'MEDIA_PAUSE':
+    //   pause();
+    //   animationController.reverse();
+    //
+    //   break;
+
+      case 'MEDIA_PREV':
+        previous();
+        break;
+
+      case 'MEDIA_NEXT':
+        next();
+        break;
+
+      default:
+        break;
+    }
+
+  }
 
   play(songNum) async {
     //player.play(song);
@@ -166,6 +216,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         songNumber=1;
       }
       play(songNumber);
+      notificationDetail.updateNotificationMediaPlayer(songNumber,isPlaying, songName);
 
       //audioPlayer.onPlayerCompletion
     // }
@@ -189,6 +240,7 @@ previous(){
     songNumber=listOfAllFolderAndFiles.length;
   }
   play(songNumber);
+  notificationDetail.updateNotificationMediaPlayer(songNumber,isPlaying, songName);
 
 }
 
@@ -398,7 +450,7 @@ fileTimeStamp()
                                       if(s==PlayerState.PLAYING){
                                         if(countTimes==0)
                                         {
-                                          notificationDetail.updateNotificationMediaPlayer(10,true, songName);
+                                          //notificationDetail.updateNotificationMediaPlayer(10,true, songName);
 
                                           countTimes++;
                                           isPlaying=true;
@@ -407,7 +459,7 @@ fileTimeStamp()
                                         }
                                         else
                                           {
-                                            notificationDetail.updateNotificationMediaPlayer(10,true, songName);
+                                           // notificationDetail.updateNotificationMediaPlayer(10,true, songName);
 
                                             isPlaying=true;
                                             animationController.reverse();
