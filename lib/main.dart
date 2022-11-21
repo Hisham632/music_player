@@ -6,6 +6,22 @@ import 'package:music_player/youtubeTest.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 /*
+Dispose Animation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Downloading issues:
 Playlist covers dont seem to want to download,
 
@@ -34,6 +50,7 @@ to create Like lists we can copy the song we want to that folder
  */
 
 void main() async {
+
   AwesomeNotifications().requestPermissionToSendNotifications();
 
   try{
@@ -66,10 +83,37 @@ void main() async {
           NotificationChannelGroup(channelGroupkey: 'media_player_tests', channelGroupName: 'Media Player tests')
         ],
         debug: true
-    );
 
+
+    );
+    if (!Playlists.subscribedActionStream) {
+
+      print("Listening "+ Playlists.subscribedActionStream.toString());
+
+      AwesomeNotifications().actionStream.listen((receivedAction) {
+
+
+        // if (!AwesomeStringUtils.isNullOrEmpty(
+        //     receivedAction.buttonKeyPressed) &&
+        //     receivedAction.buttonKeyPressed.startsWith('MEDIA_')) {
+        processMediaControls(receivedAction);
+        // }
+        // else
+        //   {
+        //     print("Line140");
+        //     String targetPage=AudioPlay(number:songNumber, path:widget.path) as String;
+        //     loadSingletonPage(targetPage: targetPage, receivedAction: receivedAction);
+        //
+        //   }
+
+
+
+      });
+      Playlists.subscribedActionStream = true;
+    }
 
     runApp(
+
 
         MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -94,6 +138,10 @@ void main() async {
     ));
 
   }
+}
+
+void processMediaControls(ReceivedAction receivedAction) {
+  print("CLIECKTEEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
 }
 
 

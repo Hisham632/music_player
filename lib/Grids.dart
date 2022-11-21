@@ -16,6 +16,7 @@ enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class Playlists extends StatefulWidget {
   const Playlists({Key? key}) : super(key: key);
+  static bool subscribedActionStream = false;
 
   @override
   _PlaylistsState createState() => _PlaylistsState();
@@ -39,6 +40,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
     getAllSongsList();
 
   }
+  @override
   void dispose() {
     tabController.dispose();
     super.dispose();

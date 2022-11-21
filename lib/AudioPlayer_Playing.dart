@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:music_player/TextScroll.dart';
+import 'package:music_player/Grids.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:path/path.dart' as path2;
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:music_player/notification.dart';
 import 'package:music_player/List.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 
 class AudioPlay extends StatefulWidget {
@@ -26,9 +28,8 @@ class AudioPlay extends StatefulWidget {
   final String path;
 
 
-
   const AudioPlay({Key? key,
-    required this.number,required this.path
+    required this.number,required this.path,
 
   }) : super(key: key);
 
@@ -39,6 +40,8 @@ class AudioPlay extends StatefulWidget {
 
 
 class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
+
+  static int Count=0;
 
   int countTimes=0;
 
@@ -57,30 +60,14 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   late AnimationController animationController;
   int songNumber=1;
   void initPlayer() async {
+
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
-    AwesomeNotifications().requestPermissionToSendNotifications();
 
-
-
-    AwesomeNotifications().actionStream.listen((receivedAction) {
-print("ACTION STREAM");
-        processMediaControls(receivedAction);
-
-    });
-
-    // AwesomeNotifications().actionStream.listen((isPlaying) {
-    //
-    //
-    //   notificationDetail.updateNotificationMediaPlayer(100,true, songName);
-    //
-    //
-    // });
 
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
-    // notificationDetail.updateNotificationMediaPlayer(10,true, songName);
 
 
     //player.load('assets/misfit.mp3');
@@ -98,6 +85,23 @@ print("ACTION STREAM");
           this.position=position;
     });
   });
+
+
+    AwesomeNotifications().requestPermissionToSendNotifications();
+
+//issue is when we open first time it works but subsequent opening of songs doesnt work
+
+
+
+    // AwesomeNotifications().createdStream.listen((notification) {
+    //
+    //   print("CREated NOti");
+    //
+    //   animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500));
+    //
+    // });
+
+
 
     final status = await Permission.storage.status;
     const statusManageStorage = Permission.manageExternalStorage;
@@ -124,18 +128,77 @@ print("ACTION STREAM");
       {
         play(songNumber);
       }
-    notificationDetail.updateNotificationMediaPlayer(songNumber,isPlaying, songName);
 
+
+
+    // if (!Playlists.subscribedActionStream) {
+    //   notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+    //
+    //   print("Listening "+ Playlists.subscribedActionStream.toString());
+    //
+    //   AwesomeNotifications().actionStream.listen((receivedAction) {
+    //
+    //
+    //   // if (!AwesomeStringUtils.isNullOrEmpty(
+    //   //     receivedAction.buttonKeyPressed) &&
+    //   //     receivedAction.buttonKeyPressed.startsWith('MEDIA_')) {
+    //      processMediaControls(receivedAction);
+    //   // }
+    //   // else
+    //   //   {
+    //   //     print("Line140");
+    //   //     String targetPage=AudioPlay(number:songNumber, path:widget.path) as String;
+    //   //     loadSingletonPage(targetPage: targetPage, receivedAction: receivedAction);
+    //   //
+    //   //   }
+    //
+    //
+    //
+    // });
+    //   Playlists.subscribedActionStream = true;
+    // }else{
+    //   await AwesomeNotifications().actionStream.single;
+    //
+    //   print("222Listening222 "+ Playlists.subscribedActionStream.toString());
+    //   notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+    //
+    //
+    //
+    // }
+  }
+  void loadSingletonPage({required String targetPage, required ReceivedAction receivedAction}){
+    // Avoid to open the notification details page over another details page already opened
+    Navigator.pushNamedAndRemoveUntil(context, targetPage,
+            (route) => (route.settings.name != targetPage) || route.isFirst,
+        arguments: receivedAction);
   }
 
 
-
+  @override
   void initState()
   {
     super.initState();
+
     initPlayer();
+
   }
 
+  @override
+  void dispose()
+  {
+    //animationController.dispose();
+    super.dispose();
+
+
+  }
+
+
+//  @override
+  // void dispose() {
+  //   AwesomeNotifications().actionSink.close();
+  //   AwesomeNotifications().createdSink.close();
+  //   super.dispose();
+  // }
 
   void processMediaControls(actionReceived) {
     switch (actionReceived.buttonKeyPressed) {
@@ -176,7 +239,7 @@ print("ACTION STREAM");
 
   }
 
-  play(songNum) async {
+ play(songNum) async {
     //player.play(song);
     String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
     songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
@@ -216,7 +279,7 @@ print("ACTION STREAM");
         songNumber=1;
       }
       play(songNumber);
-      notificationDetail.updateNotificationMediaPlayer(songNumber,isPlaying, songName);
+      notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
       //audioPlayer.onPlayerCompletion
     // }
@@ -240,7 +303,7 @@ previous(){
     songNumber=listOfAllFolderAndFiles.length;
   }
   play(songNumber);
-  notificationDetail.updateNotificationMediaPlayer(songNumber,isPlaying, songName);
+  notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
 }
 

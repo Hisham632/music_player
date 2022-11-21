@@ -1,6 +1,7 @@
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:music_player/AudioPlayer_Playing.dart';
 
 
 /*
@@ -16,6 +17,8 @@ class notificationDetail{
   }
 
   static void updateNotificationMediaPlayer(int id, bool isPlaying, String songNmae) {
+
+
     var imageSaveName=songNmae.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     //FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg'))
@@ -87,6 +90,26 @@ class notificationDetail{
               showInCompactView: false,
               buttonType: ActionButtonType.KeepOnTop)
         ]);
+
+    // AwesomeNotifications().actionStream.listen((receivedAction) {
+    //
+    //
+    //   //
+    //   // if (!AwesomeStringUtils.isNullOrEmpty(
+    //   //     receivedAction.buttonKeyPressed) &&
+    //   //     receivedAction.buttonKeyPressed.startsWith('MEDIA_')) {
+    //   // }
+    //   // else
+    //   //   {
+    //   //     print("Line140");
+    //   //     String targetPage=AudioPlay(number:songNumber, path:widget.path) as String;
+    //   //     loadSingletonPage(targetPage: targetPage, receivedAction: receivedAction);
+    //   //
+    //   //   }
+    //
+    //
+    //
+    // });
   }
 }
 
