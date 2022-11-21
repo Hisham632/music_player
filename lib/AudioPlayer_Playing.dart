@@ -27,7 +27,44 @@ class AudioPlay extends StatefulWidget {
   final int number;
   final String path;
 
+  static void processMediaControls(actionReceived) {
+    switch (actionReceived.buttonKeyPressed) {
 
+      case 'MEDIA_CLOSE':
+        _AudioPlayState.stop();
+        break;
+
+      case 'MEDIA_PLAY':
+        if(_AudioPlayState.isPlaying){
+          _AudioPlayState.pause();
+        }
+        else
+        {
+          _AudioPlayState.play(_AudioPlayState.songNumber);
+        }
+
+
+        break;
+
+    // case 'MEDIA_PAUSE':
+    //   pause();
+    //   animationController.reverse();
+    //
+    //   break;
+
+      case 'MEDIA_PREV':
+        _AudioPlayState.previous();
+        break;
+
+      case 'MEDIA_NEXT':
+        _AudioPlayState.next();
+        break;
+
+      default:
+        break;
+    }
+
+  }
   const AudioPlay({Key? key,
     required this.number,required this.path,
 
@@ -47,18 +84,18 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
 
 
-  late AudioPlayer audioPlayer;
+  static late AudioPlayer audioPlayer;
   late AudioCache player=player = AudioCache();
   Duration fileDuration= Duration();
   Duration position= Duration();
-  bool isPlaying=false;
-  late List<FileSystemEntity> listOfAllFolderAndFiles;
-  String songName='', lastSongPlayed='';//not used
+  static bool isPlaying=false;
+  static late List<FileSystemEntity> listOfAllFolderAndFiles;
+  static String songName='', lastSongPlayed='';//not used
   bool liked = false;
   late List<FileSystemEntity> tempPathOld;
 
   late AnimationController animationController;
-  int songNumber=1;
+  static int songNumber=1;
   void initPlayer() async {
 
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
@@ -128,6 +165,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       {
         play(songNumber);
       }
+    notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
 
 
@@ -200,46 +238,9 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   //   super.dispose();
   // }
 
-  void processMediaControls(actionReceived) {
-    switch (actionReceived.buttonKeyPressed) {
-
-      case 'MEDIA_CLOSE':
-        stop();
-        break;
-
-      case 'MEDIA_PLAY':
-        if(isPlaying){
-          pause();
-        }
-        else
-        {
-          play(songNumber);
-        }
 
 
-        break;
-
-    // case 'MEDIA_PAUSE':
-    //   pause();
-    //   animationController.reverse();
-    //
-    //   break;
-
-      case 'MEDIA_PREV':
-        previous();
-        break;
-
-      case 'MEDIA_NEXT':
-        next();
-        break;
-
-      default:
-        break;
-    }
-
-  }
-
- play(songNum) async {
+ static play(songNum) async {
     //player.play(song);
     String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
     songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
@@ -258,10 +259,10 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
     }
 
-  pause(){
+  static pause(){
     audioPlayer.pause();
   }
-  stop(){
+  static stop(){
     audioPlayer.stop();
   }
 
@@ -269,7 +270,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     audioPlayer.resume();
   }
 
-  next(){
+  static next(){
 
     //if(Lists.playNextNum==-1){
       //ig just +1 to songNum
@@ -294,7 +295,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
 
   }
-previous(){
+  static previous(){
    // play(lastSongPlayed);
   songNumber-=1;
 

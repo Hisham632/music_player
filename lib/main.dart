@@ -86,17 +86,16 @@ void main() async {
 
 
     );
-    if (!Playlists.subscribedActionStream) {
 
-      print("Listening "+ Playlists.subscribedActionStream.toString());
 
       AwesomeNotifications().actionStream.listen((receivedAction) {
+        print("Listening2222222222222222222222222222222222222222222222222222222 ");
 
 
         // if (!AwesomeStringUtils.isNullOrEmpty(
         //     receivedAction.buttonKeyPressed) &&
         //     receivedAction.buttonKeyPressed.startsWith('MEDIA_')) {
-        processMediaControls(receivedAction);
+        AudioPlay.processMediaControls(receivedAction);
         // }
         // else
         //   {
@@ -109,8 +108,7 @@ void main() async {
 
 
       });
-      Playlists.subscribedActionStream = true;
-    }
+
 
     runApp(
 
@@ -140,9 +138,7 @@ void main() async {
   }
 }
 
-void processMediaControls(ReceivedAction receivedAction) {
-  print("CLIECKTEEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-}
+
 
 
 
