@@ -56,12 +56,12 @@ void main() async {
   try{
 
     AwesomeNotifications().initialize(
-        'resource://drawable/res_ic_prev',
+        'resource://drawable/res_ic_play',
         [
 
           NotificationChannel(
               channelGroupKey: 'media_player_tests',
-              icon: 'resource://drawable/res_ic_prev',
+              icon: null,
               channelKey: 'media_player',
               channelName: 'Media player controller',
               channelDescription: 'Media player controller',
@@ -71,9 +71,9 @@ void main() async {
               playSound: false,
               locked: true,
               defaultColor: Color(0xFF9D50DD),
-              ledColor: Colors.white,
+              ledColor: Colors.black,
               importance: NotificationImportance.High,
-              channelShowBadge: true,  ),
+              channelShowBadge: false,  ),
 
 
 
@@ -90,6 +90,7 @@ void main() async {
 
       AwesomeNotifications().actionStream.listen((receivedAction) {
         print("Listening2222222222222222222222222222222222222222222222222222222 ");
+
 
 
         // if (!AwesomeStringUtils.isNullOrEmpty(

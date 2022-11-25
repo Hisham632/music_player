@@ -2,6 +2,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
+import 'package:music_player/AudioPlayer_Playing.dart';
 
 
 /*
@@ -36,11 +37,12 @@ class notificationDetail{
             channelKey: 'media_player',
             category: NotificationCategory.Transport,
             title: songNmae,
-            //body: songNmae,
+            body: songNmae,
             notificationLayout: NotificationLayout.MediaPlayer,
-           // icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
+            //icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
             bigPicture:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
-
+roundedLargeIcon: false,
+            progress: 50,
             largeIcon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
             color: Colors.purple.shade700,
             autoDismissible: false,
@@ -56,14 +58,14 @@ class notificationDetail{
               showInCompactView: true,
               buttonType: ActionButtonType.KeepOnTop),
 
-              // NotificationActionButton(
-              // key: 'MEDIA_PAUSE',
-              // icon: 'resource://drawable/res_ic_pause',
-              // label: 'Pause',
-              // autoDismissible: false,
-              // showInCompactView: true,
-              // buttonType: ActionButtonType.KeepOnTop)
-              // :
+          isPlaying?NotificationActionButton(
+              key: 'MEDIA_PAUSE',
+              icon: 'resource://drawable/res_ic_pause',
+              label: 'Pause',
+              autoDismissible: false,
+              showInCompactView: true,
+              buttonType: ActionButtonType.KeepOnTop)
+              :
               NotificationActionButton(
               key: 'MEDIA_PLAY',
               icon: 'resource://drawable/res_ic_play',

@@ -160,7 +160,11 @@ initState()
 
                   child: playlistName,)
 
-
+/*
+if we press the shuffle button auto start playing song and send to AudioPage
+and continue playing random
+change the next() and previosu to have a consdition wheterh or not Shuffllle mode is ON
+ */
 
 
 

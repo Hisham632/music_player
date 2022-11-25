@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:music_player/TextScroll.dart';
@@ -35,13 +36,17 @@ class AudioPlay extends StatefulWidget {
         break;
 
       case 'MEDIA_PLAY':
-        if(_AudioPlayState.isPlaying){
-          _AudioPlayState.pause();
-        }
-        else
-        {
-          _AudioPlayState.play(_AudioPlayState.songNumber);
-        }
+        print(_AudioPlayState.isPlaying);
+
+            if(_AudioPlayState.isPlaying){
+              _AudioPlayState.pause();
+            }
+            else
+            {
+              _AudioPlayState.play(_AudioPlayState.songNumber);
+            }
+
+
 
 
         break;
@@ -78,7 +83,7 @@ class AudioPlay extends StatefulWidget {
 
 class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
-  static int Count=0;
+   int count2=0;
 
   int countTimes=0;
 
@@ -92,6 +97,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   static late List<FileSystemEntity> listOfAllFolderAndFiles;
   static String songName='', lastSongPlayed='';//not used
   bool liked = false;
+  static bool shuffle=false;
   late List<FileSystemEntity> tempPathOld;
 
   late AnimationController animationController;
@@ -204,12 +210,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     //
     // }
   }
-  void loadSingletonPage({required String targetPage, required ReceivedAction receivedAction}){
-    // Avoid to open the notification details page over another details page already opened
-    Navigator.pushNamedAndRemoveUntil(context, targetPage,
-            (route) => (route.settings.name != targetPage) || route.isFirst,
-        arguments: receivedAction);
-  }
+
 
 
   @override
@@ -221,22 +222,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   }
 
-  @override
-  void dispose()
-  {
-    //animationController.dispose();
-    super.dispose();
 
 
-  }
-
-
-//  @override
-  // void dispose() {
-  //   AwesomeNotifications().actionSink.close();
-  //   AwesomeNotifications().createdSink.close();
-  //   super.dispose();
-  // }
 
 
 
@@ -272,7 +259,21 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   static next(){
 
-    //if(Lists.playNextNum==-1){
+    if(shuffle)
+      {
+        Random random = Random();
+
+        songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
+
+        if(listOfAllFolderAndFiles.length<songNumber)
+        {
+          songNumber=1;
+        }
+        play(songNumber);
+        notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+      }
+    else{
+      //if(Lists.playNextNum==-1){
       //ig just +1 to songNum
       songNumber+=1;
       if(listOfAllFolderAndFiles.length<songNumber)
@@ -283,30 +284,52 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
       //audioPlayer.onPlayerCompletion
-    // }
-    // else{
-    //   Directory dir = Directory(Lists.playNextPath);
-    //   tempPathOld=listOfAllFolderAndFiles;
-    //   listOfAllFolderAndFiles = dir.listSync(recursive: true);
-    //   play(Lists.playNextNum);
-    //
-    // }
+      // }
+      // else{
+      //   Directory dir = Directory(Lists.playNextPath);
+      //   tempPathOld=listOfAllFolderAndFiles;
+      //   listOfAllFolderAndFiles = dir.listSync(recursive: true);
+      //   play(Lists.playNextNum);
+      //
+      // }
+
+
+    }
 
 
 
   }
   static previous(){
-   // play(lastSongPlayed);
-  songNumber-=1;
 
-  if(songNumber<1)
-  {
-    songNumber=listOfAllFolderAndFiles.length;
-  }
-  play(songNumber);
-  notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+    if(shuffle)
+      {
+        Random random = Random();
+        songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
 
-}
+        if(songNumber<1)
+        {
+          songNumber=listOfAllFolderAndFiles.length;
+        }
+        play(songNumber);
+        notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+
+
+      }
+    else{
+      // play(lastSongPlayed);
+      songNumber-=1;
+
+      if(songNumber<1)
+      {
+        songNumber=listOfAllFolderAndFiles.length;
+      }
+      play(songNumber);
+      notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+
+    }
+    }
+
+
 
 timeStamp()
 {
@@ -349,6 +372,7 @@ fileTimeStamp()
     var imageSaveName=songName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     return Scaffold(
+        resizeToAvoidBottomInset : false,
 
       // appBar: AppBar(
       //     title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
@@ -577,12 +601,19 @@ fileTimeStamp()
 
                 IconButton(
                   iconSize: 35,
-                  icon: Icon(Icons.loop),
-                  color: Color(0xFFFFFFFF),
+                  icon: Icon(Icons.shuffle_outlined),
+                  color: shuffle?Colors.red[800]:Color(0xFFFFFFFF),
 
                   onPressed: ()
                   {
-                    next();
+
+                    if(shuffle)
+                      {
+                        shuffle=false;
+                      }
+                    else{
+                      shuffle=true;
+                    }
 
                   },
                 ),
