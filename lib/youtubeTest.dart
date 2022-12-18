@@ -29,6 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String vidImage="";
   String playListImage="";
+  late List<FileSystemEntity> listOfAllFolderAndFiles;
+  List<FileSystemEntity> PlaylistsFolders=[];
 
   String vidTitle="";
   String author="";
@@ -37,6 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
    int vidNum=0;
   String playlistTitle="";
   bool show=false;
+
+  String _selectedValue='Songs';
+  List<String> dropDownValues=[];
 
   void initPlayerPermission() async {
     final status = await Permission.storage.status;
@@ -54,8 +59,48 @@ class _MyHomePageState extends State<MyHomePage> {
       ].request();
     }
   }
+
+  void initState() {
+    super.initState();
+
+    initPlayerPermission();
+    getPlaylists();
+
+  }
+
+  void getPlaylists()
+  {
+    //getExternalStorageDirectory() ;
+
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    listOfAllFolderAndFiles = dir.listSync(recursive: false);
+    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
+    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
+
+    for(int count=0;count<listOfAllFolderAndFiles.length;count++)
+    {
+      if(listOfAllFolderAndFiles[count].toString().substring(0,9)=='Directory'){
+        PlaylistsFolders.add(listOfAllFolderAndFiles[count]);
+        //print(PlaylistsFolders);
+
+      }
+    }
+
+    for(int count=0;count<PlaylistsFolders.length;count++)
+    {
+      dropDownValues.add(PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-1));
+
+    }
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       resizeToAvoidBottomInset : false,
 
@@ -135,8 +180,65 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             },
           ),
-          SizedBox(height: 45),
+          SizedBox(height: 10),
+          //HERE
 
+        DropdownButtonFormField(
+          elevation: 10,
+          style:TextStyle(fontSize: 19,color: Color(0xFFFFFFFF),fontFamily:'Proxima Nova'),
+          alignment: Alignment.center,
+
+
+          decoration: InputDecoration(
+
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide( color: Color(0xFF424242),width: 2),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide( color: Colors.grey,width: 2),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            filled: true,
+             fillColor:Color(0xFF111213),
+          ),
+           dropdownColor: Color(0xFF212121),
+
+          value: _selectedValue,
+          hint: Text(
+            'choose one',
+          ),
+          isExpanded: false,
+          onChanged: (String? value) {
+            setState(() {
+              _selectedValue = value!;
+            });
+            print(_selectedValue);
+          },
+          // onSaved: (value) {
+          //   setState(() {
+          //     _selectedValue = value!;
+          //   });
+          // },
+          // validator: (String value) {
+          //   if (value.isEmpty) {
+          //     return "can't empty";
+          //   } else {
+          //     return null;
+          //   }
+          // },
+          items: dropDownValues
+              .map((String val) {
+            return DropdownMenuItem(
+              value: val,
+              child: Text(
+                val,
+              ),
+            );
+          }).toList(),
+        ),
+
+        //dropDownValues
 
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -186,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                  // print(directory2);
                   print("LINE182");
                   print(vidTitle);
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/Songs/');
+                  Directory dir = Directory('/storage/emulated/0/AudioFiles/'+_selectedValue+'/');
                   var filePath = path.join(dir.uri.toFilePath(),'$vidTitle.${audio.container.name}');
 
                   print(filePath);
@@ -296,7 +398,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     var nameFix="itachi.jpg";
 
-                    File imageFile= File('/storage/emulated/0files/pictures/$nameFix');
+                    File imageFile= File('/storage/emulated/0/files/pictures/$nameFix');
                     imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
 
                   }
