@@ -478,12 +478,12 @@ fileTimeStamp()
                       print("{RESSSED");
                       String song = listOfAllFolderAndFiles[songNumber].toString().substring(7, listOfAllFolderAndFiles[songNumber].toString().length - 1);
 
-                    if(Directory("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm").existsSync()) {
+                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm").existsSync()) {
 
                     }
                     else
                       {
-                        File(song).copySync("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm");
+                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm");
 
                       }
 

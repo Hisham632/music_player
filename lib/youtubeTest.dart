@@ -288,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                  // print(directory2);
                   print("LINE182");
                   print(vidTitle);
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/'+_selectedValue+'/');
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/'+_selectedValue+'/');
                   var filePath = path.join(dir.uri.toFilePath(),'$vidTitle.${audio.container.name}');
 
                   print(filePath);
@@ -348,8 +348,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   catch(e){
                     var nameFix="itachi";
 
-                    File imageFile= File('/storage/emulated/files/pictures/$nameFix.jpg');
-                    imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
+                    File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix.jpg');
+                    imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
 
                   }
 
@@ -363,7 +363,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   var title = playlist.title.replaceAll("/", '').replaceAll(':', '').replaceAll('.', '').replaceAll('[', '(').replaceAll(']',')').replaceAll("\"",'').replaceAll('*','').replaceAll('"','').replaceAll('<','').replaceAll('>','').replaceAll('|','');
                   //print(title);
                   await Permission.storage.request();
-                  Directory dir = Directory('/storage/emulated/0/AudioFiles/$title/');
+                  Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/$title/');
                  // Directory directory2 = await getExternalStorageDirectory() as Directory;
 
 
@@ -398,8 +398,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     var nameFix="itachi.jpg";
 
-                    File imageFile= File('/storage/emulated/0/files/pictures/$nameFix');
-                    imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
+                    File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix');
+                    imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
 
                   }
 
@@ -473,7 +473,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     try{
 
 
-                      File imageFile= File('/storage/emulated/0/files/pictures/$imageSaveName.jpg');
+                      File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
                       imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName2.jpg');
 
                     }
@@ -481,8 +481,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       var nameFix="itachi.jpg";
 
-                      File imageFile= File('/storage/emulated/0/files/pictures/$nameFix');
-                      imageFile.copySync('/storage/emulated/0/files/pictures/$imageSaveName2.jpg');
+                      File imageFile= File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix');
+                      imageFile.copySync('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName2.jpg');
 
                     }
 
