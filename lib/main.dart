@@ -66,14 +66,17 @@ void main() async {
               channelName: 'Media player controller',
               channelDescription: 'Media player controller',
               defaultPrivacy: NotificationPrivacy.Public,
-              enableVibration: true,
+              enableVibration: false,
               enableLights: true,
               playSound: false,
               locked: true,
               defaultColor: Color(0xFF9D50DD),
               ledColor: Colors.black,
               importance: NotificationImportance.High,
-              channelShowBadge: false,  ),
+              channelShowBadge: false,
+
+
+          ),
 
 
 

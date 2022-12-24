@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
     // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
     // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -189,14 +189,15 @@ class _MyHomePageState extends State<MyHomePage> {
           alignment: Alignment.center,
 
 
+
           decoration: InputDecoration(
 
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide( color: Color(0xFF424242),width: 2),
+              borderSide: BorderSide( color: Color(0xFF424242),width: 1),
               borderRadius: BorderRadius.circular(100),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide( color: Colors.grey,width: 2),
+              borderSide: BorderSide( color: Colors.grey,width: 1),
               borderRadius: BorderRadius.circular(30),
             ),
             filled: true,
@@ -229,10 +230,14 @@ class _MyHomePageState extends State<MyHomePage> {
           // },
           items: dropDownValues
               .map((String val) {
+                if(val.length>30){
+                  val=val.substring(0,30);
+                }
+
             return DropdownMenuItem(
               value: val,
               child: Text(
-                val,
+                val.toString(),
               ),
             );
           }).toList(),
@@ -521,7 +526,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace)
                   {
                       return Image(
-                        image: FileImage(File('/storage/emulated/0files/pictures/itachi.jpg')),
+                        image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/itachi.jpg')),
                       );
                       },
 
@@ -543,7 +548,7 @@ SizedBox(height: 2.5,),
                         SizedBox(width: 5,),
 
                         Text("Duration: "+((vidLenght/60).floor()).toString()+"min "+(vidLenght%60).toString()+"sec",textDirection: TextDirection.ltr,textAlign: TextAlign.left, style: TextStyle(fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),),
-                        SizedBox(width: 20,),
+                        SizedBox(width: 13,),
 
                         Text("Download Progress: "+downloadProgress.toString()+"%", style: TextStyle(fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),),
 

@@ -37,7 +37,7 @@ class notificationDetail{
             channelKey: 'media_player',
             category: NotificationCategory.Transport,
             title: songNmae,
-            body: songNmae,
+            //body: songNmae,
             notificationLayout: NotificationLayout.MediaPlayer,
             //icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
             bigPicture:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
