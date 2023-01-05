@@ -35,7 +35,8 @@ class AudioPlay extends StatefulWidget {
         break;
 
       case 'MEDIA_PLAY':
-        print(_AudioPlayState.isPlaying);
+        print("38"+_AudioPlayState.isPlaying.toString());
+        // notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
 
             if(_AudioPlayState.isPlaying){
               _AudioPlayState.pause();
@@ -44,13 +45,22 @@ class AudioPlay extends StatefulWidget {
             {
               _AudioPlayState.play(_AudioPlayState.songNumber);
             }
+
         break;
 
-    // case 'MEDIA_PAUSE':
-    //   pause();
-    //   animationController.reverse();
-    //
-    //   break;
+    case 'MEDIA_PAUSE':
+      // notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
+      print("52"+_AudioPlayState.isPlaying.toString());
+
+      if(_AudioPlayState.isPlaying){
+        _AudioPlayState.pause();
+      }
+      else
+      {
+        _AudioPlayState.play(_AudioPlayState.songNumber);
+      }
+
+      break;
 
       case 'MEDIA_PREV':
         _AudioPlayState.previous();
@@ -87,7 +97,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   late AudioCache player=player = AudioCache();
   Duration fileDuration= Duration();
   Duration position= Duration();
-  static bool isPlaying=false;
+  static bool isPlaying=true;
   static late List<FileSystemEntity> listOfAllFolderAndFiles;
   static String songName='', lastSongPlayed='';//not used
   bool liked = false;
@@ -203,8 +213,6 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
 
  static play(songNum) async {
-    print(songNum);
-
 
    String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
    songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
@@ -213,11 +221,14 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
       next();
     });
+   isPlaying=true;
 
-  }
+ }
 
   static pause(){
     audioPlayer.pause();
+    isPlaying=false;
+
   }
   static stop(){
     audioPlayer.stop();
@@ -498,41 +509,49 @@ fileTimeStamp(){
 
                                      // print(' player state: $s');
                                       if(s==PlayerState.PLAYING){
-                                        if(countTimes==0)
-                                        {
-                                          //notificationDetail.updateNotificationMediaPlayer(10,true, songName);
-
-                                          countTimes++;
-                                          isPlaying=true;
-                                          animationController.reverse();
-                                          pause();
-                                        }
-                                        else
-                                          {
+                                        // if(countTimes==0)
+                                        // {
+                                        //   //notificationDetail.updateNotificationMediaPlayer(10,true, songName);
+                                        //
+                                        //   countTimes++;
+                                        //   isPlaying=true;
+                                        //   animationController.reverse();
+                                        //   pause();
+                                        // }
+                                        // else
+                                        //   {
                                            // notificationDetail.updateNotificationMediaPlayer(10,true, songName);
+                                        print(s.toString()+" 500 "+isPlaying.toString());
 
-                                            isPlaying=true;
+                                            // isPlaying=false;
                                             animationController.reverse();
-                                          }
+
+                                         // }
 
                                        // print("PAUSING EMER");
                                       }
                                       else {
                                         animationController.forward();
 
-                                        isPlaying=false;
+                                        // isPlaying=true;
                                       }
                                      // print(isPlaying);
                                     });
 
+                                    print("528 "+isPlaying.toString());
+
                                     if(!isPlaying)
                                     {
                                       play(songNumber);
+                                       // isPlaying=true;
+
                                     }
                                     else if(isPlaying)
                                     {
                                      // print("PAUSING EMER2");
                                       pause();
+                                       // isPlaying=false;
+
                                     }
 
                                   },
