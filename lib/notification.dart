@@ -5,11 +5,6 @@ import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
 
 
-/*
-We need to pass the song name and from that we can get the icon
-
-noti works now, we just gotta link the buttons making sure they work and as well when to delete and show the notification
- */
 
 class notificationDetail{
 
@@ -39,14 +34,20 @@ class notificationDetail{
             title: songNmae,
             //body: songNmae,
             notificationLayout: NotificationLayout.MediaPlayer,
-            //icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
+            icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
             bigPicture:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
-roundedLargeIcon: false,
+            roundedLargeIcon: false,
             progress: 50,
             largeIcon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
             color: Colors.purple.shade700,
-            autoDismissible: false,
-            showWhen: false),
+            autoDismissible: true,
+            showWhen: false,
+            displayOnBackground: true,
+            displayOnForeground: true,
+            summary: songNmae,
+
+
+        ),
 
         actionButtons: [
 
@@ -114,7 +115,3 @@ roundedLargeIcon: false,
     // });
   }
 }
-
-/*
-Dismiss noti
- */

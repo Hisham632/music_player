@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -28,6 +26,7 @@ class AudioPlay extends StatefulWidget {
   final int number;
   final String path;
 
+
   static void processMediaControls(actionReceived) {
     switch (actionReceived.buttonKeyPressed) {
 
@@ -45,10 +44,6 @@ class AudioPlay extends StatefulWidget {
             {
               _AudioPlayState.play(_AudioPlayState.songNumber);
             }
-
-
-
-
         break;
 
     // case 'MEDIA_PAUSE':
@@ -68,8 +63,9 @@ class AudioPlay extends StatefulWidget {
       default:
         break;
     }
-
   }
+
+
   const AudioPlay({Key? key,
     required this.number,required this.path,
 
@@ -83,10 +79,8 @@ class AudioPlay extends StatefulWidget {
 
 class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
-   int count2=0;
-
+  int count2=0;
   int countTimes=0;
-
 
 
   static late AudioPlayer audioPlayer;
@@ -102,18 +96,15 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   late AnimationController animationController;
   static int songNumber=1;
-  void initPlayer() async {
 
+  void initPlayer() async {
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
-
 
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
 
-
-    //player.load('assets/misfit.mp3');
     audioPlayer.onDurationChanged.listen((Duration duration) {
      // print('duration $duration');
       setState(() {
@@ -122,19 +113,12 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     });
 
     audioPlayer.onAudioPositionChanged.listen((Duration position) {
-
         //print('Current position: $position');
         setState(() {
           this.position=position;
     });
   });
-
-
     AwesomeNotifications().requestPermissionToSendNotifications();
-
-//issue is when we open first time it works but subsequent opening of songs doesnt work
-
-
 
     // AwesomeNotifications().createdStream.listen((notification) {
     //
@@ -143,8 +127,6 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     //   animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500));
     //
     // });
-
-
 
     final status = await Permission.storage.status;
     const statusManageStorage = Permission.manageExternalStorage;
@@ -167,13 +149,12 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     AudioPlayer.players.forEach((key, value) {
       value.stop();
     });
+
     if(songNumber!=-1)
       {
         play(songNumber);
       }
     notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
-
-
 
     // if (!Playlists.subscribedActionStream) {
     //   notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
@@ -212,39 +193,26 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   }
 
 
-
   @override
   void initState()
   {
     super.initState();
-
     initPlayer();
-
   }
 
 
 
-
-
-
  static play(songNum) async {
-    //player.play(song);
-    String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
-    songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
-    //lastSongPlayed=song;
-    //lastSongPlayed=songNum;//might need to do in a list since might go back multiple times
-    // if(Lists.playNextNum!=-1) {
-    //   listOfAllFolderAndFiles = tempPathOld; //Putting back to og Path
-    //   Lists.playNextNum==-1;
-    // }
-    audioPlayer.play(song, isLocal: true);
 
+   String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
+   songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
+
+    audioPlayer.play(song, isLocal: true);
     audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
       next();
     });
 
-
-    }
+  }
 
   static pause(){
     audioPlayer.pause();
@@ -259,19 +227,19 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
   static next(){
 
-    if(shuffle)
-      {
-        Random random = Random();
+    if(shuffle){
 
+        Random random = Random();
         songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
 
-        if(listOfAllFolderAndFiles.length<songNumber)
-        {
+        if(listOfAllFolderAndFiles.length<songNumber){
           songNumber=1;
         }
+
         play(songNumber);
         notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
       }
+
     else{
       //if(Lists.playNextNum==-1){
       //ig just +1 to songNum
@@ -292,65 +260,59 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       //   play(Lists.playNextNum);
       //
       // }
-
-
     }
-
-
-
   }
+
   static previous(){
 
-    if(shuffle)
-      {
-        Random random = Random();
+    if(shuffle){
+
+      Random random = Random();
         songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
 
-        if(songNumber<1)
-        {
+        if(songNumber<1){
           songNumber=listOfAllFolderAndFiles.length;
         }
+
         play(songNumber);
         notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
-
-
       }
+
     else{
       // play(lastSongPlayed);
       songNumber-=1;
 
-      if(songNumber<1)
-      {
+      if(songNumber<1){
         songNumber=listOfAllFolderAndFiles.length;
       }
+
       play(songNumber);
       notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
-
     }
-    }
+  }
 
+timeStamp(){
 
+  if(position.inSeconds.remainder(60)>10){
 
-timeStamp()
-{
-  if(position.inSeconds.remainder(60)>10)
-    {
       return position.inSeconds.remainder(60);
-    }
-  else {
+  }
+  else{
     return "0"+position.inSeconds.remainder(60).toString();
   }
 }
-fileTimeStamp()
-{
-    if(fileDuration.inSeconds.remainder(60)>10)
-    {
+
+fileTimeStamp(){
+
+    if(fileDuration.inSeconds.remainder(60)>=10){
       return fileDuration.inSeconds.remainder(60);
     }
-    else {
+
+    else{
       return "0"+fileDuration.inSeconds.remainder(60).toString();
     }
 }
+
   // _updatePalette() async {
   // var bgColors = [];
   // for(String image in images) {
@@ -368,22 +330,21 @@ fileTimeStamp()
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-
     var imageSaveName=songName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     return Scaffold(
         resizeToAvoidBottomInset : false,
-
       // appBar: AppBar(
       //     title: Text('Clean',textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)),
+
        body: Container(
          height: mediaQueryData.size.height,
          width: mediaQueryData.size.width,
         decoration:  BoxDecoration(
 
-            image: DecorationImage(image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')), fit: BoxFit.cover, opacity: 0.1),//HERE IS backgroundColor
+            image: DecorationImage(image: FileImage(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')), fit: BoxFit.cover, opacity: 0.1),//HERE IS backgroundColor
 
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
                 colors: [Color(0xFF616161), Color(0xFF212121)],
                 stops: [0.05, 0.62],
                 begin: Alignment.topLeft,
@@ -399,8 +360,8 @@ fileTimeStamp()
                 SizedBox(width: 10,),
                 IconButton(
                   iconSize: 32,
-                  icon: Icon(MyIcons.chevron_down_1),
-                  color: Color(0xFF212121),//632
+                  icon: const Icon(MyIcons.chevron_down_1),
+                  color: const Color(0xFF212121),//632
 
                   alignment: Alignment.topLeft,
 
@@ -411,6 +372,7 @@ fileTimeStamp()
                 ),
               ],
             ),
+
             SizedBox(height: 20,),
           Center(
             child: Container(
@@ -437,23 +399,23 @@ fileTimeStamp()
             Row(
               children: [
 
-                Text(" ${position.inMinutes}:${timeStamp()}",style: TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                Text(" ${position.inMinutes}:${timeStamp()}",style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
                 SizedBox(
                   width: 305,
                   child: Slider(
                       min: 0,
                       max: fileDuration.inSeconds.toDouble(),
                       value: position.inSeconds.toDouble(),
-                      activeColor: Color(0xFFFFFFFF),//0xFF35325e
+                      activeColor: const Color(0xFFFFFFFF),//0xFF35325e
                       inactiveColor: Colors.grey[800],
                       onChanged: (double value){
                         setState(() {
-                          audioPlayer.seek(new Duration(seconds: value.toInt()));
+                          audioPlayer.seek(Duration(seconds: value.toInt()));
                         });
                       }
                   ),
                 ),
-                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
 
               ],
             ),
@@ -472,18 +434,16 @@ fileTimeStamp()
                         ? Colors.red[800]
                         : Colors.white70 ,
 
-
                     onPressed: ()
                     {
-                      print("{RESSSED");
                       String song = listOfAllFolderAndFiles[songNumber].toString().substring(7, listOfAllFolderAndFiles[songNumber].toString().length - 1);
 
-                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm").existsSync()) {
+                    if(Directory("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm").existsSync()) {
 
                     }
                     else
                       {
-                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm");
+                        File(song).copySync("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm");
 
                       }
 
@@ -553,9 +513,6 @@ fileTimeStamp()
                                             animationController.reverse();
                                           }
 
-
-
-
                                        // print("PAUSING EMER");
                                       }
                                       else {
@@ -586,7 +543,7 @@ fileTimeStamp()
                     ),
                 SizedBox(width: 10,),
 
-           IconButton(
+                IconButton(
                       iconSize: 50,
                       icon: Icon(Icons.skip_next_rounded),
                       color: Color(0xFFFFFFFF),
@@ -594,9 +551,9 @@ fileTimeStamp()
                       onPressed: ()
                       {
                         next();
-
                       },
                   ),
+
                 SizedBox(width: 10,),
 
                 IconButton(
@@ -607,8 +564,7 @@ fileTimeStamp()
                   onPressed: ()
                   {
 
-                    if(shuffle)
-                      {
+                    if(shuffle){
                         shuffle=false;
                       }
                     else{
@@ -630,22 +586,18 @@ fileTimeStamp()
 
   }
 
-  songNameLenght()
-  {
+  songNameLenght(){
     if(songName.length>20)
     {
       return ScrollingText(
         text: songName,
-        textStyle: TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+        textStyle: const TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
       );
     }
     else {
-      return Text(songName, style: TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
+      return Text(songName, style: const TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
     }
   }
-
-
-
 
 }
 

@@ -19,7 +19,6 @@ enum Menu { itemOne, itemTwo, itemThree, itemFour }
 class Lists extends StatefulWidget {
   final String folderName;
 
-
   static int playNextNum=-1;
   static String playNextPath="";
 
@@ -39,14 +38,12 @@ class _ListsState extends State<Lists> {
   late List<FileSystemEntity> listOfAllFolderAndFiles;
   final player  = AudioPlayer();
 
-  //late Future<String> dataValue;
 
-initState()
-   {
+@override
+  initState(){
      int songNum=2;
 
     super.initState();
-  //  print(widget.folderName);
     //Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     Directory dir = Directory(widget.folderName.substring(13, widget.folderName.length - 1));// later make sure the folder is not empty
 
@@ -56,13 +53,7 @@ initState()
 
     //String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
     songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5);
-    //print('line28');
-    //print(song);
-   // print('line30');
-   // print(songName);
-   // var duration =  player.setFilePath(listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1));
-    //print(duration);
-     //songMetaData();
+
    }
 
 
@@ -114,7 +105,6 @@ initState()
   @override
   Widget build(BuildContext context) {
 
-
     var name=widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1);
     var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.left,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'));
     var num=0.0;
@@ -134,10 +124,10 @@ initState()
       Container(
         color: const Color(0xFF161617),
         child: Row(
+            children: [
+              SizedBox(width: 1),
 
-
-            children: [SizedBox(width: 1),
-        Container(
+              Container(
               padding: EdgeInsets.all(50),
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -156,9 +146,8 @@ initState()
               SizedBox(width: num),
 
               Flexible(
-
-
-                  child: playlistName,)
+                  child: playlistName,
+              )
 
 /*
 if we press the shuffle button auto start playing song and send to AudioPage
@@ -166,14 +155,10 @@ and continue playing random
 change the next() and previosu to have a consdition wheterh or not Shuffllle mode is ON
  */
 
-
-
-
-
-
             ]
         ),
-      ), ListView.separated(//later add that divider
+      ),
+      ListView.separated(//later add that divider
           separatorBuilder: (context, index) => const Divider(
             color: Color(0xFF000000),
             height: 0,
@@ -191,23 +176,23 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
 
                     }
                 )
-
             );
 
-            //ElevatedButton(onPressed: (){}, child: Text(listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5)));
-
           }
-      )]             , controller: MultiSplitViewController(weights: [0.22]));
+      )], controller: MultiSplitViewController(weights: [0.22]));
+
     return MultiSplitViewTheme(
         child: multiSplitView,
         data: MultiSplitViewThemeData(
             dividerThickness: 0.001,
-            dividerPainter: DividerPainters.background(color: Color(0xFF000000))));
+            dividerPainter: DividerPainters.background(color: Color(0xFF000000))
+        )
+    );
 
   }
 
-  songListView(context,songNum)
-   {
+  songListView(context,songNum){
+
      var sName= listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
      var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
@@ -237,7 +222,6 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
               print("selected"+item.index.toString());
-
 
               setState(() {
                 // if(item.index==0){
@@ -270,7 +254,6 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
               builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1),),
             ),
           );
-         // print('clicked '+listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5));
         },
 
       ),
@@ -279,9 +262,6 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
 
 
 }
-
-
-
 
 
 /*

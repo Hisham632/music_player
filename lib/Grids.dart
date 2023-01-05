@@ -67,13 +67,13 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
 
-    for(int count=0;count<listOfAllFolderAndFiles.length;count++)
-    {
+    for(int count=0;count<listOfAllFolderAndFiles.length;count++) {
+
       if(listOfAllFolderAndFiles[count].toString().substring(0,9)=='Directory'){
           PlaylistsFolders.add(listOfAllFolderAndFiles[count]);
           //print(PlaylistsFolders);
@@ -82,92 +82,12 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   }
 
 
-  void getAllSongsList()
-  {
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+  void getAllSongsList(){
+
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
-    //print('line58');
-  //  print(listAllSongs.length);
-
   }
-/*
-miniPlayer()
-{
-  //Size phoneSize= MediaQuery.of(context).size;
-  return AnimatedContainer(
-    color: Colors.blueAccent,
-    duration: Duration(seconds: 1),
-    child: SizedBox(
-      height: 85,
-      child: Column(
-        children: [
-        SizedBox(
-        height: 1,
-        child: SliderTheme(
-          child: Slider(
-            value: 12,
-            max: 100,
-            onChanged: null,
-          ),
-          data: SliderTheme.of(context).copyWith(
-            activeTrackColor: Colors.orange,
-            inactiveTrackColor: Colors.red.withOpacity(0.3),
-            trackShape: SpotifyMiniPlayerTrackShape(),
-            trackHeight: 2,
-            thumbShape: RoundSliderThumbShape(
-              enabledThumbRadius: 0,
-            ),
-          ),
-        ),
-      ),
-      Row(
-      children: [
-      Flexible(
-      flex: 8,
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AudioPlay(number: -1, path:'/storage/emulated/0/Download/' ,)));
-        },
-        child: Row(
-          children: [
-            Flexible(
-                child: Image.asset('Images/gatePic.jpg')),
-            Flexible(
-              flex: 3,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0),
-                child: Text('Song Name'),
-              ),
-            )
-          ],
-        ),
-      ),
-    ),
-    Flexible(
-        flex: 2,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 15.0),
-          child: SizedBox(
-            height: 60,
-            width: 60,
-            child: Icon(Icons.play_arrow),
-          ),
-        ))
-    ],
-  )
-  ],
-  ),
-  ),
-  );
-}
 
-
-
-*/
   @override
   Widget build(BuildContext context) {
 
@@ -178,7 +98,7 @@ miniPlayer()
       length: 2,
       child: Scaffold(
         drawer: Drawer(
-          backgroundColor: Color(0xFF111213),
+          backgroundColor: const Color(0xFF111213),
          // shape: ,
           child: ListView(
             padding: EdgeInsets.zero,
@@ -187,7 +107,7 @@ miniPlayer()
             ,
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Home'),
+            title: const Text('Home'),
             textColor: Color(0xFF4c7dad),
             iconColor: Color(0xFF4c7dad),
             hoverColor: Color(0xFF4c7dad),
@@ -198,8 +118,6 @@ miniPlayer()
                   builder: (context) => Playlists(),
                 ),
               );
-              //print('clicked '+listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5));
-
             },
           ),
               ListTile(
@@ -221,6 +139,7 @@ miniPlayer()
             ],
           ),
         ),
+
       /*  appBar: AppBar(
           bottom: TabBar(
             isScrollable: true,
@@ -240,6 +159,7 @@ miniPlayer()
 
 
         ),*/
+
         backgroundColor: const Color(0xFF212224),
         body:NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -263,7 +183,6 @@ miniPlayer()
                      tabs: [
                        Tab(icon:Icon(Icons.whatshot_outlined,color: Color(0xFFfc0811),),text:"Playlists"),
                        Tab(icon:Icon(Icons.view_list,color: Color(0xFFfc0811)),text: "Songs",),
-                       //Tab(icon: Icon(Icons.ac_unit_sharp, color: Colors.deepPurple,),text: "YoutubeDownloader",)
                      ],
                    ),
 
@@ -272,7 +191,6 @@ miniPlayer()
               ];
           },
           body: TabBarView(
-
             controller: tabController,
             children:[
 
@@ -280,7 +198,6 @@ miniPlayer()
               getAllSongs(),
             ],
           ),
-
         ),
 
 
@@ -292,8 +209,6 @@ miniPlayer()
 
   playlistGrid()
   {
-    var images=['Images/testPic.jpg','Images/donda.jpeg','Images/testPic2.jpg','Images/testPic4.jpg','Images/testPic5.jpg','Images/testPic5.jpg','Images/testPic5.jpg','Images/testPic5.jpg','Images/testPic5.jpg'];
-
     return GridView.builder(
 
       itemCount: PlaylistsFolders.length,
@@ -318,19 +233,17 @@ miniPlayer()
                   builder: (context) => Lists(folderName:PlaylistsFolders[count].toString()),// make list take a parameter for the folder
                 ),
               );
-             // print("Clicked "+count.toString());
             },
 
             child:Column(
-              mainAxisSize:MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize:MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
 
               children: [
                 Container(decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
+                    image: FileImage(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
                     fit: BoxFit.fitWidth,
-// Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
                   ),
                   borderRadius:  BorderRadius.all(Radius.circular(15.0)),
                 ),
@@ -370,8 +283,8 @@ miniPlayer()
 
 
 
-  getAllSongs()
-  {
+  getAllSongs(){
+
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
           color: Color(0xFF000000),
@@ -403,7 +316,7 @@ miniPlayer()
                          child: ListTile(//use the special textFont ALSO later add that divider
                            leading: ClipRRect(
                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                             child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
+                             child: Image.file(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
                            ),
                            title: Text(
                              listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-1),
@@ -415,14 +328,9 @@ miniPlayer()
                            dense: true,
                            contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 1.0),
                            selected: true,
-
-
-
                          ),
-                       );;
+                       );
                      }
-
-
                   }
 
               ),
@@ -436,9 +344,8 @@ miniPlayer()
 
 
 
-  songListView(context,songNum)
-  {
-    //print('EachTime '+ songNum.toString());
+  songListView(context,songNum){
+
     var sName=listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-6);
     var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
@@ -451,11 +358,11 @@ miniPlayer()
       child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
+          child: Image.file(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
         ),
         title: Text(
           listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-6),
-          style: TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+          style: const TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
           overflow: TextOverflow.ellipsis,
 
         ),
@@ -490,11 +397,9 @@ miniPlayer()
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/',),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
             ),
           );
-        //  print('CLICKED 1111111111111111111111111111111111111111111111111  '+listAllSongs[songNum].toString());
-        //  print((listAllSongs[songNum].toString().substring(listAllSongs[songNum].toString().length-9,listAllSongs[songNum].toString().length)).contains("."));
         },
 
       ),
@@ -506,164 +411,4 @@ miniPlayer()
     return null;
   }
 
-
-
-
 }
-/*
-downloader(){
-  final textController = TextEditingController();
-
-    return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Insert the video id or url',
-            ),
-            TextField(controller: textController),
-            ElevatedButton(
-                child: const Text('Download'),
-                onPressed: () async {
-                  // Here you should validate the given input or else an error
-                  // will be thrown.
-                  var yt = YoutubeExplode();
-                  var id = VideoId("https://www.youtube.com/watch?v=2JpkMXinO1M&ab_channel=AnimelunaII");
-                  var video = await yt.videos.get(id);
-                  print(video.title);
-
-                  // Display info about this video.
-
-
-                  // Request permission to write in an external directory.
-                  // (In this case downloads)
-                  await Permission.storage.request();
-
-                  // Get the streams manifest and the audio track.
-                  var manifest = await yt.videos.streamsClient.getManifest(id);
-                  var audio = manifest.audioOnly.last;
-
-                  // Build the directory.
-                  Directory dir = Directory('/storage/emulated/0/Download/');
-                  var filePath = path.join(dir.uri.toFilePath(),
-                      '${video.title}.${audio.container.name}');
-
-                  // Open the file to write.
-                  var file = File(filePath);
-                  var fileStream = file.openWrite();
-
-                  // Pipe all the content of the stream into our file.
-                 // var audioStream = await yt.videos.streamsClient.get(audio).pipe(fileStream);
-                   var audioStream = await yt.videos.streamsClient.get(audio);
-
-                  var len = audio.size.totalBytes;
-                  var count = 0;
-                  var progress;
-                  // Pipe all the content of the stream into our file.
-                  await for (final data in audioStream) {
-                  // Keep track of the current downloaded data.
-                  count += data.length;
-
-                  // Calculate the current progress.
-                  progress = ((count / len) * 100).ceil();
-
-                  print("Progress: $progress");
-
-
-                  fileStream.add(data);
-                  }
-
-                  if(progress==100)
-                    {
-                      print("Download Complete");
-                    }
-
-
-
-                  await fileStream.flush();
-                  await fileStream.close();
-
-
-                }),
-          ],
-        ),
-      );
-  }
-
-
-
-*/
-
-
-/*
-class SpotifyMiniPlayerTrackShape extends RoundedRectSliderTrackShape {
-  Rect getPreferredRect({
-    required RenderBox parentBox,
-    Offset offset = Offset.zero,
-    required SliderThemeData sliderTheme,
-    bool isEnabled = false,
-    bool isDiscrete = false,
-  }) {
-    final double? trackHeight = sliderTheme.trackHeight;
-    final double trackLeft = offset.dx;
-    final double trackTop =
-        offset.dy + (parentBox.size.height - trackHeight!) / 2;
-    final double trackWidth = parentBox.size.width;
-    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
-  }
-}*/
-
-/*
-GridView.builder(
-          itemCount: PlaylistsFolders.length,
-          itemBuilder: (context,count)
-          {
-            return Card(// maybe make it a card
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              elevation: 15,
-              color: Colors.red[700],
-              child:InkWell(
-                splashColor: Colors.red.withAlpha(30),
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Lists(folderName:PlaylistsFolders[count].toString()),// make list take a parameter for the folder
-                      ),
-                    );
-                    print("Clicked "+count.toString());
-                  },
-
-                    child:Column(
-                      mainAxisSize:MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-
-                      children: [
-                        Ink.image(
-                          height: 160,
-                          image: AssetImage('Images/img.png'),
-                          fit: BoxFit.fitWidth,
-                        ),
-                        Text(
-                            PlaylistsFolders[count].toString().split('/').last.substring(0,PlaylistsFolders[count].toString().split('/').last.length-5),
-                            style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'lato'),
-                            overflow: TextOverflow.ellipsis
-                        ),
-
-                      ],
-                    ),
-                ),
-
-
-            );
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 5.0,
-          ),
-
-        ),
- */
