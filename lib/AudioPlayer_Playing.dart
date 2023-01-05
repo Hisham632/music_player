@@ -203,6 +203,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
 
  static play(songNum) async {
+    print(songNum);
+
 
    String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
    songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
@@ -232,8 +234,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         Random random = Random();
         songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
 
-        if(listOfAllFolderAndFiles.length<songNumber){
-          songNumber=1;
+        if(listOfAllFolderAndFiles.length<=songNumber){
+          songNumber=0;
         }
 
         play(songNumber);
@@ -244,9 +246,9 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       //if(Lists.playNextNum==-1){
       //ig just +1 to songNum
       songNumber+=1;
-      if(listOfAllFolderAndFiles.length<songNumber)
+      if(listOfAllFolderAndFiles.length<=songNumber)
       {
-        songNumber=1;
+        songNumber=0;
       }
       play(songNumber);
       notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
@@ -270,8 +272,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       Random random = Random();
         songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
 
-        if(songNumber<1){
-          songNumber=listOfAllFolderAndFiles.length;
+        if(songNumber<0){
+          songNumber=listOfAllFolderAndFiles.length-1;
         }
 
         play(songNumber);
@@ -282,8 +284,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       // play(lastSongPlayed);
       songNumber-=1;
 
-      if(songNumber<1){
-        songNumber=listOfAllFolderAndFiles.length;
+      if(songNumber<0){
+        songNumber=listOfAllFolderAndFiles.length-1;
       }
 
       play(songNumber);
@@ -598,7 +600,6 @@ fileTimeStamp(){
       return Text(songName, style: const TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
     }
   }
-
 }
 
 

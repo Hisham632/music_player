@@ -34,13 +34,13 @@ class notificationDetail{
             title: songNmae,
             //body: songNmae,
             notificationLayout: NotificationLayout.MediaPlayer,
-            icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
+            //icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
             bigPicture:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
             roundedLargeIcon: false,
             progress: 50,
             largeIcon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
             color: Colors.purple.shade700,
-            autoDismissible: true,
+            autoDismissible: false,
             showWhen: false,
             displayOnBackground: true,
             displayOnForeground: true,
@@ -115,3 +115,7 @@ class notificationDetail{
     // });
   }
 }
+
+/*
+Dismiss noti
+ */
