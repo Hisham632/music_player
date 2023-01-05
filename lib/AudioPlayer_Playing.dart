@@ -36,7 +36,6 @@ class AudioPlay extends StatefulWidget {
 
       case 'MEDIA_PLAY':
         print("38"+_AudioPlayState.isPlaying.toString());
-        // notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
 
             if(_AudioPlayState.isPlaying){
               _AudioPlayState.pause();
@@ -45,11 +44,12 @@ class AudioPlay extends StatefulWidget {
             {
               _AudioPlayState.play(_AudioPlayState.songNumber);
             }
+        notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
+
 
         break;
 
     case 'MEDIA_PAUSE':
-      // notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
       print("52"+_AudioPlayState.isPlaying.toString());
 
       if(_AudioPlayState.isPlaying){
@@ -59,6 +59,7 @@ class AudioPlay extends StatefulWidget {
       {
         _AudioPlayState.play(_AudioPlayState.songNumber);
       }
+       notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
 
       break;
 
