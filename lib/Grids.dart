@@ -394,10 +394,12 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
           icon: Icon(Icons.more_vert,color: Colors.grey[400],),
         ),
         onTap: (){
+          Duration time= Duration();
+
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/',),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/', currentPosition: time,),
             ),
           );
         },

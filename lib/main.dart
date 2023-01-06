@@ -6,9 +6,9 @@ import 'package:music_player/youtubeTest.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 /*
-Do the thing when playing current song doesnt restart,
+//Do the thing when playing current song doesnt restart,
 Search Bar,
-fix noti bugs and maybe add slider or when we click it goes to the current song
+//fix noti bugs and maybe add slider or when we click it goes to the current song
 bluetooth controller
 
 do the equal width for the stuff next and previous buttons, width% for slider
@@ -49,6 +49,11 @@ void main() async {
       debug: true);
 
   AwesomeNotifications().actionStream.listen((receivedAction) {
+    print(receivedAction.buttonKeyPressed);
+
+
+
+
     AudioPlay.processMediaControls(receivedAction);
 
     // if (!AwesomeStringUtils.isNullOrEmpty(

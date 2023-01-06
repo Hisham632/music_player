@@ -247,13 +247,32 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
           icon: Icon(Icons.more_vert,color: Colors.grey[400],),
         ),
 
-          onTap: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1),),
-            ),
-          );
+          onTap: () async {
+            Duration time= Duration();
+
+
+            if(AudioPlay.currentNumSong()==songNum&&AudioPlay.currentPath()==(widget.folderName.substring(13, widget.folderName.length - 1)))
+              {
+                print("SAME SONG");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1), currentPosition: AudioPlay.currentTime(),),
+                  ),
+                );
+              }
+            else
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1), currentPosition: time,),
+                  ),
+                );
+              }
+          
+          
+
         },
 
       ),

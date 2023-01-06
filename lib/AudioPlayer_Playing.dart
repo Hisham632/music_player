@@ -25,6 +25,25 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 class AudioPlay extends StatefulWidget {
   final int number;
   final String path;
+  final Duration currentPosition;
+
+  static Duration currentTime(){
+    // _AudioPlayState.audioPlayer.seek(position)
+
+    return _AudioPlayState.position;
+
+  }
+
+  static String currentPath(){
+    print('currentPath');
+    print( _AudioPlayState.pathForOG);
+
+    return _AudioPlayState.pathForOG;
+  }
+
+  static int currentNumSong(){
+    return _AudioPlayState.songNumber;
+  }
 
 
   static void processMediaControls(actionReceived) {
@@ -78,7 +97,7 @@ class AudioPlay extends StatefulWidget {
 
 
   const AudioPlay({Key? key,
-    required this.number,required this.path,
+    required this.number,required this.path, required this.currentPosition,
 
   }) : super(key: key);
 
@@ -93,11 +112,12 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   int count2=0;
   int countTimes=0;
 
+  static late String pathForOG;
 
   static late AudioPlayer audioPlayer;
   late AudioCache player=player = AudioCache();
-  Duration fileDuration= Duration();
-  Duration position= Duration();
+  static Duration fileDuration= Duration();
+  static Duration position= Duration();
   static bool isPlaying=true;
   static late List<FileSystemEntity> listOfAllFolderAndFiles;
   static String songName='', lastSongPlayed='';//not used
@@ -109,12 +129,29 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   static int songNumber=1;
 
   void initPlayer() async {
+
+    // if(widget.number==number&& widget.path==path){
+    //   audioPlayer.seek(this.position);
+    //
+    // }
+
+    pathForOG=widget.path;
+
+
+
+
     //final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     //final Map<String, dynamic> manifestMap = json.decode(manifestJson);
 
     audioPlayer = AudioPlayer();
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
+    if(widget.currentPosition.inSeconds>4){
+      audioPlayer.seek(widget.currentPosition);
+
+    }
+
+
 
     audioPlayer.onDurationChanged.listen((Duration duration) {
      // print('duration $duration');
@@ -123,12 +160,13 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       });
     });
 
-    audioPlayer.onAudioPositionChanged.listen((Duration position) {
-        //print('Current position: $position');
+    audioPlayer.onAudioPositionChanged.listen((Duration position2) {
+        print('Current position: $position');
         setState(() {
-          this.position=position;
+          position=position2;
     });
   });
+
     AwesomeNotifications().requestPermissionToSendNotifications();
 
     // AwesomeNotifications().createdStream.listen((notification) {
@@ -345,6 +383,8 @@ fileTimeStamp(){
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     var imageSaveName=songName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+
+    print(    'NEW POSITION:  '+position.inSeconds.toDouble().toString());
 
     return Scaffold(
         resizeToAvoidBottomInset : false,
