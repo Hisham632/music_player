@@ -249,6 +249,14 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     initPlayer();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+     // AwesomeNotifications().dismiss(0);
+  }
+
 
 
  static play(songNum) async {

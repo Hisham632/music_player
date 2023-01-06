@@ -44,6 +44,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   void dispose() {
     tabController.dispose();
     super.dispose();
+    AwesomeNotifications().dismiss(0);
+
   }
 
   void initPlayerPermission() async {
@@ -412,5 +414,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   Future songMetaData(songNum) async{
     return null;
   }
+
 
 }

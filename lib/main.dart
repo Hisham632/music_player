@@ -19,6 +19,7 @@ maybe add a minimize playr thing
 */
 
 void main() async {
+
   AwesomeNotifications().requestPermissionToSendNotifications();
 
   AwesomeNotifications().initialize(
@@ -68,6 +69,7 @@ void main() async {
     //
     //   }
   });
+
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
