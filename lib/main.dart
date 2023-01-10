@@ -7,13 +7,14 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 
 /*
 //Do the thing when playing current song doesnt restart,
-Search Bar,
+//Search Bar,
 //fix noti bugs and maybe add slider or when we click it goes to the current song
 bluetooth controller
+remove :
 
 do the equal width for the stuff next and previous buttons, width% for slider
 //arrange/clean all code
-dismiss noti on app closed
+//dismiss noti on app closed
 
 maybe add a minimize playr thing
 */

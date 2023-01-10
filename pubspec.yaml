@@ -53,6 +53,7 @@ dependencies:
   awesome_notifications: ^0.6.21
   multi_split_view: ^1.6.0
   image_downloader: ^0.31.0
+  anim_search_bar: ^2.0.3
 
 
 

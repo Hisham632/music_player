@@ -12,6 +12,8 @@ import 'package:path/path.dart' as path;
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:awesome_notifications/android_foreground_service.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:anim_search_bar/anim_search_bar.dart';
+
 enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class Playlists extends StatefulWidget {
@@ -29,6 +31,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
    List<FileSystemEntity> PlaylistsFolders=[];
   late TabController tabController;
   late List<FileSystemEntity> listAllSongs;
+  String searchTitle=' ';
 
 
   void initState() {
@@ -45,6 +48,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
     tabController.dispose();
     super.dispose();
     AwesomeNotifications().dismiss(0);
+
 
   }
 
@@ -92,6 +96,17 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    TextEditingController textControllerSearch = TextEditingController();
+
+    // tabController.addListener(() {
+    //   if(tabController.indexIsChanging){
+    //     setState(() {
+    //
+    //     });
+    //   }
+    // });
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -167,10 +182,79 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
                  SliverAppBar(
-                   title: Center(child:Text('Playlists        ',  textAlign: TextAlign.justify,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),)),
+                   elevation: 10,
+                   actions: [
+
+
+                     (currentTab())?InkWell(
+
+              onTap: ()=>{
+                print("THE ATTACK TITAN")
+
+              },
+              child: AnimSearchBar(
+              width: mediaQueryData.size.width,
+
+              textController: textControllerSearch,
+
+              color: Color(0xFF111213),
+              searchIconColor: Colors.white,
+              style: TextStyle(fontSize:22,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+              autoFocus: true,
+              boxShadow: true,
+              closeSearchOnSuffixTap: true,
+              suffixIcon: const Icon(Icons.close,
+                color: Colors.white,
+                size: 20,
+              ),
+              prefixIcon: Icon(
+                Icons.search,
+                size: 24,
+              ),
+              textFieldIconColor: Colors.white,
+              textFieldColor: Colors.grey[900],
+
+
+
+
+
+              onSuffixTap: () {
+                setState(() {
+                  textControllerSearch.addListener(() {
+
+                    print(textControllerSearch.text);
+
+                  });
+
+                  textControllerSearch.clear();
+
+                });
+
+                print("CLIKED555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555");
+              setState(() {
+                textControllerSearch.clear();
+              });}, onSubmitted: (String ) {
+
+                setState(() {
+                  searchTitle=textControllerSearch.text;
+                });
+                print("clicked44444444444444444444444444444444444444444444444444444444444444444");
+                textControllerSearch.clear();
+
+              },),
+            ):Text(''),
+
+                     // IconButton(
+                     //     onPressed: ()=>{
+                     //
+                     // },
+                     //     icon:Icon(Icons.search)),
+                   ],
+                   title: Center(child:Text('Playlists',  textAlign: TextAlign.justify,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),)),
                    backgroundColor: Color(0xFF111213),
                    pinned: true,
                    floating: true,
+
                    bottom: TabBar(
                      labelColor: const Color(0xFFFFFFFF),
                      controller: tabController,
@@ -207,6 +291,19 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
     ),
     );
 
+  }
+
+  currentTab(){
+    return true;
+    
+    if(tabController.index==0){
+      return false;
+    }
+    else{
+      return true;
+    }
+
+    return tabController.index;
   }
 
   playlistGrid()
@@ -287,6 +384,20 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   getAllSongs(){
 
+    // here wed have the filtered list, we'd need to create it from listAllSongs and put it in a setState
+    //have it same format so we dont gotta change the code below
+
+
+    late List<FileSystemEntity> listAllSongsSearch;
+
+    listAllSongsSearch=listAllSongs
+        .where((user) =>
+        user.toString().toLowerCase().contains(searchTitle.toLowerCase()))
+        .toList();
+
+    print("LINE 338");
+    print(listAllSongsSearch);
+
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
           color: Color(0xFF000000),
@@ -294,10 +405,10 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
           thickness: 2,
         ),
 
-        itemCount: listAllSongs.length,
+        itemCount: listAllSongsSearch.length,
         itemBuilder: (context,songNum){
 
-          var sName=listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-1);
+          var sName=listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-1);
           var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
           return Container(
@@ -305,7 +416,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               child: FutureBuilder(
                   future: songMetaData(songNum),
                   builder: (context, snapshot){
-                    if((listAllSongs[songNum].toString().substring(listAllSongs[songNum].toString().length-9,listAllSongs[songNum].toString().length)).contains(".")){
+                    if((listAllSongsSearch[songNum].toString().substring(listAllSongsSearch[songNum].toString().length-9,listAllSongsSearch[songNum].toString().length)).contains(".")){
                       return songListView(context, songNum);
                      }
                      else{
@@ -321,7 +432,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
                              child: Image.file(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
                            ),
                            title: Text(
-                             listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-1),
+                             listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-1),
                              style: TextStyle(fontSize: 20,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
                              overflow: TextOverflow.ellipsis,
 
@@ -348,7 +459,14 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   songListView(context,songNum){
 
-    var sName=listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-6);
+    late List<FileSystemEntity> listAllSongsSearch;
+
+    listAllSongsSearch=listAllSongs
+        .where((user) =>
+        user.toString().toLowerCase().contains(searchTitle.toLowerCase()))
+        .toList();
+
+    var sName=listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-6);
     var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     return Card(
@@ -360,10 +478,10 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
       child: ListTile(//use the special textFont ALSO later add that divider
         leading: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image.file(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
+          child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
         ),
         title: Text(
-          listAllSongs[songNum].toString().split('/').last.substring(0,listAllSongs[songNum].toString().split('/').last.length-6),
+          listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-6),
           style: const TextStyle(fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
           overflow: TextOverflow.ellipsis,
 
