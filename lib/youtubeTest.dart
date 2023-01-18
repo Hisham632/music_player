@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void getPlaylists() {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
     // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
     // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -296,7 +296,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print("LINE182");
                   print(vidTitle);
                   Directory dir = Directory(
-                      '/storage/emulated/0/AudioFiles/' + _selectedValue + '/');
+                      '/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/' + _selectedValue + '/');
                   var filePath = path.join(dir.uri.toFilePath(),
                       '$vidTitle.${audio.container.name}');
 
@@ -356,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   } catch (e) {
                     var nameFix = "itachi";
 
-                    File imageFile = File(
+                    File imageFile = File(//Android/data/com.example.music_player/
                         '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$nameFix.jpg');
                     imageFile.copySync(
                         '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
@@ -381,7 +381,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   //print(title);
                   await Permission.storage.request();
                   Directory dir =
-                      Directory('/storage/emulated/0/AudioFiles/$title/');
+                      Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/$title/');
                   // Directory directory2 = await getExternalStorageDirectory() as Directory;
 
                   setState(() {

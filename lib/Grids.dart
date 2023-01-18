@@ -73,7 +73,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -90,7 +90,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList(){
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
   }
 
@@ -193,7 +193,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
               },
               child: AnimSearchBar(
-              width: mediaQueryData.size.width,
+              width: mediaQueryData.size.width*.99,
 
               textController: textControllerSearch,
 
@@ -213,7 +213,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               ),
               textFieldIconColor: Colors.white,
               textFieldColor: Colors.grey[900],
-
+              animationDurationInMilli: 160,
 
 
 
@@ -341,7 +341,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               children: [
                 Container(decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: FileImage(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
+                    image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
                     fit: BoxFit.fitWidth,
                   ),
                   borderRadius:  BorderRadius.all(Radius.circular(15.0)),
@@ -429,7 +429,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
                          child: ListTile(//use the special textFont ALSO later add that divider
                            leading: ClipRRect(
                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                             child: Image.file(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')),
+                             child: Image.file(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
                            ),
                            title: Text(
                              listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-1),
@@ -519,7 +519,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/', currentPosition: time,),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/', currentPosition: time,),
             ),
           );
         },

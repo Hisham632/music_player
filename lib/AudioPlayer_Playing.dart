@@ -112,7 +112,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   int count2=0;
   int countTimes=0;
 
-  static late String pathForOG;
+  static String pathForOG='path';
 
   static late AudioPlayer audioPlayer;
   late AudioCache player=player = AudioCache();
@@ -249,13 +249,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     initPlayer();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
 
-     // AwesomeNotifications().dismiss(0);
-  }
 
 
 
@@ -404,7 +398,7 @@ fileTimeStamp(){
          width: mediaQueryData.size.width,
         decoration:  BoxDecoration(
 
-            image: DecorationImage(image: FileImage(File('/storage/emulated/0/files/pictures/$imageSaveName.jpg')), fit: BoxFit.cover, opacity: 0.1),//HERE IS backgroundColor
+            image: DecorationImage(image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')), fit: BoxFit.cover, opacity: 0.1),//HERE IS backgroundColor
 
             gradient: const LinearGradient(
                 colors: [Color(0xFF616161), Color(0xFF212121)],
@@ -500,12 +494,12 @@ fileTimeStamp(){
                     {
                       String song = listOfAllFolderAndFiles[songNumber].toString().substring(7, listOfAllFolderAndFiles[songNumber].toString().length - 1);
 
-                    if(Directory("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm").existsSync()) {
+                    if(Directory("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm").existsSync()) {
 
                     }
                     else
                       {
-                        File(song).copySync("/storage/emulated/0/AudioFiles/Liked/"+songName+".webm");
+                        File(song).copySync("/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/Liked/"+songName+".webm");
 
                       }
 
