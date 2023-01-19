@@ -522,6 +522,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/', currentPosition: time,),
             ),
           );
+
+
         },
 
       ),

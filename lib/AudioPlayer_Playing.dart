@@ -147,7 +147,10 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     player = AudioCache(fixedPlayer: audioPlayer);
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
     if(widget.currentPosition.inSeconds>4){
-      audioPlayer.seek(widget.currentPosition);
+
+      Duration time2=Duration(days: 0,hours: 0,minutes: 0,seconds:  (widget.currentPosition.inSeconds+1),microseconds:0,milliseconds:  0);
+
+      audioPlayer.seek(time2);
 
     }
 
