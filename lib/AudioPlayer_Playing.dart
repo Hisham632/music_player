@@ -61,7 +61,7 @@ class AudioPlay extends StatefulWidget {
             }
             else
             {
-              _AudioPlayState.play(_AudioPlayState.songNumber);
+              _AudioPlayState.play(_AudioPlayState.songNumber,'');
             }
         notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
 
@@ -76,7 +76,7 @@ class AudioPlay extends StatefulWidget {
       }
       else
       {
-        _AudioPlayState.play(_AudioPlayState.songNumber);
+        _AudioPlayState.play(_AudioPlayState.songNumber,'');
       }
        notificationDetail.updateNotificationMediaPlayer(0,_AudioPlayState.isPlaying, _AudioPlayState.songName);
 
@@ -129,6 +129,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   static int songNumber=1;
 
   void initPlayer() async {
+
+    print(Lists.playNextQueue);
 
     // if(widget.number==number&& widget.path==path){
     //   audioPlayer.seek(this.position);
@@ -204,7 +206,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
     if(songNumber!=-1)
       {
-        play(songNumber);
+        play(songNumber,'');
       }
     notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
@@ -250,22 +252,44 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   {
     super.initState();
     initPlayer();
+
+
   }
 
 
 
 
 
- static play(songNum) async {
+ static play(songNum,path) async {
 
-   String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
-   songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
+    if(path!=''){
+      List<FileSystemEntity> listNextSongDirectory;
 
-    audioPlayer.play(song, isLocal: true);
-    audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
-      next();
-    });
-   isPlaying=true;
+      Directory dir = Directory(path);
+      listNextSongDirectory = dir.listSync(recursive: true);
+
+      String song = listNextSongDirectory[songNum].toString().substring(7, listNextSongDirectory[songNum].toString().length - 1);
+      songName=listNextSongDirectory[songNum].toString().split('/').last.substring(0,listNextSongDirectory[songNum].toString().split('/').last.length-6);
+
+      audioPlayer.play(song, isLocal: true);
+      audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
+        next();
+      });
+      isPlaying=true;
+
+    }
+    else{
+      String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
+      songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
+
+      audioPlayer.play(song, isLocal: true);
+      audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
+        next();
+      });
+      isPlaying=true;
+    }
+
+
 
  }
 
@@ -283,8 +307,23 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   }
 
   static next(){
+    print(Lists.playNextQueue);
+    if(Lists.playNextQueue.isNotEmpty){// we call song with giving the path of the song and num, after its done with the queue it goes back to the og playlist
 
-    if(shuffle){
+      String nextListSong=Lists.playNextQueue.removeLast();
+      print(nextListSong);
+      int nextSongNum= int.parse(nextListSong.substring(0,1));
+      print(nextSongNum);
+      String nextPath=nextListSong.substring(1);
+      print(nextPath);
+
+      play(nextSongNum, nextPath);
+
+
+
+    }
+    else{
+      if(shuffle){
 
         Random random = Random();
         songNumber= random.nextInt(listOfAllFolderAndFiles.length) + 1;
@@ -293,31 +332,35 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
           songNumber=0;
         }
 
-        play(songNumber);
+        play(songNumber,'');
         notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
       }
 
-    else{
-      //if(Lists.playNextNum==-1){
-      //ig just +1 to songNum
-      songNumber+=1;
-      if(listOfAllFolderAndFiles.length<=songNumber)
-      {
-        songNumber=0;
-      }
-      play(songNumber);
-      notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
+      else{
+        //if(Lists.playNextNum==-1){
+        //ig just +1 to songNum
+        songNumber+=1;
+        if(listOfAllFolderAndFiles.length<=songNumber)
+        {
+          songNumber=0;
+        }
+        play(songNumber,'');
+        notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
-      //audioPlayer.onPlayerCompletion
-      // }
-      // else{
-      //   Directory dir = Directory(Lists.playNextPath);
-      //   tempPathOld=listOfAllFolderAndFiles;
-      //   listOfAllFolderAndFiles = dir.listSync(recursive: true);
-      //   play(Lists.playNextNum);
-      //
-      // }
+        //audioPlayer.onPlayerCompletion
+        // }
+        // else{
+        //   Directory dir = Directory(Lists.playNextPath);
+        //   tempPathOld=listOfAllFolderAndFiles;
+        //   listOfAllFolderAndFiles = dir.listSync(recursive: true);
+        //   play(Lists.playNextNum);
+        //
+        // }
+      }
     }
+
+
+
   }
 
   static previous(){
@@ -331,7 +374,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
           songNumber=listOfAllFolderAndFiles.length-1;
         }
 
-        play(songNumber);
+        play(songNumber,'');
         notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
       }
 
@@ -343,7 +386,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         songNumber=listOfAllFolderAndFiles.length-1;
       }
 
-      play(songNumber);
+      play(songNumber,'');
       notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
     }
   }
@@ -412,7 +455,7 @@ fileTimeStamp(){
 
         child: Column(
           children: [
-            SizedBox(height: 40,),
+           // SizedBox(height: 40,),
 
             Row(
               children: [
@@ -447,14 +490,15 @@ fileTimeStamp(){
               width: 350,
               height: 380,
             ),
-          ),SizedBox(height: 23,),
+          ),//SizedBox(height: 23,),
 
             Container(
               child: songNameLenght(),
               height: 45,
               width: 380,
             )
-         ,SizedBox(height: 30,),
+         ,
+            //SizedBox(height: 30,),
             Row(
               children: [
 
@@ -480,7 +524,7 @@ fileTimeStamp(){
             ),
 
 
-        SizedBox(height: 15,),
+       // SizedBox(height: 15,),
 
             Row(//buttons row
               children: [
@@ -588,7 +632,7 @@ fileTimeStamp(){
 
                                     if(!isPlaying)
                                     {
-                                      play(songNumber);
+                                      play(songNumber,'');
                                        // isPlaying=true;
 
                                     }

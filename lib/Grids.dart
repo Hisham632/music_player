@@ -73,7 +73,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -90,7 +90,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList(){
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
   }
 
@@ -129,11 +129,11 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
             iconColor: Color(0xFF4c7dad),
             hoverColor: Color(0xFF4c7dad),
             onTap: (){
-              Navigator.push(
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Playlists(),
-                ),
+                ), (route) => false
               );
             },
           ),
@@ -397,6 +397,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
     print("LINE 338");
     print(listAllSongsSearch);
+    //Solution: Possibly path is dif then wat it sent to AudioPlayer, so try to listAllSongsSearch path
 
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
@@ -514,12 +515,12 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
           icon: Icon(Icons.more_vert,color: Colors.grey[400],),
         ),
         onTap: (){
-          Duration time= Duration();
+          Duration time= const Duration();
 
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/', currentPosition: time,),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/', currentPosition: time,),
             ),
           );
 

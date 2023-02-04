@@ -19,8 +19,8 @@ enum Menu { itemOne, itemTwo, itemThree, itemFour }
 class Lists extends StatefulWidget {
   final String folderName;
 
-  static int playNextNum=-1;
-  static String playNextPath="";
+
+  static List playNextQueue=[];
 
   const Lists({Key? key,
     required this.folderName,
@@ -37,6 +37,7 @@ class _ListsState extends State<Lists> {
 
   late List<FileSystemEntity> listOfAllFolderAndFiles;
   final player  = AudioPlayer();
+
 
 
 @override
@@ -222,6 +223,10 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
               print("selected"+item.index.toString());
+              print("SongNum: "+songNum.toString()+" Path: "+widget.folderName.substring(13, widget.folderName.length - 1));
+              Lists.playNextQueue.add(songNum.toString()+widget.folderName.substring(13, widget.folderName.length - 1));
+
+
 
               setState(() {
                 // if(item.index==0){
@@ -232,18 +237,20 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
               });
               ;
             },
+          elevation: 10,
+
             itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
               const PopupMenuItem<Menu>(
                 value: Menu.itemOne,
                 child: Text('Play Next'),
-              ),
-              const PopupMenuItem<Menu>(
-                value: Menu.itemTwo,
-                child: Text('Add to Queue'),
+                height: 25,
+                textStyle: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+
+
               ),
 
             ]
-        ,color: Colors.grey,
+        ,color: Colors.grey[700],
           icon: Icon(Icons.more_vert,color: Colors.grey[400],),
         ),
 
