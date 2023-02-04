@@ -243,14 +243,14 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
               const PopupMenuItem<Menu>(
                 value: Menu.itemOne,
                 child: Text('Play Next'),
-                height: 25,
-                textStyle: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
+                height: 30,
+                textStyle: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),
 
 
               ),
 
             ]
-        ,color: Colors.grey[700],
+        ,color: Colors.grey[900],
           icon: Icon(Icons.more_vert,color: Colors.grey[400],),
         ),
 

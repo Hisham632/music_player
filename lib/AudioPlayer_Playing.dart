@@ -455,7 +455,7 @@ fileTimeStamp(){
 
         child: Column(
           children: [
-           // SizedBox(height: 40,),
+            SizedBox(height: 40,),
 
             Row(
               children: [
@@ -490,7 +490,7 @@ fileTimeStamp(){
               width: 350,
               height: 380,
             ),
-          ),//SizedBox(height: 23,),
+          ),SizedBox(height: 23,),
 
             Container(
               child: songNameLenght(),
@@ -498,7 +498,7 @@ fileTimeStamp(){
               width: 380,
             )
          ,
-            //SizedBox(height: 30,),
+            SizedBox(height: 30,),
             Row(
               children: [
 
@@ -524,7 +524,7 @@ fileTimeStamp(){
             ),
 
 
-       // SizedBox(height: 15,),
+        SizedBox(height: 15,),
 
             Row(//buttons row
               children: [

@@ -73,7 +73,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -90,7 +90,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList(){
 
-    Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
     listAllSongs = dir.listSync(recursive: true);
   }
 
@@ -520,7 +520,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/AudioFiles/', currentPosition: time,),
+              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/', currentPosition: time,),
             ),
           );
 
