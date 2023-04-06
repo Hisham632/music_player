@@ -256,6 +256,7 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
 
           onTap: () async {
             Duration time= Duration();
+            // print("Search THING  "+widget.folderName.substring(13, widget.folderName.length - 1));
 
 
             if(AudioPlay.currentNumSong()==songNum&&AudioPlay.currentPath()==(widget.folderName.substring(13, widget.folderName.length - 1)))

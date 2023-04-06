@@ -194,7 +194,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         Permission.manageExternalStorage,
       ].request();
     }
-
+    print("TESTING HERELLL");
+    print(widget.path);
     Directory dir = Directory(widget.path);
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
     //print(listOfAllFolderAndFiles);//has all the files from the directory
@@ -265,12 +266,13 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     if(path!=''){
       List<FileSystemEntity> listNextSongDirectory;
 
-      Directory dir = Directory(path);
-      listNextSongDirectory = dir.listSync(recursive: true);
+      Directory dir =  Directory(path);
+      listNextSongDirectory = await dir.listSync(recursive: true);
 
       String song = listNextSongDirectory[songNum].toString().substring(7, listNextSongDirectory[songNum].toString().length - 1);
       songName=listNextSongDirectory[songNum].toString().split('/').last.substring(0,listNextSongDirectory[songNum].toString().split('/').last.length-6);
 
+      print("NEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SONG");
       audioPlayer.play(song, isLocal: true);
       audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
         next();

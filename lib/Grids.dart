@@ -33,6 +33,9 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   late List<FileSystemEntity> listAllSongs;
   String searchTitle=' ';
 
+  String DevicePATH='/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/';
+  String EmulatorPATH='/storage/emulated/0/AudioFiles/';
+
 
   void initState() {
     super.initState();
@@ -73,7 +76,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory(EmulatorPATH);
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -90,7 +93,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList(){
 
-    Directory dir = Directory('/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/');
+    Directory dir = Directory(EmulatorPATH);
     listAllSongs = dir.listSync(recursive: true);
   }
 
@@ -467,6 +470,9 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         user.toString().toLowerCase().contains(searchTitle.toLowerCase()))
         .toList();
 
+    print("SONG LIST PATHS:::");
+    print(listAllSongsSearch);
+
     var sName=listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-6);
     var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
@@ -516,11 +522,43 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         ),
         onTap: (){
           Duration time= const Duration();
+          print("SONG22222  "+songNum.toString());
+
+
+          print(listAllSongsSearch[songNum]);
+          List<FileSystemEntity> listOfAllFolderAndFiles2;
+          Directory dir = Directory('/storage/emulated/0/AudioFiles/Eminem - Recovery (full album)/');
+          listOfAllFolderAndFiles2 = dir.listSync(recursive: true);
+          //print(listOfAllFolderAndFiles2.toList().toString().split(',').indexOf("File: '/storage/emulated/0/AudioFiles/Eminem - Recovery (full album)/Attack on Titan S4 OST - BORN INTO THIS WORLD (Footsteps of Doom X Light of The Seven)  Epic Cover.webm'"));
+          // final List<FileSystemEntity> entities =  dir.list().toList();
+          List<String> newSongs=[];
+          print(listOfAllFolderAndFiles2);
+          listOfAllFolderAndFiles2.forEach((element) {
+            print(element);
+            print(element.toString()==listAllSongsSearch[songNum].toString());
+            newSongs.add(element.toString());
+
+          });
+          print("NEW SONGS");
+
+          print(newSongs.indexOf(listAllSongsSearch[songNum].toString()));
+          String song = listOfAllFolderAndFiles2[songNum].toString().substring(7, listOfAllFolderAndFiles2[songNum].toString().length - 1);
+          String folderPath = song.substring(0, song.lastIndexOf('/'))+"/";
+
+
+
+
+
+
+           print(folderPath);
+
+          // print(listAllSongsSearch[songNum].toString().substring(7, listAllSongsSearch[songNum].toString().length - 1));
+
 
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AudioPlay(number:songNum,path:'/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/', currentPosition: time,),
+              builder: (context) => AudioPlay(number:newSongs.indexOf(listAllSongsSearch[songNum].toString()),path:folderPath, currentPosition: time,),
             ),
           );
 
