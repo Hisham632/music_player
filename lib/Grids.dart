@@ -7,7 +7,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
-import 'package:miniplayer/miniplayer.dart';
 import 'package:path/path.dart' as path;
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:awesome_notifications/android_foreground_service.dart';
@@ -76,7 +75,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory(EmulatorPATH);
+    Directory dir = Directory(DevicePATH);
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
    // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
@@ -93,7 +92,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList(){
 
-    Directory dir = Directory(EmulatorPATH);
+    Directory dir = Directory(DevicePATH);
     listAllSongs = dir.listSync(recursive: true);
   }
 
@@ -233,7 +232,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
                 });
 
-                print("CLIKED555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555");
               setState(() {
                 textControllerSearch.clear();
               });}, onSubmitted: (String ) {
@@ -241,7 +239,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
                 setState(() {
                   searchTitle=textControllerSearch.text;
                 });
-                print("clicked44444444444444444444444444444444444444444444444444444444444444444");
                 textControllerSearch.clear();
 
               },),
@@ -386,11 +383,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
 
   getAllSongs(){
-
-    // here wed have the filtered list, we'd need to create it from listAllSongs and put it in a setState
-    //have it same format so we dont gotta change the code below
-
-
     late List<FileSystemEntity> listAllSongsSearch;
 
     listAllSongsSearch=listAllSongs
@@ -398,9 +390,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         user.toString().toLowerCase().contains(searchTitle.toLowerCase()))
         .toList();
 
-    print("LINE 338");
-    print(listAllSongsSearch);
-    //Solution: Possibly path is dif then wat it sent to AudioPlayer, so try to listAllSongsSearch path
+    // print("LINE 338");
+    // print(listAllSongsSearch);
 
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
@@ -470,8 +461,8 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         user.toString().toLowerCase().contains(searchTitle.toLowerCase()))
         .toList();
 
-    print("SONG LIST PATHS:::");
-    print(listAllSongsSearch);
+    // print("SONG LIST PATHS:::");
+    // print(listAllSongsSearch);
 
     var sName=listAllSongsSearch[songNum].toString().split('/').last.substring(0,listAllSongsSearch[songNum].toString().split('/').last.length-6);
     var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
@@ -522,38 +513,31 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         ),
         onTap: (){
           Duration time= const Duration();
-          print("SONG22222  "+songNum.toString());
-
-
-          print(listAllSongsSearch[songNum]);
+          // print("SONG22222  "+songNum.toString());
+          //
+          //
+          // print(listAllSongsSearch[songNum]);
           List<FileSystemEntity> listOfAllFolderAndFiles2;
-          Directory dir = Directory('/storage/emulated/0/AudioFiles/Eminem - Recovery (full album)/');
+          String song2 = listAllSongsSearch[songNum].toString().substring(7, listAllSongsSearch[songNum].toString().length - 1);
+          String folderPath2 = song2.substring(0, song2.lastIndexOf('/'));
+
+          Directory dir = Directory(folderPath2);
           listOfAllFolderAndFiles2 = dir.listSync(recursive: true);
           //print(listOfAllFolderAndFiles2.toList().toString().split(',').indexOf("File: '/storage/emulated/0/AudioFiles/Eminem - Recovery (full album)/Attack on Titan S4 OST - BORN INTO THIS WORLD (Footsteps of Doom X Light of The Seven)  Epic Cover.webm'"));
           // final List<FileSystemEntity> entities =  dir.list().toList();
+
           List<String> newSongs=[];
-          print(listOfAllFolderAndFiles2);
+          // print(listOfAllFolderAndFiles2);
           listOfAllFolderAndFiles2.forEach((element) {
-            print(element);
-            print(element.toString()==listAllSongsSearch[songNum].toString());
+            // print(element);
+            // print(element.toString()==listAllSongsSearch[songNum].toString());
             newSongs.add(element.toString());
 
           });
-          print("NEW SONGS");
-
-          print(newSongs.indexOf(listAllSongsSearch[songNum].toString()));
+          // print("NEW SONGS");
+          // print(newSongs.indexOf(listAllSongsSearch[songNum].toString()));
           String song = listOfAllFolderAndFiles2[songNum].toString().substring(7, listOfAllFolderAndFiles2[songNum].toString().length - 1);
-          String folderPath = song.substring(0, song.lastIndexOf('/'))+"/";
-
-
-
-
-
-
-           print(folderPath);
-
-          // print(listAllSongsSearch[songNum].toString().substring(7, listAllSongsSearch[songNum].toString().length - 1));
-
+          String folderPath = song.substring(0, song.lastIndexOf('/'));
 
           Navigator.push(
             context,
@@ -561,7 +545,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               builder: (context) => AudioPlay(number:newSongs.indexOf(listAllSongsSearch[songNum].toString()),path:folderPath, currentPosition: time,),
             ),
           );
-
 
         },
 

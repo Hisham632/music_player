@@ -6,17 +6,25 @@ import 'package:music_player/youtubeTest.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 /*
-//Do the thing when playing current song doesnt restart,
-//Search Bar,
-//fix noti bugs and maybe add slider or when we click it goes to the current song
-bluetooth controller
-remove :
+Notification like Youtube in LockScreen:
+  https://pub.dev/packages/just_audio_background
+  I found it relatively easy on Google
+  https://www.youtube.com/watch?v=DIqB8qEZW1U hate to bringing up YouTube video but this might help you
 
-do the equal width for the stuff next and previous buttons, width% for slider
-//arrange/clean all code
-//dismiss noti on app closed
+  When searching for this kind of thing better start by looking up what its name
+  https://developer.android.com/guide/topics/media/media-controls#supporting_playback_resumption
+  That is the API you looking for
 
-maybe add a minimize playr thing
+Bluetooth:
+  Isn't headset button just counted as keyboard button on Android?
+  You could use ![RawKeyboardListener] or ![RawKeyboard.addListener] if that is the case
+  https://api.flutter.dev/flutter/widgets/RawKeyboardListener-class.html
+  https://api.flutter.dev/flutter/services/RawKeyboard/addListener.html
+  you can debug the keypress
+
+
+
+Do the equal width for the stuff next and previous buttons, width% for slider
 */
 
 void main() async {
@@ -24,6 +32,7 @@ void main() async {
   AwesomeNotifications().requestPermissionToSendNotifications();
 
   AwesomeNotifications().initialize(
+
       'resource://drawable/res_ic_play',
       [
         NotificationChannel(
@@ -41,19 +50,19 @@ void main() async {
           ledColor: Colors.black,
           importance: NotificationImportance.High,
           channelShowBadge: true,
+
         ),
       ],
       channelGroups: [
         NotificationChannelGroup(
             channelGroupkey: 'media_player_tests',
             channelGroupName: 'Media Player tests')
+
       ],
       debug: true);
 
   AwesomeNotifications().actionStream.listen((receivedAction) {
-    print(receivedAction.buttonKeyPressed);
-
-
+    // print(receivedAction.buttonKeyPressed);
 
 
     AudioPlay.processMediaControls(receivedAction);
@@ -85,56 +94,16 @@ void main() async {
   ));
 }
 
+
+
+
+
 /*
 https://stackoverflow.com/questions/72451301/flutter-how-to-sort-file-list-by-creation-time
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-avg color Code
- decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Color(0xFFe63946), Colors.black.withOpacity(0.6)],
-                stops: [0.0, 0.4],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                tileMode: TileMode.repeated)),
-
-
-
 
 For Miniplayer implementation :
   Make the Stack with AudioPlayer()
   add the state and riverpod
   make it so when we drag the miniplayer above a certain height it goes to the AudioPlayer page
   The Miniplayer has the pause, next and previous buttons and the details of the song playing
-
-
-
 */

@@ -2,7 +2,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
-import 'package:music_player/AudioPlayer_Playing.dart';
 
 
 
@@ -18,21 +17,25 @@ class notificationDetail{
     var imageSaveName=songNmae.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
     //FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg'))
-  print("IN NOTIFICATION "+isPlaying.toString());
+ // print("IN NOTIFICATION "+isPlaying.toString());
 
     if (isPlaying == null) {
       cancelNotification(id);
       return;
     }
-    print("creating Noti");
+    //print("creating Noti");
     AwesomeNotifications().createNotification(
 
+
         content: NotificationContent(
+
+
             id: id,
             channelKey: 'media_player',
             category: NotificationCategory.Transport,
             title: songNmae,
-            //body: songNmae,
+            body: "YourGate",
+            backgroundColor: Colors.purple.shade700,
             notificationLayout: NotificationLayout.MediaPlayer,
             //icon:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',
             bigPicture:'file://storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg',//pic here
@@ -116,6 +119,3 @@ class notificationDetail{
   }
 }
 
-/*
-Dismiss noti
- */

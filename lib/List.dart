@@ -1,5 +1,3 @@
-// show the list of all songs in a driectory then make it so when they click on it they are directed to play page and it plays it
-
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:multi_split_view/multi_split_view.dart';
@@ -97,9 +95,7 @@ class _ListsState extends State<Lists> {
     //   print('\n');
     // });
 
-
     return null;
-
   }
 
 
@@ -118,7 +114,7 @@ class _ListsState extends State<Lists> {
       num=30.0*(name.length/10);
     }
 
-    print(name+" "+(name.toString().length).toString());
+    // print(name+" "+(name.toString().length).toString());
 
     MultiSplitView multiSplitView = MultiSplitView(axis: Axis.vertical, children: [
 
@@ -149,13 +145,6 @@ class _ListsState extends State<Lists> {
               Flexible(
                   child: playlistName,
               )
-
-/*
-if we press the shuffle button auto start playing song and send to AudioPage
-and continue playing random
-change the next() and previosu to have a consdition wheterh or not Shuffllle mode is ON
- */
-
             ]
         ),
       ),
@@ -222,9 +211,10 @@ change the next() and previosu to have a consdition wheterh or not Shuffllle mod
         trailing: PopupMenuButton<Menu>(
           // Callback that sets the selected popup menu item.
             onSelected: (Menu item) {
-              print("selected"+item.index.toString());
-              print("SongNum: "+songNum.toString()+" Path: "+widget.folderName.substring(13, widget.folderName.length - 1));
-              Lists.playNextQueue.add(songNum.toString()+widget.folderName.substring(13, widget.folderName.length - 1));
+              // print(Lists.playNextQueue);
+              // print("selected"+item.index.toString());
+              // print("SongNum: "+songNum.toString()+" Path: "+widget.folderName.substring(13, widget.folderName.length - 1));
+              Lists.playNextQueue.add(songNum.toString()+','+widget.folderName.substring(13, widget.folderName.length - 1));
 
 
 
@@ -302,4 +292,3 @@ class musicFileInfo
 
   musicFileInfo(this.trackName, this.albumName, this.albumArtistName,this.year, this.albumArt);
 }*/
-//next thing sync up each vid time and artist name and the pic, then use the divider(maybe add whiteLine)

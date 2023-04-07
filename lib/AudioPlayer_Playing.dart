@@ -35,8 +35,8 @@ class AudioPlay extends StatefulWidget {
   }
 
   static String currentPath(){
-    print('currentPath');
-    print( _AudioPlayState.pathForOG);
+    //print('currentPath');
+    //print( _AudioPlayState.pathForOG);
 
     return _AudioPlayState.pathForOG;
   }
@@ -54,7 +54,7 @@ class AudioPlay extends StatefulWidget {
         break;
 
       case 'MEDIA_PLAY':
-        print("38"+_AudioPlayState.isPlaying.toString());
+       // print("38"+_AudioPlayState.isPlaying.toString());
 
             if(_AudioPlayState.isPlaying){
               _AudioPlayState.pause();
@@ -69,7 +69,7 @@ class AudioPlay extends StatefulWidget {
         break;
 
     case 'MEDIA_PAUSE':
-      print("52"+_AudioPlayState.isPlaying.toString());
+     // print("52"+_AudioPlayState.isPlaying.toString());
 
       if(_AudioPlayState.isPlaying){
         _AudioPlayState.pause();
@@ -129,6 +129,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   static int songNumber=1;
 
   void initPlayer() async {
+    print("playNextQueue");
 
     print(Lists.playNextQueue);
 
@@ -150,7 +151,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),reverseDuration: Duration(milliseconds: 500) );
     if(widget.currentPosition.inSeconds>4){
 
-      Duration time2=Duration(days: 0,hours: 0,minutes: 0,seconds:  (widget.currentPosition.inSeconds+1),microseconds:0,milliseconds:  0);
+      Duration time2=Duration(days: 0,hours: 0,minutes: 0,seconds:  (widget.currentPosition.inSeconds+2),microseconds:0,milliseconds:  0);
 
       audioPlayer.seek(time2);
 
@@ -166,7 +167,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     });
 
     audioPlayer.onAudioPositionChanged.listen((Duration position2) {
-        print('Current position: $position');
+        //print('Current position: $position');
         setState(() {
           position=position2;
     });
@@ -194,8 +195,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         Permission.manageExternalStorage,
       ].request();
     }
-    print("TESTING HERELLL");
-    print(widget.path);
+    // print("TESTING HERELLL");
+    // print(widget.path);
     Directory dir = Directory(widget.path);
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
     //print(listOfAllFolderAndFiles);//has all the files from the directory
@@ -278,6 +279,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         next();
       });
       isPlaying=true;
+      notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
 
     }
     else{
@@ -311,14 +313,21 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   static next(){
     print(Lists.playNextQueue);
     if(Lists.playNextQueue.isNotEmpty){// we call song with giving the path of the song and num, after its done with the queue it goes back to the og playlist
+      // List<FileSystemEntity> listOfAllFolderAndFiles2;
+
+      print("PLAYNEXT");
 
       String nextListSong=Lists.playNextQueue.removeLast();
       print(nextListSong);
-      int nextSongNum= int.parse(nextListSong.substring(0,1));
+      List nextSongAndNum=nextListSong.split(',');
+      int nextSongNum= int.parse(nextSongAndNum[0]);
       print(nextSongNum);
-      String nextPath=nextListSong.substring(1);
+      String nextPath=nextSongAndNum[1];
       print(nextPath);
 
+      // Directory dir = Directory(nextPath);
+      // listOfAllFolderAndFiles2 = dir.listSync(recursive: true);
+      //
       play(nextSongNum, nextPath);
 
 
@@ -434,7 +443,7 @@ fileTimeStamp(){
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     var imageSaveName=songName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
-    print(    'NEW POSITION:  '+position.inSeconds.toDouble().toString());
+   // print(    'NEW POSITION:  '+position.inSeconds.toDouble().toString());
 
     return Scaffold(
         resizeToAvoidBottomInset : false,
@@ -504,7 +513,14 @@ fileTimeStamp(){
             Row(
               children: [
 
-                Text(" ${position.inMinutes}:${timeStamp()}",style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                SizedBox(
+                    width: 40,
+                    child: Center(
+                      child: Text(" ${position.inMinutes}:${timeStamp()}",
+                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                    )
+
+                ),
                 SizedBox(
                   width: 305,
                   child: Slider(
@@ -613,7 +629,7 @@ fileTimeStamp(){
                                         // else
                                         //   {
                                            // notificationDetail.updateNotificationMediaPlayer(10,true, songName);
-                                        print(s.toString()+" 500 "+isPlaying.toString());
+                                        // print(s.toString()+" 500 "+isPlaying.toString());
 
                                             // isPlaying=false;
                                             animationController.reverse();
@@ -630,7 +646,7 @@ fileTimeStamp(){
                                      // print(isPlaying);
                                     });
 
-                                    print("528 "+isPlaying.toString());
+                                   // print("528 "+isPlaying.toString());
 
                                     if(!isPlaying)
                                     {
@@ -695,8 +711,6 @@ fileTimeStamp(){
       )
 
       );
-
-
   }
 
   songNameLenght(){
@@ -756,4 +770,4 @@ fileTimeStamp(){
                 end: Alignment.bottomRight,
                 tileMode: TileMode.repeated)),
 
-  */
+*/

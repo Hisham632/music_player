@@ -293,19 +293,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       await getExternalStorageDirectory() as Directory;
                   //print("TEEMP");
                   // print(directory2);
-                  print("LINE182");
-                  print(vidTitle);
+                  // print("LINE182");
+                  // print(vidTitle);
                   Directory dir = Directory(
                       '/storage/emulated/0/Android/data/com.example.music_player/AudioFiles/' + _selectedValue + '/');
                   var filePath = path.join(dir.uri.toFilePath(),
                       '$vidTitle.${audio.container.name}');
 
-                  print(filePath);
+                  // print(filePath);
 
                   if (Directory(filePath).existsSync()) {
-                    print("EXists");
+                    // print("EXists");
                   } else {
-                    print("NOT exist");
+                    // print("NOT exist");
 
                     try {
                       File(filePath).createSync(recursive: true);
@@ -343,7 +343,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       '');
 
                   try {
-                    print(imageSaveName);
+                    // print(imageSaveName);
 
                     await ImageDownloader.downloadImage(
                       vidImage.toString(),
@@ -402,7 +402,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       .getVideos(playlist.id)
                       .take(1)
                       .toList();
-                  print(somePlaylistVideos[0].title);
+                  // print(somePlaylistVideos[0].title);
 
                   try {
                     await ImageDownloader.downloadImage(
@@ -450,9 +450,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     //var filePath;
                     if (Directory(filePath).existsSync()) {
-                      print("Exists");
+                      // print("Exists");
                     } else {
-                      print("NOT exist");
+                      // print("NOT exist");
 
                       try {
                         File(filePath).createSync(recursive: true);
