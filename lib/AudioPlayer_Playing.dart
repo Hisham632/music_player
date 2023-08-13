@@ -128,6 +128,14 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   late AnimationController animationController;
   static int songNumber=1;
 
+  void dispose() {
+    // audioPlayer.dispose();
+
+
+
+    super.dispose();
+  }
+
   void initPlayer() async {
     print("playNextQueue");
 
@@ -161,16 +169,21 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
     audioPlayer.onDurationChanged.listen((Duration duration) {
      // print('duration $duration');
-      setState(() {
-        fileDuration=duration;
-      });
+      if(this.mounted) {
+        setState(() {
+          fileDuration = duration;
+        });
+      }
     });
 
     audioPlayer.onAudioPositionChanged.listen((Duration position2) {
         //print('Current position: $position');
+      if(this.mounted){
         setState(() {
           position=position2;
-    });
+        });
+      }
+
   });
 
     AwesomeNotifications().requestPermissionToSendNotifications();
@@ -205,6 +218,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
     AudioPlayer.players.forEach((key, value) {
       value.stop();
     });
+
 
     if(songNumber!=-1)
       {

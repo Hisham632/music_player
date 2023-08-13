@@ -50,9 +50,11 @@ class notificationDetail{
             summary: songNmae,
 
 
+
         ),
 
         actionButtons: [
+
 
           NotificationActionButton(
               key: 'MEDIA_PREV',
@@ -117,5 +119,6 @@ class notificationDetail{
     //
     // });
   }
+
 }
 
