@@ -106,6 +106,7 @@ class AudioPlay extends StatefulWidget {
 }
 
 
+final myWidgetKey = GlobalKey<_AudioPlayState>();
 
 class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
@@ -287,7 +288,7 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       String song = listNextSongDirectory[songNum].toString().substring(7, listNextSongDirectory[songNum].toString().length - 1);
       songName=listNextSongDirectory[songNum].toString().split('/').last.substring(0,listNextSongDirectory[songNum].toString().split('/').last.length-6);
 
-      print("NEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SONG");
+      // print("NEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SONG");
       audioPlayer.play(song, isLocal: true);
       audioPlayer.onPlayerCompletion.listen((event) {// when the song ends call the next()
         next();
@@ -306,6 +307,8 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
       });
       isPlaying=true;
     }
+    print("songName");
+    print(songName);
 
 
 
@@ -325,19 +328,19 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
   }
 
   static next(){
-    print(Lists.playNextQueue);
+    // print(Lists.playNextQueue);
     if(Lists.playNextQueue.isNotEmpty){// we call song with giving the path of the song and num, after its done with the queue it goes back to the og playlist
       // List<FileSystemEntity> listOfAllFolderAndFiles2;
 
-      print("PLAYNEXT");
+      // print("PLAYNEXT");
 
       String nextListSong=Lists.playNextQueue.removeLast();
-      print(nextListSong);
+      // print(nextListSong);
       List nextSongAndNum=nextListSong.split(',');
       int nextSongNum= int.parse(nextSongAndNum[0]);
-      print(nextSongNum);
+      // print(nextSongNum);
       String nextPath=nextSongAndNum[1];
-      print(nextPath);
+      // print(nextPath);
 
       // Directory dir = Directory(nextPath);
       // listOfAllFolderAndFiles2 = dir.listSync(recursive: true);
@@ -387,6 +390,11 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
 
 
   }
+  void updateSongNum(int newNum) {
+    setState(() {
+      songNumber = newNum;
+    });
+  }
 
   static previous(){
 
@@ -411,14 +419,17 @@ class _AudioPlayState extends State<AudioPlay> with TickerProviderStateMixin {
         songNumber=listOfAllFolderAndFiles.length-1;
       }
 
+
       play(songNumber,'');
       notificationDetail.updateNotificationMediaPlayer(0,isPlaying, songName);
     }
+
   }
+
 
 timeStamp(){
 
-  if(position.inSeconds.remainder(60)>10){
+  if(position.inSeconds.remainder(60)>=10||fileDuration.inSeconds.remainder(60).toDouble()/10==0){
 
       return position.inSeconds.remainder(60);
   }
@@ -429,7 +440,7 @@ timeStamp(){
 
 fileTimeStamp(){
 
-    if(fileDuration.inSeconds.remainder(60)>=10){
+    if(fileDuration.inSeconds.remainder(60)>=10 ||fileDuration.inSeconds.remainder(60).toDouble()/10==0){
       return fileDuration.inSeconds.remainder(60);
     }
 
@@ -526,21 +537,25 @@ fileTimeStamp(){
             SizedBox(height: 30,),
             Row(
               children: [
+                SizedBox(width: MediaQuery.of(context).size.width * 0.112,child:Center(
+                  child: Text(" ${position.inMinutes}:${timeStamp()}",
+                    style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                ) ,), // 10% spacing from start
 
+                // SizedBox(
+                //     width: 40,
+                //     child: Center(
+                //       child: Text(" ${position.inMinutes}:${timeStamp()}",
+                //         style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                //     )
+                //
+                // ),
                 SizedBox(
-                    width: 40,
-                    child: Center(
-                      child: Text(" ${position.inMinutes}:${timeStamp()}",
-                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
-                    )
-
-                ),
-                SizedBox(
-                  width: 305,
+                  width: MediaQuery.of(context).size.width * 0.775,
                   child: Slider(
                       min: 0,
                       max: fileDuration.inSeconds.toDouble(),
-                      value: position.inSeconds.toDouble(),
+                      value: position.inSeconds.toDouble().floorToDouble(),
                       activeColor: const Color(0xFFFFFFFF),//0xFF35325e
                       inactiveColor: Colors.grey[800],
                       onChanged: (double value){
@@ -550,7 +565,8 @@ fileTimeStamp(){
                       }
                   ),
                 ),
-                Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.113,child:Text("${fileDuration.inMinutes}:${fileTimeStamp()}",style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova' ),),), // 10% spacing from start
+
 
               ],
             ),
@@ -739,7 +755,10 @@ fileTimeStamp(){
       return Text(songName, style: const TextStyle(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),textAlign:  TextAlign.center,);
     }
   }
+
+
 }
+
 
 
 

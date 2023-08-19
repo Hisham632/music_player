@@ -122,10 +122,10 @@ class _ListsState extends State<Lists> {
         color: const Color(0xFF161617),
         child: Row(
             children: [
-              SizedBox(width: 1),
+              SizedBox(width: 1.5),
 
               Container(
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.symmetric(vertical: 0,horizontal: 50),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg')),
@@ -135,15 +135,15 @@ class _ListsState extends State<Lists> {
 
               ),
               alignment: Alignment.centerRight,
-              width: 120,
-              height: 120,
+              width: 125,
+              height: 125,
 
             ),
 
               SizedBox(width: num),
 
               Flexible(
-                  child: playlistName,
+                  child: Center(child: playlistName),
               )
             ]
         ),
