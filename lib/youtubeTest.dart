@@ -347,7 +347,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     await ImageDownloader.downloadImage(
                       vidImage.toString(),
-                      destination: AndroidDestinationType.custom(directory: '')
+                      destination: AndroidDestinationType.directoryPictures
                         ..inExternalFilesDir()
                         ..subDirectory("pictures/$imageSaveName.jpg"),
                     ).timeout(const Duration(seconds: 15),

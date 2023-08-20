@@ -5,6 +5,9 @@ import 'package:music_player/Grids.dart';
 import 'package:music_player/youtubeTest.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
+import 'Audio/AudioPlayerHandler.dart';
+import 'Audio/AudioService.dart';
+
 /*
 Notification like Youtube in LockScreen:
   https://pub.dev/packages/just_audio_background
@@ -90,20 +93,8 @@ void main() async {
       //   '/listing':(context)=> Lists(folderName:" Directory: '/storage/emulated/0/AudioFiles/君の名は。 (Kimi no Na wa.) (Your Name.) (Full Original Soundtrack)'"),
       '/Playlists': (context) => Playlists(),
       // '/youtube':(context)=>  MyHomePage(title: 'Flutter Demo Home Page'),
+      //  '/newAudio':(context)=>  AudioPlayerJustAudio(path: "/storage/emulated/0/AudioFiles/"),
+
     },
   ));
 }
-
-
-
-
-
-/*
-https://stackoverflow.com/questions/72451301/flutter-how-to-sort-file-list-by-creation-time
-
-For Miniplayer implementation :
-  Make the Stack with AudioPlayer()
-  add the state and riverpod
-  make it so when we drag the miniplayer above a certain height it goes to the AudioPlayer page
-  The Miniplayer has the pause, next and previous buttons and the details of the song playing
-*/

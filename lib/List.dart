@@ -1,17 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:multi_split_view/multi_split_view.dart';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:on_audio_edit/on_audio_edit.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
-import 'package:id3/id3.dart';
-import 'package:dart_tags/dart_tags.dart';
-import 'package:on_audio_edit/on_audio_edit.dart';
+
+import 'Audio/AudioPlayerHandler.dart';
+
 enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class Lists extends StatefulWidget {
@@ -41,18 +35,11 @@ class _ListsState extends State<Lists> {
 @override
   initState(){
      int songNum=2;
-
     super.initState();
-    //Directory dir = Directory('/storage/emulated/0/AudioFiles/');
+
     Directory dir = Directory(widget.folderName.substring(13, widget.folderName.length - 1));// later make sure the folder is not empty
-
     listOfAllFolderAndFiles = dir.listSync(recursive: true);
-   // print(listOfAllFolderAndFiles);//has all the files from the directory
-   // print(listOfAllFolderAndFiles.length);//has all the files from the directory
-
-    //String song = listOfAllFolderAndFiles[songNum].toString().substring(7, listOfAllFolderAndFiles[songNum].toString().length - 1);
     songName=listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-5);
-
    }
 
 
@@ -94,7 +81,6 @@ class _ListsState extends State<Lists> {
     //   l.forEach(print);
     //   print('\n');
     // });
-
     return null;
   }
 
@@ -113,9 +99,6 @@ class _ListsState extends State<Lists> {
     else{
       num=30.0*(name.length/10);
     }
-
-    // print(name+" "+(name.toString().length).toString());
-
     MultiSplitView multiSplitView = MultiSplitView(axis: Axis.vertical, children: [
 
       Container(
@@ -261,10 +244,15 @@ class _ListsState extends State<Lists> {
               }
             else
               {
+                print(":FOLDER");
+                print(songNum);
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1), currentPosition: time,),
+                    builder: (context) => AudioPlayerManager(path:widget.folderName.substring(13, widget.folderName.length - 1), index: songNum,),
+
+                    // builder: (context) => AudioPlay(number:songNum, path:widget.folderName.substring(13, widget.folderName.length - 1), currentPosition: time,),
                   ),
                 );
               }
@@ -276,19 +264,4 @@ class _ListsState extends State<Lists> {
       ),
     );
   }
-
-
 }
-
-
-/*
-class musicFileInfo
-{
-  final String trackName;
-  final String albumName;
-  final String albumArtistName;
-  final int year;
-  final Uint8List albumArt;
-
-  musicFileInfo(this.trackName, this.albumName, this.albumArtistName,this.year, this.albumArt);
-}*/

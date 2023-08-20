@@ -16,9 +16,6 @@ class notificationDetail{
 
     var imageSaveName=songNmae.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
 
-    //FileImage(File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg'))
- // print("IN NOTIFICATION "+isPlaying.toString());
-
     if (isPlaying == null) {
       cancelNotification(id);
       return;

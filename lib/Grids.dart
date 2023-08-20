@@ -1,15 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/youtubeTest.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:music_player/List.dart';
 import 'package:music_player/AudioPlayer_Playing.dart';
-import 'package:path/path.dart' as path;
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:awesome_notifications/android_foreground_service.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 
@@ -36,6 +30,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   String EmulatorPATH='/storage/emulated/0/AudioFiles/';
 
 
+  @override
   void initState() {
     super.initState();
 
@@ -75,16 +70,13 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   {
     //getExternalStorageDirectory() ;
 
-    Directory dir = Directory(DevicePATH);
+    Directory dir = Directory(EmulatorPATH);
     listOfAllFolderAndFiles = dir.listSync(recursive: false);
-   // print(listOfAllFolderAndFiles[0]);//has all the files from the directory
    // print(listOfAllFolderAndFiles[0].toString().substring(0,9));//Gets the "Directory"
 
     for(int count=0;count<listOfAllFolderAndFiles.length;count++) {
-
       if(listOfAllFolderAndFiles[count].toString().substring(0,9)=='Directory'){
           PlaylistsFolders.add(listOfAllFolderAndFiles[count]);
-          //print(PlaylistsFolders);
       }
     }
   }
@@ -92,7 +84,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
 
   void getAllSongsList(){
 
-    Directory dir = Directory(DevicePATH);
+    Directory dir = Directory(EmulatorPATH);
     listAllSongs = dir.listSync(recursive: true);
   }
 
@@ -101,14 +93,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
     TextEditingController textControllerSearch = TextEditingController();
-
-    // tabController.addListener(() {
-    //   if(tabController.indexIsChanging){
-    //     setState(() {
-    //
-    //     });
-    //   }
-    // });
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -158,27 +142,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
             ],
           ),
         ),
-
-      /*  appBar: AppBar(
-          bottom: TabBar(
-            isScrollable: true,
-            indicatorColor: Colors.amberAccent,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 5,
-            indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(50), // Creates border
-                color: Colors.blue // Can also add an image
-            ),
-            tabs: [
-              Tab(text:"Playlists"),
-              Tab(text: "Songs",)
-            ],
-          ),
-          //title: Text('Choose'),
-
-
-        ),*/
-
         backgroundColor: const Color(0xFF212224),
         body:NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -217,9 +180,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               textFieldColor: Colors.grey[900],
               animationDurationInMilli: 160,
 
-
-
-
               onSuffixTap: () {
                 setState(() {
                   textControllerSearch.addListener(() {
@@ -244,11 +204,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               },),
             ):Text(''),
 
-                     // IconButton(
-                     //     onPressed: ()=>{
-                     //
-                     // },
-                     //     icon:Icon(Icons.search)),
                    ],
                    title: Center(child:Text('Playlists',  textAlign: TextAlign.justify,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'),)),
                    backgroundColor: Color(0xFF111213),
@@ -285,8 +240,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
             ],
           ),
         ),
-
-
       ),
     ),
     );
@@ -389,9 +342,6 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         .where((user) =>
         user.toString().toLowerCase().contains(searchTitle.toLowerCase()))
         .toList();
-
-    // print("LINE 338");
-    // print(listAllSongsSearch);
 
     return ListView.separated(//later add that divider
         separatorBuilder: (context, index) => const Divider(
@@ -513,21 +463,15 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
         ),
         onTap: (){
           Duration time= const Duration();
-          // print("SONG22222  "+songNum.toString());
-          //
-          //
-          // print(listAllSongsSearch[songNum]);
+
           List<FileSystemEntity> listOfAllFolderAndFiles2;
           String song2 = listAllSongsSearch[songNum].toString().substring(7, listAllSongsSearch[songNum].toString().length - 1);
           String folderPath2 = song2.substring(0, song2.lastIndexOf('/'));
 
           Directory dir = Directory(folderPath2);
           listOfAllFolderAndFiles2 = dir.listSync(recursive: true);
-          //print(listOfAllFolderAndFiles2.toList().toString().split(',').indexOf("File: '/storage/emulated/0/AudioFiles/Eminem - Recovery (full album)/Attack on Titan S4 OST - BORN INTO THIS WORLD (Footsteps of Doom X Light of The Seven)  Epic Cover.webm'"));
-          // final List<FileSystemEntity> entities =  dir.list().toList();
 
           List<String> newSongs=[];
-          // print(listOfAllFolderAndFiles2);
           listOfAllFolderAndFiles2.forEach((element) {
             // print(element);
             // print(element.toString()==listAllSongsSearch[songNum].toString());
@@ -545,9 +489,7 @@ class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
               builder: (context) => AudioPlay(number:newSongs.indexOf(listAllSongsSearch[songNum].toString()),path:folderPath, currentPosition: time,),
             ),
           );
-
         },
-
       ),
     );
   }
