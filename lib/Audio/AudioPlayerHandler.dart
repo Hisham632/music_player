@@ -78,7 +78,7 @@ class _AudioPlayerManagerState extends State<AudioPlayerManager> with TickerProv
     // audioPlayer.dispose();
 
     animationController?.dispose();
-
+    audioPlayer.dispose();
 
     super.dispose();
   }
@@ -268,6 +268,28 @@ class _AudioPlayerManagerState extends State<AudioPlayerManager> with TickerProv
   //   );
   //
   // }
+  timeStamp(){
+    if(audioPlayer.position.inSeconds.remainder(60)>=10||(audioPlayer.position.inSeconds.remainder(60).toDouble()/10==0&&audioPlayer.position.inSeconds.remainder(60).toDouble()!=0)){
+
+      return audioPlayer.position.inSeconds.remainder(60);
+    }
+    else{
+      return "0"+audioPlayer.position.inSeconds.remainder(60).toString();
+    }
+  }
+  fileTimeStamp(){
+    int? remainderSeconds = audioPlayer.duration?.inSeconds.remainder(60);
+
+    if (remainderSeconds == null) {
+      return "00"; // or some default value
+    }
+
+    if (remainderSeconds >= 10||(remainderSeconds.toDouble()/10==0&&remainderSeconds.toDouble()!=0)) {
+      return remainderSeconds.toString();
+    } else {
+      return "0" + remainderSeconds.toString();
+    }
+  }
 
 @override
 Widget build(BuildContext context) {
@@ -373,7 +395,7 @@ Widget build(BuildContext context) {
                             width: 40,
                             child: Center(
                               child: Text(
-                                " ${audioPlayer.position.inMinutes}:${audioPlayer.position.inSeconds.remainder(60)}",
+                                " ${audioPlayer.position.inMinutes}:${timeStamp()}",
                                 style: const TextStyle(
                                     color: Color(0xFFFFFFFF),
                                     fontSize: 16,
@@ -398,7 +420,7 @@ Widget build(BuildContext context) {
                               }),
                         ),
                         Text(
-                          "${audioPlayer.duration?.inMinutes}:${audioPlayer.duration?.inSeconds.remainder(60)}",
+                          "${audioPlayer.duration?.inMinutes}:${fileTimeStamp()}",
                           style: const TextStyle(
                               color: Color(0xFFFFFFFF),
                               fontSize: 16,
