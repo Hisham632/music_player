@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:id3/id3.dart';
 import 'package:dart_tags/dart_tags.dart';
 import 'package:on_audio_edit/on_audio_edit.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class Lists extends StatefulWidget {
@@ -106,7 +109,47 @@ class _ListsState extends State<Lists> {
     var playlistName=Text(widget.folderName.toString().split('/').last.substring(0,widget.folderName.toString().split('/').last.length-1),textAlign: TextAlign.left,textWidthBasis: TextWidthBasis.longestLine ,softWrap: true ,style: TextStyle(decoration: TextDecoration.none,fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold,fontFamily:'Proxima Nova'));
     var num=0.0;
     var imageSaveName=name.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+    try {
+      File imageFile = File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+      if (imageFile.existsSync()) {
 
+      } else {
+        print("COPIED2");
+
+        File imageFile = File(
+            '/storage/emulated/0/AudioFiles/com.example.music_player/files/pictures/$imageSaveName.jpg');
+        imageFile.copySync(
+            '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
+
+      }
+    } catch (e) {
+      print("COPIED");
+      File imageFile = File(
+          '/storage/emulated/0/AudioFiles/com.example.music_player/files/pictures/$imageSaveName.jpg');
+      imageFile.copySync(
+          '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
+      // var youtubeDownload = YoutubeExplode();
+      // var searchResults =await youtubeDownload.search.search(sName);
+      // var video = searchResults.first;
+      // var vidImage = video.thumbnails.maxResUrl;
+      //
+      //
+      //
+      // // Code to download image goes here
+      // await ImageDownloader.downloadImage(
+      //   vidImage.toString(),
+      //   destination: AndroidDestinationType.custom(directory: '')
+      //     ..inExternalFilesDir()
+      //     ..subDirectory("pictures/$imageSaveName.jpg"),
+      // ).timeout(const Duration(seconds: 15),
+      //     onTimeout: () => throw TimeoutException(
+      //         'Cant connect in 15 seconds.'));
+      setState(() {
+        // You can update the UI here.
+      });
+    }
     if(name.length>20){
         num=0.0;
     }
@@ -181,11 +224,51 @@ class _ListsState extends State<Lists> {
 
   }
 
-  songListView(context,songNum){
+  songListView(context,songNum)  {
 
      var sName= listOfAllFolderAndFiles[songNum].toString().split('/').last.substring(0,listOfAllFolderAndFiles[songNum].toString().split('/').last.length-6);
      var imageSaveName=sName.replaceAll(RegExp(r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]', unicode: true),'');
+     try {
+       File imageFile = File('/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+       if (imageFile.existsSync()) {
 
+       } else {
+         print("COPIED2");
+
+         File imageFile = File(
+             '/storage/emulated/0/AudioFiles/com.example.music_player/files/pictures/$imageSaveName.jpg');
+         imageFile.copySync(
+             '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
+
+       }
+     } catch (e) {
+       print("COPIED");
+       File imageFile = File(
+           '/storage/emulated/0/AudioFiles/com.example.music_player/files/pictures/$imageSaveName.jpg');
+       imageFile.copySync(
+           '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
+       // var youtubeDownload = YoutubeExplode();
+       // var searchResults =await youtubeDownload.search.search(sName);
+       // var video = searchResults.first;
+       // var vidImage = video.thumbnails.maxResUrl;
+       //
+       //
+       //
+       // // Code to download image goes here
+       // await ImageDownloader.downloadImage(
+       //   vidImage.toString(),
+       //   destination: AndroidDestinationType.custom(directory: '')
+       //     ..inExternalFilesDir()
+       //     ..subDirectory("pictures/$imageSaveName.jpg"),
+       // ).timeout(const Duration(seconds: 15),
+       //     onTimeout: () => throw TimeoutException(
+       //         'Cant connect in 15 seconds.'));
+       setState(() {
+         // You can update the UI here.
+       });
+     }
     return Card(
       color: Colors.grey[600]?.withOpacity(0.3),
       shape: RoundedRectangleBorder(

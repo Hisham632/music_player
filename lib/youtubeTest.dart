@@ -353,6 +353,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ).timeout(const Duration(seconds: 15),
                         onTimeout: () => throw TimeoutException(
                             'Cant connect in 15 seconds.'));
+
+                    File imageFile = File(
+                        '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+                    imageFile.copySync(
+                        ' /storage/emulated/0/AudioFiles/com.example.music_player/files/pictures/$imageSaveName.jpg');
+
                   } catch (e) {
                     var nameFix = "itachi";
 
@@ -414,6 +420,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         .timeout(const Duration(seconds: 10),
                             onTimeout: () => throw TimeoutException(
                                 'Can\'t connect in 10 seconds.'));
+                    File imageFile = File(
+                        '/storage/emulated/0/Android/data/com.example.music_player/files/pictures/$imageSaveName.jpg');
+                    imageFile.copySync(
+                        ' /storage/emulated/0/AudioFiles/com.example.music_player/files/pictures/$imageSaveName.jpg');
                   } catch (e) {
                     var nameFix = "itachi.jpg";
 
