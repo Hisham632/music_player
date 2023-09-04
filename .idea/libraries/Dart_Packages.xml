@@ -40,7 +40,7 @@
         <entry key="audio_service_platform_interface">
           <value>
             <list>
-              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_service_platform_interface-0.1.0/lib" />
+              <option value="C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_service_platform_interface-0.1.1/lib" />
             </list>
           </value>
         </entry>
@@ -675,7 +675,7 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.9.0/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_service-0.18.10/lib" />
-      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_service_platform_interface-0.1.0/lib" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_service_platform_interface-0.1.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_service_web-0.1.1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audio_session-0.1.6+1/lib" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.20.1/lib" />
